@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术博客 | JH.Dev</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <nav class="bg-white border-b py-4">
+        <div class="max-w-4xl mx-auto px-6 flex justify-between items-center">
+            <a href="/zh/" class="text-sm font-bold text-blue-600">← 返回主页</a>
+            <span class="text-slate-400 text-sm italic">Code is Poetry.</span>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-6 py-12 space-y-12">
+        <header>
+            <h1 class="text-4xl font-black">技术博客</h1>
+            <p class="text-slate-500 mt-2">记录嵌入式开发、AI 部署与硬件调试的点滴。</p>
+        </header>
+
+        <section class="space-y-8">
+            <article class="group">
+                <span class="text-xs text-slate-400 font-mono">2026.02.06</span>
+                <h2 class="text-xl font-bold mt-1 group-hover:text-blue-600 cursor-pointer">
+                    <a href="/blog/ncnn-yolov8-deploy.html">如何优化 NCNN 在低算力 MCU 上的推理速度</a>
+                </h2>
+                <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                    在眼压机项目中，我遇到了模型推理延迟问题。本文分享如何通过算子融合与 FP16 量化解决...
+                </p>
+            </article>
+
+            <article class="group">
+                <span class="text-xs text-slate-400 font-mono">2026.01.20</span>
+                <h2 class="text-xl font-bold mt-1 group-hover:text-blue-600 cursor-pointer">
+                    <a href="#">FreeRTOS 四线程调度下的串口接收死锁分析</a>
+                </h2>
+                <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                    UART 进程使用分段接收时，如果优先级配置不当，容易导致泵控制线程抢占资源...
+                </p>
+            </article>
+        </section>
+    </main>
+
+    <footer class="py-20 text-center text-slate-400 text-xs italic">
+        "Stay Hungry, Stay Foolish."
+    </footer>
+</body>
+</html>

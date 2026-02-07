@@ -3,122 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>嵌入式开发工程师</title>
+    <title>JH.Dev | 嵌入式 & AI 部署</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', -apple-system, sans-serif; }
-        .tech-tag { @apply px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded; }
-    </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-slate-50 text-slate-900">
 
     <nav class="sticky top-0 bg-white/80 backdrop-blur-md border-b z-50">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-            <span class="font-bold text-xl tracking-tight">Jiahui Dong</span>
-            <div class="space-x-4 text-sm font-medium">
-                <a href="#about" class="hover:text-blue-600">关于</a>
-                <a href="#projects" class="hover:text-blue-600">项目</a>
-                <a href="#skills" class="hover:text-blue-600">技能</a>
-                <a href="/en/" class="text-gray-400 hover:text-blue-600">EN</a>
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold">J</div>
+                <span class="font-bold text-lg">JH.DeviceLab</span>
+            </div>
+            <div class="flex gap-6 text-sm font-medium">
+                <a href="#resume" class="text-blue-600">主页</a>
+                <a href="/blog/" class="hover:text-blue-600 transition-colors">技术博客</a>
+                <a href="/en/" class="text-slate-400 hover:text-blue-600">EN</a>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-4 py-12 space-y-20">
-        
-        <section id="about" class="flex flex-col md:flex-row items-center gap-8">
-            <div class="flex-1 space-y-4">
-                <p class="text-xl text-blue-600 font-medium">嵌入式开发工程师 / AI 部署专家</p>
-                <p class="text-gray-600 leading-relaxed">
-                    2 年工作经验，深耕医疗器械嵌入式开发 [cite: 5, 6]。擅长 MCU 实时系统设计、嵌入式 Linux 应用开发，并具备深厚的深度学习模型（YOLO/NCNN）在资源受限设备上的部署经验 [cite: 7, 38, 70]。
-                </p>
-                <div class="flex gap-4 text-sm">
-                    <a href="mailto:jdong8464@gmail.com" class="flex items-center gap-1 text-gray-500 hover:text-blue-600">
-                        <i class="fa-regular fa-envelope"></i> jdong8464@gmail.com
-                    </a>
-                    <span class="flex items-center gap-1 text-gray-500">
-                        <i class="fa-solid fa-phone"></i> 17712130217
-                    </span>
-                </div>
+    <main class="max-w-4xl mx-auto px-6 py-16 space-y-20">
+        <section id="hero" class="space-y-6">
+            <h1 class="text-5xl font-black">你好，我是 <span class="text-blue-600">Jiahui.</span></h1>
+            <p class="text-xl text-slate-500 leading-relaxed">
+                2 年嵌入式开发经验，专注 **医疗设备 MCU 控制系统** [cite: 7] 与 **端侧 AI 推理优化** [cite: 38]。擅长 FreeRTOS [cite: 10]、嵌入式 Linux [cite: 67] 及 NCNN 部署 [cite: 42]。
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="reveal('mail')" id="m-btn" class="px-4 py-2 bg-white border rounded-full text-sm shadow-sm hover:border-blue-300">
+                    <i class="fa-regular fa-envelope mr-1 text-blue-600"></i> <span id="m-txt">获取邮箱</span>
+                </button>
+                <button onclick="reveal('phone')" id="p-btn" class="px-4 py-2 bg-white border rounded-full text-sm shadow-sm hover:border-green-300">
+                    <i class="fa-solid fa-phone mr-1 text-green-600"></i> <span id="p-txt">获取电话</span>
+                </button>
+                <a href="https://github.com/qlghmz" target="_blank" class="px-4 py-2 bg-slate-900 text-white rounded-full text-sm">
+                    <i class="fa-brands fa-github mr-1"></i> GitHub
+                </a>
             </div>
         </section>
 
-        <section id="skills" class="space-y-6">
-            <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">技术能力</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-6 bg-white rounded-xl shadow-sm border">
-                    <h3 class="font-bold mb-3"><i class="fa-solid fa-microchip mr-2"></i>嵌入式开发</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-tag">STM32/RTOS [cite: 7, 71]</span>
-                        <span class="tech-tag">C/C++ [cite: 66]</span>
-                        <span class="tech-tag">UART/IIC/ADC [cite: 11]</span>
-                        <span class="tech-tag">电机控制 [cite: 8]</span>
-                    </div>
-                </div>
-                <div class="p-6 bg-white rounded-xl shadow-sm border">
-                    <h3 class="font-bold mb-3"><i class="fa-solid fa-brain mr-2"></i>AI 部署</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-tag">YOLOv8/v5 [cite: 41, 89]</span>
-                        <span class="tech-tag">NCNN/ONNX [cite: 42, 70]</span>
-                        <span class="tech-tag">OpenCV [cite: 24, 38]</span>
-                        <span class="tech-tag">SAM2 [cite: 53]</span>
-                    </div>
-                </div>
-                <div class="p-6 bg-white rounded-xl shadow-sm border">
-                    <h3 class="font-bold mb-3"><i class="fa-solid fa-laptop-code mr-2"></i>软件工程</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-tag">Qt 开发 [cite: 16, 68]</span>
-                        <span class="tech-tag">Linux 驱动 [cite: 67, 74]</span>
-                        <span class="tech-tag">Python/Shell [cite: 66]</span>
-                        <span class="tech-tag">MQTT [cite: 78]</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="space-y-6">
-            <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">核心项目</h2>
-            <div class="space-y-8">
-                <div class="group">
-                    <h3 class="text-lg font-bold group-hover:text-blue-600 transition-colors">医用款眼压机 - MCU/AI 系统设计 [cite: 6, 38]</h3>
-                    <p class="text-sm text-gray-500 mb-2">2024.8 - 至今 | 浙江佳目医疗科技有限公司</p>
-                    <ul class="list-disc list-inside text-gray-600 text-sm space-y-1">
-                        <li>使用 FreeRTOS 设计四线程架构，处理 UART、手柄、气路及电机控制 [cite: 10, 11]。</li>
-                        <li>部署 YOLOv8 模型进行实时眼球检测，通过光斑间距实现深度信息识别 [cite: 38, 44]。</li>
-                        <li>开发基于 Qt 的工厂测试工具及老化测试系统 [cite: 16, 23]。</li>
+        <section id="resume" class="space-y-8">
+            <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">核心实战</h2>
+            <div class="grid gap-8">
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">医用款眼压机 - MCU/AI 控制系统 [cite: 7, 38]</h3>
+                    <p class="text-xs text-blue-500 mb-3">浙江佳目医疗 | 2024.08 - 至今 [cite: 6, 9]</p>
+                    <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                        <li>基于 <strong>FreeRTOS</strong> 开启四个独立线程 (UART, Handle, Pump, Motor) [cite: 10]，处理气路泵控制与电机 S 曲线加减速 [cite: 14, 15]。</li>
+                        <li>部署 <strong>YOLOv8</strong> 目标检测模型进行眼球定位 [cite: 38, 41]，通过 NCNN 库在嵌入式端实现实时推理 [cite: 42]。</li>
+                        <li>利用红外相机结构光原理 [cite: 39, 44]，通过光斑间距实时计算眼球深度信息 [cite: 44]。</li>
                     </ul>
                 </div>
-                <div class="group">
-                    <h3 class="text-lg font-bold group-hover:text-blue-600 transition-colors">医学成像文件系统 (DICOM) [cite: 28]</h3>
-                    <p class="text-sm text-gray-500 mb-2">2024.8 - 2024.12</p>
-                    <p class="text-gray-600 text-sm">基于 DCMTK 库开发，实现了多帧医学图像的 DIR 存储架构，支持视频与图片的标准化读取 [cite: 31, 32]。</p>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">SAM2 自动标注脚本工具 [cite: 53, 56]</h3>
+                    <p class="text-sm text-slate-600 mt-2">利用 <strong>Segment Anything Model 2</strong> 开发自动化多边形标注脚本，将 52 帧视频的标注效率提升一倍以上 [cite: 54, 56]。</p>
                 </div>
             </div>
         </section>
-
-        <section id="education" class="space-y-4">
-            <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">教育背景</h2>
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="font-bold">浙大宁波理工学院 [cite: 62]</h3>
-                    <p class="text-sm text-gray-600">计算机科学与技术 - 本科 [cite: 63, 65]</p>
-                </div>
-                <p class="text-sm text-gray-500">2020.09 - 2024.06 [cite: 65]</p>
-            </div>
-        </section>
-
     </main>
 
-    <footer class="bg-gray-100 py-8 text-center text-gray-400 text-xs">
-        <p>© 2026 Jiahui Dong. Powered by Cloudflare Pages & WebLLM.</p>
-    </footer>
-
-    <div id="ai-chat-widget" class="fixed bottom-6 right-6">
-        <button class="w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center">
-            <i class="fa-solid fa-robot text-xl"></i>
-        </button>
-    </div>
-
+    <script>
+        function reveal(t) {
+            if(t==='mail'){ 
+                document.getElementById('m-txt').innerText = "jdong8464@gmail.com"; [cite: 4]
+                document.getElementById('m-btn').classList.add('bg-blue-50');
+            } else {
+                document.getElementById('p-txt').innerText = "177 1213 0217"; [cite: 3]
+                document.getElementById('p-btn').classList.add('bg-green-50');
+            }
+        }
+    </script>
 </body>
 </html>
