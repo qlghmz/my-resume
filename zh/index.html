@@ -49,33 +49,66 @@
             <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">核心实战</h2>
             <div class="grid gap-8">
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 class="font-bold text-lg">医用款眼压机 mcu程序开发 (mcurtos)</h3>
+                    <h3 class="font-bold text-lg">医用款眼压机 mcu程序开发 (mcu rtos)</h3>
                     <p class="text-xs text-blue-500 mb-3">浙江佳目医疗 | 2025.8 - 至今</p>
-                    <p class="text-sm text-slate-600 leading-relaxed">完成整个mcu系统、外设的开发。系统（使用FreeRTOS，四个线程：uart, handle, pump, motor）、外设（IO：风扇、电源使能、trigger信号；uart：通信；adc：手柄、气体压力；iic：气压传感器、按键板；EXTI：光耦、手柄按键、按键板中断）、串口进程（协议、DMA收发）、手柄线程、气路线程（打气、吹气）、电机线程（S曲线）等。</p>
+                    <p class="text-sm text-slate-600 mb-2 leading-relaxed">完成整个mcu系统、外设的开发，协助做电机的工程师一起完成电机控制。</p>
+                    <div class="text-sm text-slate-600 space-y-2 leading-relaxed">
+                        <p><strong>系统：</strong>使用freertos，开启四个线程，uart，handle，pump，motor。这四个线程等待队列指令来运作。</p>
+                        <p><strong>外设：</strong>io：风扇、各种电源使能、trigger信号。uart：通信上位机和电机驱动板。adc：手柄、气体压力、压力传感器。iic：气压传感器、按键板。EXTI：光耦、手柄按键、按键板中断。</p>
+                        <p><strong>串口进程：</strong>协议，head,command_type,seq,uTick;,length,data,crc,tail.接收使用分段接收(实时要求不高，不用循环缓冲区)。dma发送和接收</p>
+                        <p><strong>手柄线程：</strong>dma实时检测手柄、按键值，发送队列给其他task。</p>
+                        <p><strong>气路线程：</strong>打气：充气进入气缸到达指定气缸压力。吹气：开阀获取吹气值。</p>
+                        <p><strong>电机线程：</strong>s曲线，加减速。</p>
+                    </div>
                 </div>
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 class="font-bold text-lg">眼压机 mmitest、longtest</h3>
+                    <h3 class="font-bold text-lg">眼压机 mmitest、longtest (眼压机工厂测试工具、老化测试工具(qt))</h3>
                     <p class="text-xs text-blue-500 mb-3">浙江佳目医疗 | 2024.8 - 至今</p>
-                    <p class="text-sm text-slate-600 leading-relaxed">串口通信（qserial）、与下位机通信、相机驱动、打气自校准工具、吹气自校准、出厂气路/光学校准等功能。</p>
+                    <p class="text-sm text-slate-600 mb-2 leading-relaxed">内容过多，只举例说明个别功能。</p>
+                    <div class="text-sm text-slate-600 space-y-2 leading-relaxed">
+                        <p>串口通信功能，qserial接收串口信号去解析并执行和分发指令。</p>
+                        <p>完成与下位机所有功能的通信和状态获取。用于出厂校验硬件。</p>
+                        <p>相机驱动调用。</p>
+                        <p><strong>打气自校准工具：</strong>由于在打气刚刚结束的状态，气体流动导致传感器度数不稳，会略大于稳定状态，所以需要在打气过充打气让其自己降回去，但气量不同，硬件不同，过充量也不同，所以需要校准打气过冲值来让打气稳定。</p>
+                        <p><strong>吹气自校准：</strong>模型计算眼压值时，需要形变一致，不同硬件机器，调整吹气量，要校准打气、吹气、开阀时间的值。</p>
+                        <p>出厂气路、光学校准功能开发，机器老化功能完成。</p>
+                    </div>
                 </div>
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
                     <h3 class="font-bold text-lg">optics 光学测试工具 (qt opencv)</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">检测两条有斜率白色细直线的中间边缘的中心点，以及两种方法：形态学膨胀+边缘检测和投影法（后者因精度不足取消）。</p>
+                    <div class="text-sm text-slate-600 space-y-2 leading-relaxed">
+                        <p>完成检测两条横向有斜率白色细直线的中间边缘的中心点。opencv</p>
+                        <p><strong>方法一：</strong>形态学膨胀+边缘检测：构造出横向的直线和纵向的直线，即白线所在的位置，然后取中点即可。</p>
+                        <p><strong>方法二：</strong>投影法：分别做X轴和Y轴投影，找到灰度值变化最大的两个位置（对应横纵线），交点即为中心。（对中心点精度不够高，取消）</p>
+                    </div>
                 </div>
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
                     <h3 class="font-bold text-lg">dicom 医学成像文件制作 (dicom opencv)</h3>
                     <p class="text-xs text-blue-500 mb-3">2024.8 - 2024.12</p>
-                    <p class="text-sm text-slate-600 leading-relaxed">使用 dicomtk 库制作 dicomDIR 文件系统，包含图片和视频的存储。</p>
+                    <div class="text-sm text-slate-600 space-y-2 leading-relaxed">
+                        <p>使用dicomtk库 制作dicomDIR文件系统的保存和读取功能，结构示例为DICOM/UserID/TestTime/。</p>
+                        <p>dicom文件系统包含两张图片和一个视频，保存三个dicom文件，两张图片dicom和一个多帧dicom。</p>
+                    </div>
                 </div>
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 class="font-bold text-lg">ad8555烧录工装 (mcu)</h3>
+                    <h3 class="font-bold text-lg">ad8555烧录工装 (熔断ad8555的电阻丝来配置ad8555 (mcu))</h3>
                     <p class="text-xs text-blue-500 mb-3">2025.4 - 2025.6</p>
-                    <p class="text-sm text-slate-600 leading-relaxed">io (led digin烧写)、adc 读取 ad8555 值和气压传感器值，以及烧写协议。</p>
+                    <div class="text-sm text-slate-600 space-y-2 leading-relaxed">
+                        <p>io(led digin烧写) digin烧写ad8555寄存器，用来配置模式、输出倍率。led用来判断烧写后效果。</p>
+                        <p>adc 读取ad8555值，读取气压传感器值。</p>
+                        <p>烧写协议为高于50us的脉冲为高，低于10us脉冲为低，每位间隔20us。</p>
+                    </div>
                 </div>
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 class="font-bold text-lg">眼压机 眼球检测(目标检测) (yolov8 opencv pid ncnn ai)</h3>
+                    <h3 class="font-bold text-lg">眼压机 眼球检测(目标检测) (眼球检测功能设计(yolov8 opencv pid ncnn ai))</h3>
                     <p class="text-xs text-blue-500 mb-3">2024.9 - 2024.12</p>
-                    <p class="text-sm text-slate-600 leading-relaxed">红外相机的使用、YOLOv8训练（将视频转为图片帧，训练左眼、右眼、瞳孔、空、光斑四个类，模型转换为ncnn模型）、NCNN部署（推理、画框、NMS）、以及"空"、"左右眼"、"光斑"等类的具体作用和结构光用于判断深度信息。</p>
+                    <div class="text-sm text-slate-600 space-y-2 leading-relaxed">
+                        <p><strong>红外相机：</strong>使用红外相机捕获，红外相机可以在较暗环境拍摄，还可以捕获红外光线来做结构光。</p>
+                        <p><strong>训练：</strong>使用yolov8进行训练，将采集的视频文件转成图片帧，训练四个类分别为左眼，右眼，瞳孔，空，光斑，将模型转换成ncnn模型。</p>
+                        <p><strong>部署：</strong>使用tencent的ncnn开源库，在嵌入式设备进行推理。将opencvMat转成ncnnMat。归一化，推理，画框，nms后。得到输出框坐标。</p>
+                        <p><strong>类：</strong>空的作用为，当没有眼球时，相机画面是一片黑而红外相机拍摄的瞳孔也一片黑，会误导需要单独训练类来判断。同时可以用来获取眼球放入和拿开的功能。左右眼用来分辨放上的是左眼还是右眼。光斑用来判断深度信息。</p>
+                        <p><strong>结构光：</strong>用画面中光斑间距来判断深度信息。光斑有两个，红外光斜射打在眼球上会在画面里出现两个白色光斑，计算他们之间的距离来判断深度，如果没有双光斑会来回z轴移动，来找到光斑。</p>
+                    </div>
                 </div>
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
                     <h3 class="font-bold text-lg">SAM2 自动标注脚本工具</h3>
@@ -89,21 +122,30 @@
             <div class="grid gap-8">
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
                     <h3 class="font-bold text-lg">眼压机 眼压计算模型 (类分类任务) (resnet ncnn ai)</h3>
-                    <p class="text-xs text-blue-500 mb-3">2024.3 - 2024.9 · 实习期间完成</p>
-                    <p class="text-sm text-slate-600 mb-2"><strong>目的：</strong>用于计算眼压值。</p>
-                    <p class="text-sm text-slate-600 leading-relaxed">使用resnet模型将分类任务的输出由class改为float预测值。捕获最大形变点，制作数据集并用yolov5训练，输入图像和660个吹气值数据，使用ncnn在嵌入式设备上进行推理。使用神经网络模型制作新型推理眼压值模型。优化了检测模型的图片权重。</p>
-                    <p class="text-sm text-slate-600 mt-2 leading-relaxed"><strong>特点：</strong>1.将分类模型修改为直接输出推理值。2.在嵌入式设备上部署AI模型。</p>
+                    <p class="text-xs text-blue-500 mb-3">2024.3 - 2024.9 · 实习期间完成 · 用于计算眼压值</p>
+                    <div class="text-sm text-slate-600 space-y-2 leading-relaxed">
+                        <p>使用resnet模型将分类任务不使用输出class改为输出float预测值的模型。</p>
+                        <p>捕获最大形变点，制作数据集并用yolov5训练，输入为图像和一个660个吹气值数据，用ncnn在嵌入式设备推理。</p>
+                        <p>使用神经网络模型来制作的新式推理眼压值的模型。</p>
+                        <p><strong>优化：</strong>不断优化检测模型的图片权重。</p>
+                        <p><strong>特点：</strong>1.将分类模型修改为直接输出推理值。2.在嵌入式设备上部署ai模型。</p>
+                    </div>
                 </div>
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 class="font-bold text-lg">眼角膜检测 (sam2)</h3>
+                    <h3 class="font-bold text-lg">眼角膜检测 标注眼角膜部分框 (sam2)</h3>
                     <p class="text-xs text-blue-500 mb-3">2025.6 - 2025.6</p>
-                    <p class="text-sm text-slate-600 mb-2"><strong>目的：</strong>标注眼角膜部分框。</p>
-                    <p class="text-sm text-slate-600 leading-relaxed"><strong>项目需求：</strong>标注600个视频图片（每个视频52张图）中角膜外形的分割框，即多边形标注。计划使用sam2进行标注，编写脚本实现sam2推理并标记指定位置，相比手动标注软件，项目时间缩短至少一倍。</p>
+                    <div class="text-sm text-slate-600 space-y-2 leading-relaxed">
+                        <p><strong>项目需求：</strong>将600个视频图片，每个视频52张图，标注出角膜外形的分割框，也就是多边形标注。</p>
+                        <p>我计划使用sam2来标注，写了一个脚本推理sam2，然后标记指定位置，相比使用手动标注软件将项目时间缩短了至少一倍。</p>
+                    </div>
                 </div>
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 class="font-bold text-lg">可变眼膜项目 mcu、Icd</h3>
+                    <h3 class="font-bold text-lg">可变眼膜项目 mcu、lcd</h3>
                     <p class="text-xs text-blue-500 mb-3">2024.6 - 2024.12 · 实习期间完成</p>
-                    <p class="text-sm text-slate-600 leading-relaxed">通过炫动旋钮改变密封眼膜内的气压值，使眼膜的眼压值不同。使用LCD显示眼压值，通过缸内气压传感器获取数据。</p>
+                    <div class="text-sm text-slate-600 space-y-2 leading-relaxed">
+                        <p>炫动旋钮，来改变密封眼膜内的气压值，使得眼膜可以让眼压值不同。</p>
+                        <p>lcd显示眼压值，通过缸内气压传感器获取数据。</p>
+                    </div>
                 </div>
             </div>
         </section>
