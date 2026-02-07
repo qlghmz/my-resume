@@ -6,6 +6,9 @@
     <title>JH.Dev | 嵌入式 & AI 部署</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .cite { font-size: 0.75em; color: #64748b; font-weight: normal; vertical-align: super; }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
@@ -25,9 +28,9 @@
 
     <main class="max-w-4xl mx-auto px-6 py-16 space-y-20">
         <section id="hero" class="space-y-6">
-            <h1 class="text-5xl font-black">你好，我是 <span class="text-blue-600">Jiahui.</span></h1>
+            <h1 class="text-5xl font-black">你好，我是 <span class="text-blue-600">jh.</span></h1>
             <p class="text-xl text-slate-500 leading-relaxed">
-                2 年嵌入式开发经验，专注 **医疗设备 MCU 控制系统** [cite: 7] 与 **端侧 AI 推理优化** [cite: 38]。擅长 FreeRTOS [cite: 10]、嵌入式 Linux [cite: 67] 及 NCNN 部署 [cite: 42]。
+                2 年嵌入式开发经验，专注 <strong>医疗设备 MCU 控制系统</strong> <sup class="cite">[7]</sup> 与 <strong>端侧 AI 推理优化</strong> <sup class="cite">[38]</sup>。擅长 FreeRTOS <sup class="cite">[10]</sup>、嵌入式 Linux <sup class="cite">[67]</sup> 及 NCNN 部署 <sup class="cite">[42]</sup>。
             </p>
             <div class="flex flex-wrap gap-3">
                 <button onclick="reveal('mail')" id="m-btn" class="px-4 py-2 bg-white border rounded-full text-sm shadow-sm hover:border-blue-300">
@@ -46,29 +49,141 @@
             <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">核心实战</h2>
             <div class="grid gap-8">
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 class="font-bold text-lg">医用款眼压机 - MCU/AI 控制系统 [cite: 7, 38]</h3>
-                    <p class="text-xs text-blue-500 mb-3">浙江佳目医疗 | 2024.08 - 至今 [cite: 6, 9]</p>
+                    <h3 class="font-bold text-lg">医用款眼压机 - MCU/AI 控制系统 <sup class="cite">[7, 38]</sup></h3>
+                    <p class="text-xs text-blue-500 mb-3">浙江佳目医疗 | 2024.08 - 至今 <sup class="cite">[6, 9]</sup></p>
                     <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
-                        <li>基于 <strong>FreeRTOS</strong> 开启四个独立线程 (UART, Handle, Pump, Motor) [cite: 10]，处理气路泵控制与电机 S 曲线加减速 [cite: 14, 15]。</li>
-                        <li>部署 <strong>YOLOv8</strong> 目标检测模型进行眼球定位 [cite: 38, 41]，通过 NCNN 库在嵌入式端实现实时推理 [cite: 42]。</li>
-                        <li>利用红外相机结构光原理 [cite: 39, 44]，通过光斑间距实时计算眼球深度信息 [cite: 44]。</li>
+                        <li>基于 <strong>FreeRTOS</strong> 开启四个独立线程 (UART, Handle, Pump, Motor) <sup class="cite">[10]</sup>，处理气路泵控制与电机 S 曲线加减速 <sup class="cite">[14, 15]</sup>。</li>
+                        <li>部署 <strong>YOLOv8</strong> 目标检测模型进行眼球定位 <sup class="cite">[38, 41]</sup>，通过 NCNN 库在嵌入式端实现实时推理 <sup class="cite">[42]</sup>。</li>
+                        <li>利用红外相机结构光原理 <sup class="cite">[39, 44]</sup>，通过光斑间距实时计算眼球深度信息 <sup class="cite">[44]</sup>。</li>
                     </ul>
                 </div>
                 <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                    <h3 class="font-bold text-lg">SAM2 自动标注脚本工具 [cite: 53, 56]</h3>
-                    <p class="text-sm text-slate-600 mt-2">利用 <strong>Segment Anything Model 2</strong> 开发自动化多边形标注脚本，将 52 帧视频的标注效率提升一倍以上 [cite: 54, 56]。</p>
+                    <h3 class="font-bold text-lg">SAM2 自动标注脚本工具 <sup class="cite">[53, 56]</sup></h3>
+                    <p class="text-sm text-slate-600 mt-2">利用 <strong>Segment Anything Model 2</strong> 开发自动化多边形标注脚本，将 52 帧视频的标注效率提升一倍以上 <sup class="cite">[54, 56]</sup>。</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">眼压机 mmitest、longtest</h3>
+                    <p class="text-xs text-blue-500 mb-3">浙江佳目医疗 | 2024.08 - 至今</p>
+                    <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                        <li>串口通信（QSerial）、与下位机通信、相机驱动。</li>
+                        <li>打气自校准工具、吹气自校准、出厂气路/光学校准等功能。</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">Optics 光学测试工具 <span class="text-slate-400 font-normal text-sm">(Qt OpenCV)</span></h3>
+                    <p class="text-sm text-slate-600 mt-2">检测两条有斜率白色细直线的中间边缘中心点；形态学膨胀+边缘检测与投影法（后者因精度不足取消）。</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">DICOM 医学成像文件制作 <span class="text-slate-400 font-normal text-sm">(DICOM OpenCV)</span></h3>
+                    <p class="text-xs text-blue-500 mb-3">2024.08 - 2024.12</p>
+                    <p class="text-sm text-slate-600 mt-2">使用 <strong>dicomtk</strong> 库制作 DICOM DIR 文件系统，包含图片和视频的存储。</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">AD8555 烧录工装 <span class="text-slate-400 font-normal text-sm">(MCU)</span></h3>
+                    <p class="text-xs text-blue-500 mb-3">2025.04 - 2025.06</p>
+                    <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                        <li>IO：LED、DIGIN 烧写；ADC 读取 AD8555 值与气压传感器值；烧写协议。</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">眼压机 眼球检测（目标检测） <span class="text-slate-400 font-normal text-sm">(YOLOv8 OpenCV NCNN AI)</span></h3>
+                    <p class="text-xs text-blue-500 mb-3">2024.09 - 2024.12</p>
+                    <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                        <li>红外相机使用；YOLOv8 训练（视频转图片帧，左眼、右眼、瞳孔、空、光斑五类），模型转 NCNN。</li>
+                        <li>NCNN 部署：推理、画框、NMS；「空」「左右眼」「光斑」等类与结构光判断深度信息。</li>
+                    </ul>
                 </div>
             </div>
+        </section>
+
+        <section id="project-exp" class="space-y-8">
+            <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">项目经验</h2>
+            <div class="grid gap-8">
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">眼压机 眼压计算模型 <span class="text-slate-400 font-normal text-sm">(类分类任务 ResNet NCNN AI)</span></h3>
+                    <p class="text-xs text-blue-500 mb-3">2024.03 - 2024.09 · 实习期间完成</p>
+                    <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                        <li>使用 ResNet 将分类任务输出由 class 改为 float 预测值；捕获最大形变点制作数据集，YOLOv5 训练。</li>
+                        <li>输入图像与 660 个吹气值数据，NCNN 在嵌入式设备上推理；新型推理眼压值模型；优化检测模型图片权重。</li>
+                        <li><strong>特点：</strong> 1. 分类模型修改为直接输出推理值；2. 嵌入式设备上部署 AI 模型。</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">眼角膜检测 <span class="text-slate-400 font-normal text-sm">(SAM2)</span></h3>
+                    <p class="text-xs text-blue-500 mb-3">2025.06</p>
+                    <p class="text-sm text-slate-600 mt-2">标注 600 个视频图片（每视频 52 张）中角膜外形分割框（多边形标注）；计划使用 SAM2 推理并标记指定位置，相比手动标注软件，项目时间缩短至少一倍。</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">可变眼膜项目 <span class="text-slate-400 font-normal text-sm">(MCU、LCD)</span></h3>
+                    <p class="text-xs text-blue-500 mb-3">2024.06 - 2024.12 · 实习期间完成</p>
+                    <p class="text-sm text-slate-600 mt-2">通过旋钮改变密封眼膜内气压值使眼压不同；LCD 显示眼压值，缸内气压传感器获取数据。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="space-y-6">
+            <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">教育背景</h2>
+            <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                <h3 class="font-bold text-lg">浙大宁波理工学院</h3>
+                <p class="text-sm text-slate-600">计算机科学与技术 · 2020.09 - 2024.06</p>
+                <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4 mt-3">
+                    <li>掌握 C、C++、Python、Shell，能独立完成嵌入式系统相关应用。</li>
+                    <li>熟悉嵌入式 Linux、移植与驱动定制，串口数据交换与远程控制。</li>
+                    <li>熟悉嵌入式 Linux 下开发调试与 Qt 开发、交叉编译链，多线程、消息队列、信号量等。</li>
+                    <li>掌握 Pytorch/TensorFlow 模型开发与部署；常用 YOLO；嵌入式部署：ncnn、onnxruntime、paddle。</li>
+                    <li>嵌入式芯片：STM32、Arduino；外设 uart、iic、adc 等；会看原理图、示波器调试。</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="campus" class="space-y-8">
+            <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">校园经历 <span class="text-slate-400 font-normal text-base">(可略过)</span></h2>
+            <div class="grid gap-8">
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">Mosquitto 广域物联网网关 <span class="text-slate-400 font-normal text-sm">(MQTT Linux 驱动)</span></h3>
+                    <p class="text-xs text-blue-500 mb-3">2022.06 - 2023.06</p>
+                    <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                        <li>基于 ARM 开发板、IO 设备与手机的广域物联网系统；C++ 编写应用。</li>
+                        <li>MQTT Client-Server，ARM 板与手机数据通信、控制 <strong>继电器、步进电机等硬件</strong>。</li>
+                        <li>Qt 界面与 IO 驱动；U-Boot 与系统烧录部署；成功制作 MQTT 物联网连接模型，获高度评价。</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">浙江省机器人竞赛</h3>
+                    <p class="text-xs text-blue-500 mb-3">2022.06 - 2023.06</p>
+                    <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                        <li>自动寻路、检测并抓取物块放入箱子；树莓派计算与指令、STM32 控制电机/舵机。</li>
+                        <li>YOLOv8 训练与优化，Paddle 部署到嵌入式设备；完成竞赛要求，<strong>二等奖</strong>。</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <h3 class="font-bold text-lg">浙江省工程训练竞赛项目</h3>
+                    <p class="text-xs text-blue-500 mb-3">2021.06 - 2021.12</p>
+                    <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                        <li>目标检测识别物块、机械臂抓取，C++ 应用；YOLOv5 训练目标检测模型，部署到树莓派并优化。</li>
+                        <li>成功实现目标识别与物块抓取，<strong>三等奖</strong>。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="awards" class="space-y-6">
+            <h2 class="text-2xl font-bold border-l-4 border-blue-600 pl-4">奖学金</h2>
+            <ul class="text-sm text-slate-600 space-y-2 list-disc ml-4">
+                <li>浙江省政府奖学金</li>
+                <li>宁波理工学院学业二等奖学金</li>
+                <li>宁波理工学院创新专项奖学金</li>
+            </ul>
         </section>
     </main>
 
     <script>
         function reveal(t) {
-            if(t==='mail'){ 
-                document.getElementById('m-txt').innerText = "jdong8464@gmail.com"; [cite: 4]
+            if(t==='mail'){
+                document.getElementById('m-txt').innerHTML = '<a href="mailto:jdong8464@gmail.com" class="text-blue-600 hover:underline">jdong8464@gmail.com</a>';
                 document.getElementById('m-btn').classList.add('bg-blue-50');
             } else {
-                document.getElementById('p-txt').innerText = "177 1213 0217"; [cite: 3]
+                document.getElementById('p-txt').innerHTML = '<a href="tel:17712130217" class="text-green-600 hover:underline">177 1213 0217</a>';
                 document.getElementById('p-btn').classList.add('bg-green-50');
             }
         }
