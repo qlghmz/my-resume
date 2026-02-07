@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于 RK3588 RGA 硬件加速的三路相机并发预览方案设计 | JH.Dev</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <nav class="bg-white border-b py-4">
+        <div class="max-w-3xl mx-auto px-6 flex justify-between items-center">
+            <a href="/blog/" class="text-sm font-bold text-blue-600">← 博客列表</a>
+            <a href="/zh/" class="text-sm font-bold text-blue-600">主页</a>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-6 py-12">
+        <article class="space-y-8">
+            <header>
+                <span class="text-xs text-slate-400 font-mono">2026.02.07</span>
+                <h1 class="text-3xl font-black mt-2 leading-tight">
+                    基于 RK3588 RGA 硬件加速的三路相机并发预览方案设计
+                </h1>
+                <p class="text-lg text-slate-500 mt-2">
+                    Architecting High-Performance Multi-Camera Streaming with RGA Hardware Acceleration
+                </p>
+            </header>
+
+            <div class="prose prose-slate max-w-none space-y-6 text-slate-600 leading-relaxed">
+                <p>
+                    在最近的嵌入式 Linux 项目开发中，我负责核心的视觉采集模块，目标是实现三路高分辨率相机（包括同轴、USB及无线图传）的同时开启与实时预览。
+                    面对如此高吞吐量的视频流数据，我在架构设计初期就意识到：如果沿用传统的 CPU 软解（如 cv::cvtColor）进行 YUV 到 RGB 的格式转换，必然会抢占宝贵的 CPU 算力，导致 UI 交互卡顿。
+                </p>
+
+                <h2 class="text-xl font-bold text-slate-800 mt-8">🚀 架构选型与实现方案</h2>
+                <p>
+                    基于对 Rockchip 硬件架构的理解，我直接采用了 SoC 内置的 RGA (2D Raster Graphic Acceleration) 引擎作为核心处理单元。
+                    我设计了一套基于 DMA (Direct Memory Access) 的零拷贝取图机制。通过直接操作物理连续内存，将多路相机的原始 YUV 数据直接“喂”给 RGA 硬件进行格式转换与缩放，绕过 CPU 的 Cache 刷新，最大化利用了总线带宽。
+                </p>
+
+                <h2 class="text-xl font-bold text-slate-800 mt-8">💡 攻克的技术难点</h2>
+                <p>
+                    虽然 RGA 效率极高，但在落地时我解决了以下底层挑战：
+                </p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li><strong>内存管理的严苛要求：</strong>RGA 对内存地址有严格的对齐约束。我通过 posix_memalign 实现了 4K 页对齐的内存池管理，确保硬件 DMA 传输的稳定性，解决了潜在的画面撕裂与段错误问题。</li>
+                    <li><strong>异构源的统一抽象：</strong>由于三路相机的接口不同（MIPI/USB），其输出格式（UYVY/YUYV）也不尽相同。我封装了统一的 Buffer 处理层，根据 V4L2 捕获的元数据动态配置 RGA 通道，实现了对不同硬件源的透明兼容。</li>
+                </ul>
+
+                <h2 class="text-xl font-bold text-slate-800 mt-8">最终成果</h2>
+                <p>
+                    该方案成功实现了三路相机的并发流畅预览。在满负载运行下，CPU 依然保持在极低的占用率，为后续的业务逻辑和复杂 UI 渲染留足了算力空间。这再次证明了在嵌入式开发中，“软硬结合”的设计思维至关重要。
+                </p>
+
+                <div class="flex flex-wrap gap-2 pt-4">
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#嵌入式开发</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#Linux</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#Rockchip</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#RGA</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#高性能计算</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#C++</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#Qt</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#架构设计</span>
+                </div>
+            </div>
+
+            <hr class="border-slate-200 my-12">
+
+            <div class="space-y-6 text-slate-600 leading-relaxed">
+                <h2 class="text-2xl font-bold text-slate-800">English</h2>
+                <p>
+                    In my recent Embedded Linux project (RK3588), I was tasked with a critical requirement: simultaneously capturing and previewing three distinct high-resolution camera streams (Coaxial, USB, and Wireless transmission).
+                    During the initial architectural design phase, I recognized that a traditional CPU-based approach (like software color conversion) would be a bottleneck for such high-throughput video data, inevitably choking the UI thread.
+                </p>
+                <h3 class="text-lg font-bold text-slate-800">🚀 The Architectural Decision</h3>
+                <p>
+                    Leveraging my knowledge of the Rockchip SoC capabilities, I proactively designed the pipeline around the RGA (2D Raster Graphic Acceleration) engine from day one.
+                    Instead of relying on CPU cycles, I implemented a DMA (Direct Memory Access) based mechanism. This approach feeds raw YUV data from the V4L2 buffers directly into the RGA hardware for format conversion (YUV to RGB) and scaling. This bypasses unnecessary CPU cache operations and maximizes memory bandwidth efficiency.
+                </p>
+                <h3 class="text-lg font-bold text-slate-800">💡 Technical Challenges Solved</h3>
+                <p>
+                    While RGA is powerful, enabling it required solving specific low-level constraints:
+                </p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li><strong>Strict Memory Alignment:</strong> RGA hardware demands precise memory alignment. I implemented a memory pool using posix_memalign to ensure 4K page-aligned buffers, preventing DMA transmission errors and ensuring stable video output.</li>
+                    <li><strong>Handling Heterogeneous Sources:</strong> The three cameras utilized different interfaces and output different raw formats (UYVY vs. YUYV). I engineered a unified buffer abstraction layer that dynamically configures the RGA channels based on the source metadata, ensuring seamless compatibility across all streams.</li>
+                </ul>
+                <h3 class="text-lg font-bold text-slate-800">The Result</h3>
+                <p>
+                    The system now supports concurrent, smooth previewing of all three cameras. Even under full load, CPU usage remains negligible for video processing, leaving ample headroom for complex business logic and UI rendering. This confirms that in embedded systems, designing with hardware acceleration in mind is key to unlocking maximum performance.
+                </p>
+                <div class="flex flex-wrap gap-2 pt-4">
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#EmbeddedSystems</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#Linux</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#Rockchip</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#RGA</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#HighPerformance</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#Cpp</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#Qt</span>
+                    <span class="text-xs px-2 py-1 bg-slate-100 rounded text-slate-600">#SystemArchitecture</span>
+                </div>
+            </div>
+        </article>
+
+        <div class="mt-12 pt-8 border-t border-slate-200">
+            <a href="/blog/" class="text-blue-600 font-medium hover:underline">← 返回博客列表</a>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center text-slate-400 text-xs italic">
+        "Stay Hungry, Stay Foolish."
+    </footer>
+</body>
+</html>
