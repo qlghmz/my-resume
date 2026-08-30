@@ -151,8 +151,6 @@ body::after {
   height: 100%;
   object-fit: cover;
   object-position: 16% 42%;
-  opacity: 0.55;
-  mix-blend-mode: screen;
 }
 .sea-glow {
   position: absolute;
@@ -205,18 +203,6 @@ body::after {
   opacity: 0.55;
   animation: sea-rays 12s linear infinite;
 }
-.otter {
-  position: absolute;
-  left: -6vw;
-  bottom: -10vh;
-  width: min(52vw, 680px);
-  height: auto;
-  transform: rotate(-22deg);
-  transform-origin: 40% 60%;
-  animation: otter-drift 8s ease-in-out infinite;
-  z-index: 1;
-  filter: drop-shadow(0 18px 28px rgba(0, 20, 40, 0.35));
-}
 @keyframes sea-burst {
   0%, 100% {
     transform: translate(0, 0) scale(1);
@@ -234,19 +220,9 @@ body::after {
 @keyframes sea-rays {
   to { transform: rotate(8deg); }
 }
-@keyframes otter-drift {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 10px -22px; }
-}
 
 @media (max-width: 620px) {
-  .otter {
-    width: min(78vw, 420px);
-    left: -12vw;
-    bottom: 8vh;
-    opacity: 0.7;
-  }
-  .sea-photo { opacity: 0.4; }
+  .sea-glow { opacity: 0.7; }
 }
 
 .giant,
