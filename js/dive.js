@@ -1,32 +1,36 @@
 (() => {
   const REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)");
-  let diving = false;
+  const FRAME_MS = 48;
+  const FRAME_COUNT = 10;
+  let busy = false;
   let overlay = null;
   let titleEl = null;
+  let revealEl = null;
+  let bladeEl = null;
+  let flashEl = null;
 
   function ensureOverlay() {
     if (overlay) return;
     overlay = document.createElement("div");
-    overlay.className = "dive";
-    overlay.id = "dive";
+    overlay.className = "cut";
+    overlay.id = "cut";
     overlay.setAttribute("aria-hidden", "true");
     overlay.innerHTML = `
-      <div class="dive-wash"></div>
-      <div class="dive-water">
-        <div class="dive-surface"></div>
-        <div class="dive-caustic"></div>
-        <div class="dive-bubbles" aria-hidden="true">
-          ${Array.from({ length: 18 }, (_, i) => `<span style="--i:${i}"></span>`).join("")}
-        </div>
-      </div>
-      <p class="dive-title" id="dive-title"></p>
+      <div class="cut-scene"></div>
+      <div class="cut-reveal" id="cut-reveal"></div>
+      <div class="cut-blade" id="cut-blade"></div>
+      <div class="cut-flash" id="cut-flash"></div>
+      <p class="cut-title" id="cut-title"></p>
     `;
     document.body.append(overlay);
-    titleEl = overlay.querySelector("#dive-title");
+    titleEl = overlay.querySelector("#cut-title");
+    revealEl = overlay.querySelector("#cut-reveal");
+    bladeEl = overlay.querySelector("#cut-blade");
+    flashEl = overlay.querySelector("#cut-flash");
   }
 
-  function shouldDive(anchor) {
-    if (!anchor || diving) return false;
+  function shouldCut(anchor) {
+    if (!anchor || busy) return false;
     const href = anchor.getAttribute("href");
     if (!href || href.startsWith("#")) return false;
     if (href.startsWith("mailto:") || href.startsWith("tel:")) return false;
@@ -40,14 +44,32 @@
     return true;
   }
 
+  function labelFromHref(href, fallback) {
+    if (fallback) return fallback;
+    try {
+      const path = new URL(href, window.location.href).pathname.replace(/\/$/, "") || "/";
+      const leaf = path.split("/").filter(Boolean).pop() || "MAIN";
+      return leaf.toUpperCase();
+    } catch {
+      return "MAIN";
+    }
+  }
+
+  function setFrame(i) {
+    if (revealEl) revealEl.dataset.frame = String(i);
+    if (bladeEl) bladeEl.dataset.frame = String(i);
+    if (flashEl) flashEl.dataset.frame = String(i);
+    if (titleEl) titleEl.dataset.frame = String(i);
+  }
+
   function playDive(href, { label = "" } = {}) {
-    if (!href || diving) return;
+    if (!href || busy) return;
     if (REDUCE.matches) {
       window.location.href = href;
       return;
     }
 
-    diving = true;
+    busy = true;
     ensureOverlay();
     try {
       sessionStorage.setItem("p3r-dive", "1");
@@ -55,31 +77,27 @@
       /* ignore */
     }
 
-    const text =
-      label ||
-      (() => {
-        try {
-          const path = new URL(href, window.location.href).pathname.replace(/\/$/, "") || "/";
-          const leaf = path.split("/").filter(Boolean).pop() || "MAIN";
-          return leaf.toUpperCase();
-        } catch {
-          return "";
-        }
-      })();
-
+    const text = labelFromHref(href, label);
     if (titleEl) titleEl.textContent = text;
-    document.body.classList.add("is-diving");
-    overlay.classList.remove("is-on");
-    void overlay.offsetWidth;
-    overlay.classList.add("is-on");
 
-    const done = () => {
-      window.location.href = href;
+    document.body.classList.add("is-cutting");
+    overlay.classList.add("is-on");
+    setFrame(0);
+
+    let frame = 0;
+    const tick = () => {
+      frame += 1;
+      if (frame >= FRAME_COUNT) {
+        window.location.href = href;
+        return;
+      }
+      setFrame(frame);
+      window.setTimeout(tick, FRAME_MS);
     };
-    window.setTimeout(done, 1250);
+    window.setTimeout(tick, FRAME_MS);
   }
 
-  function playSurface() {
+  function playEnter() {
     let flag = null;
     try {
       flag = sessionStorage.getItem("p3r-dive");
@@ -88,19 +106,20 @@
       return;
     }
     if (flag !== "1" || REDUCE.matches) return;
-    document.body.classList.add("is-surfacing");
+    document.body.classList.add("is-entering");
     window.setTimeout(() => {
-      document.body.classList.remove("is-surfacing");
-    }, 900);
+      document.body.classList.remove("is-entering");
+    }, 1100);
   }
 
   document.addEventListener(
     "click",
     (e) => {
       const a = e.target.closest("a[href]");
-      if (!shouldDive(a)) return;
+      if (!shouldCut(a)) return;
       e.preventDefault();
-      const label = a.dataset.en || a.querySelector(".cmd-word")?.textContent?.trim() || "";
+      const label =
+        a.dataset.en || a.querySelector(".cmd-word")?.textContent?.trim() || "";
       playDive(a.href, { label });
     },
     true,
@@ -108,5 +127,5 @@
 
   window.playDive = playDive;
   ensureOverlay();
-  playSurface();
+  playEnter();
 })();
