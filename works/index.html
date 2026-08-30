@@ -4,23 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#041830" />
-  <title>博客 · 董家辉</title>
+  <title>作品 · 董家辉</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&family=Barlow+Condensed:wght@600;700;800&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/site.css" />
 </head>
-<body data-page="blog">
+<body data-page="works">
   <div id="site-header"></div>
   <main id="main" class="page">
     <header class="page-hero">
       <div class="section-head">
-        <h2>技术博客</h2>
-        <span class="counter"><span id="post-count">00</span> / POSTS</span>
+        <h2>精选作品</h2>
+        <span class="counter"><span id="visible-count">0</span> / <span id="total-count">0</span></span>
       </div>
-      <p>嵌入式 Linux、相机和板端推理相关的笔记。</p>
+      <p>工作里做过的系统、工具和竞赛。点进去看简历详情、文章或 GitHub。</p>
     </header>
-    <div class="posts" id="post-list"></div>
+    <div class="project-tools">
+      <label for="project-search" class="skip-link">搜索作品</label>
+      <input id="project-search" class="search" type="search" placeholder="搜索作品，例如：相机、NCNN、工装、竞赛…" autocomplete="off" />
+    </div>
+    <div class="projects" id="project-list"></div>
   </main>
   <div id="site-footer"></div>
   <script src="/data/works.js"></script>
