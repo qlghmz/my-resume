@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#041830" />
+  <title>Dong Jiahui · 个人网站</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&family=Barlow+Condensed:wght@600;700;800&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body data-page="home">
+  <div id="site-header"></div>
+  <main id="main" class="pause">
+    <div class="pause-fx" aria-hidden="true">
+      <span class="moon"></span>
+      <span class="caustic"></span>
+      <span class="caustic-2"></span>
+    </div>
+    <p class="giant" id="giant" aria-hidden="true">WORKS</p>
+    <header class="who">
+      <p class="who-kicker">Personal Site</p>
+      <h1>Dong Jiahui</h1>
+      <p class="who-role">个人网站 · Embedded Engineer</p>
+    </header>
+    <div class="pause-clock">
+      <time id="pause-clock" datetime=""></time>
+    </div>
+    <nav class="cmd" aria-label="主菜单">
+      <a class="cmd-item is-on" href="/works/" data-en="WORKS" data-desc="查看项目、工装与竞赛" style="--tilt:-22deg;--x:-64px">
+        <i class="slash" aria-hidden="true"></i>
+        <span class="cmd-word">WORKS</span>
+        <span class="cmd-zh">作品</span>
+      </a>
+      <a class="cmd-item" href="/resume/" data-en="RESUME" data-desc="完整经历与教育背景" style="--tilt:-14deg;--x:-8px">
+        <i class="slash" aria-hidden="true"></i>
+        <span class="cmd-word">RESUME</span>
+        <span class="cmd-zh">简历</span>
+      </a>
+      <a class="cmd-item" href="/blog/" data-en="BLOG" data-desc="嵌入式与相机笔记" style="--tilt:-18deg;--x:-42px">
+        <i class="slash" aria-hidden="true"></i>
+        <span class="cmd-word">BLOG</span>
+        <span class="cmd-zh">博客</span>
+      </a>
+      <a class="cmd-item" href="/contact/" data-en="CONTACT" data-desc="邮件、电话与 GitHub" style="--tilt:-6deg;--x:-18px">
+        <i class="slash" aria-hidden="true"></i>
+        <span class="cmd-word">CONTACT</span>
+        <span class="cmd-zh">联系</span>
+      </a>
+      <a class="cmd-item" href="https://github.com/qlghmz" data-en="GITHUB" data-desc="打开代码仓库" style="--tilt:6deg;--x:8px" target="_blank" rel="noopener">
+        <i class="slash" aria-hidden="true"></i>
+        <span class="cmd-word">GITHUB</span>
+        <span class="cmd-zh">代码</span>
+      </a>
+    </nav>
+    <aside class="pause-meta">
+      <div class="cmd-index" id="cmd-index">01</div>
+      <p class="cmd-desc" id="cmd-desc">查看项目、工装与竞赛</p>
+      <p class="cmd-label">Command</p>
+      <div class="cmd-keys">
+        <span>Enter Confirm</span>
+        <span>Esc Close</span>
+      </div>
+    </aside>
+  </main>
+  <div id="site-footer"></div>
+  <script src="/js/layout.js"></script>
+  <script src="/js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "resume-tensorview-cc",
+  "private": true,
+  "scripts": {
+    "dev": "node ./scripts/dev.mjs",
+    "cf:dev": "node ./node_modules/wrangler/bin/wrangler.js dev --live-reload --port 8787",
+    "deploy": "node ./node_modules/wrangler/bin/wrangler.js deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}
