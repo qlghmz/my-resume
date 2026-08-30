@@ -28,6 +28,15 @@ body {
 body[data-page="home"] {
   overflow: hidden;
 }
+body[data-page="home"]::before {
+  background:
+    radial-gradient(ellipse 72% 52% at 92% -6%, #f4fdff 0%, #7ee0ff 24%, transparent 54%),
+    radial-gradient(ellipse 50% 40% at 12% 20%, #cfefff 0%, transparent 58%),
+    linear-gradient(118deg, #d7f2ff 0%, #1570b8 38%, #06244a 72%, #01060e 100%);
+}
+body[data-page="home"]::after {
+  opacity: 0.18;
+}
 ::selection { background: var(--hot); color: #fff; }
 a { color: inherit; }
 button, input { font: inherit; color: inherit; }
@@ -135,36 +144,109 @@ body::after {
   pointer-events: none;
   overflow: hidden;
 }
-.moon {
+.sea-photo {
   position: absolute;
-  top: -8vh;
-  right: 6vw;
-  width: min(42vw, 520px);
-  height: min(42vw, 520px);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 42% 40%, #f4fbff 0 18%, #9ad4ff 28%, rgba(26, 92, 184, 0.15) 58%, transparent 72%);
-  filter: blur(2px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 16% 42%;
   opacity: 0.55;
-}
-.caustic,
-.caustic-2 {
-  position: absolute;
-  inset: -20%;
-  background:
-    radial-gradient(ellipse 40% 18% at 20% 30%, rgba(120, 230, 255, 0.18), transparent 55%),
-    radial-gradient(ellipse 50% 22% at 70% 55%, rgba(255, 255, 255, 0.08), transparent 50%),
-    radial-gradient(ellipse 30% 14% at 40% 80%, rgba(104, 252, 254, 0.14), transparent 60%);
-  animation: drift 18s linear infinite;
   mix-blend-mode: screen;
 }
-.caustic-2 {
-  animation-duration: 26s;
-  animation-direction: reverse;
-  opacity: 0.7;
+.sea-glow {
+  position: absolute;
+  top: -18vh;
+  right: -8vw;
+  width: min(70vw, 920px);
+  height: min(55vh, 560px);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 58% 38%, #fff 0 12%, #bff4ff 26%, rgba(80, 190, 255, 0.35) 48%, transparent 72%);
+  filter: blur(6px);
+  opacity: 0.85;
 }
-@keyframes drift {
-  to { transform: translate3d(6%, -4%, 0) rotate(8deg); }
+.sea-wave {
+  position: absolute;
+  top: -6vh;
+  right: -10vw;
+  width: min(78vw, 1100px);
+  height: min(48vh, 520px);
+  background:
+    radial-gradient(ellipse 36% 28% at 62% 22%, rgba(255, 255, 255, 0.55), transparent 62%),
+    radial-gradient(ellipse 48% 34% at 78% 38%, rgba(160, 235, 255, 0.4), transparent 58%),
+    radial-gradient(ellipse 30% 22% at 48% 8%, rgba(255, 255, 255, 0.35), transparent 60%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.sea-wave-1 {
+  animation: sea-burst 4.2s ease-in-out infinite;
+}
+.sea-wave-2 {
+  width: min(64vw, 880px);
+  opacity: 0.7;
+  animation: sea-burst 5.6s ease-in-out 1.4s infinite reverse;
+}
+.sea-wave-3 {
+  width: min(52vw, 720px);
+  height: min(36vh, 380px);
+  opacity: 0.55;
+  animation: sea-burst 3.4s ease-in-out 0.6s infinite;
+}
+.sea-rays {
+  position: absolute;
+  inset: -15% -10% 30% 30%;
+  background: repeating-conic-gradient(
+    from 210deg at 92% 0%,
+    transparent 0deg 7deg,
+    rgba(255, 255, 255, 0.07) 7deg 9deg
+  );
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  animation: sea-rays 12s linear infinite;
+}
+.otter {
+  position: absolute;
+  left: -6vw;
+  bottom: -10vh;
+  width: min(52vw, 680px);
+  height: auto;
+  transform: rotate(-22deg);
+  transform-origin: 40% 60%;
+  animation: otter-drift 8s ease-in-out infinite;
+  z-index: 1;
+  filter: drop-shadow(0 18px 28px rgba(0, 20, 40, 0.35));
+}
+@keyframes sea-burst {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.32;
+  }
+  28% {
+    transform: translate(-5%, 7%) scale(1.14);
+    opacity: 0.9;
+  }
+  62% {
+    transform: translate(3%, 3%) scale(1.05);
+    opacity: 0.48;
+  }
+}
+@keyframes sea-rays {
+  to { transform: rotate(8deg); }
+}
+@keyframes otter-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 10px -22px; }
+}
+
+@media (max-width: 620px) {
+  .otter {
+    width: min(78vw, 420px);
+    left: -12vw;
+    bottom: 8vh;
+    opacity: 0.7;
+  }
+  .sea-photo { opacity: 0.4; }
 }
 
 .giant,
@@ -648,7 +730,6 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
-  .caustic, .caustic-2 { animation: none; }
 }
 
 @media (max-width: 900px) {
