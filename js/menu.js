@@ -1,7 +1,8 @@
-const items = [...document.querySelectorAll(".cmd-item")];
-if (!items.length) {
-  /* inner pages */
-} else {
+(() => {
+  const items = [...document.querySelectorAll(".cmd-item")];
+  if (!items.length) return;
+
+  const { t } = window.I18N;
   const giant = document.querySelector("#giant");
   const desc = document.querySelector("#cmd-desc");
   const indexEl = document.querySelector("#cmd-index");
@@ -46,6 +47,16 @@ if (!items.length) {
     }
   }
 
+  function syncSecondaryLabels() {
+    const showZh = window.I18N.locale === "zh";
+    items.forEach((el) => {
+      const key = el.dataset.i18nZh;
+      const zhEl = el.querySelector(".cmd-zh");
+      if (zhEl && key) zhEl.textContent = t(key);
+      if (zhEl) zhEl.hidden = !showZh;
+    });
+  }
+
   function paint(next, play) {
     const len = items.length;
     current = ((next % len) + len) % len;
@@ -57,7 +68,10 @@ if (!items.length) {
       void giant.offsetWidth;
       giant.classList.add("is-swap");
     }
-    if (desc) desc.textContent = on.dataset.desc || "";
+    if (desc) {
+      const descKey = on.dataset.i18nDesc;
+      desc.textContent = descKey ? t(descKey) : "";
+    }
     if (indexEl) indexEl.textContent = pad(current + 1);
     on.focus({ preventScroll: true });
     if (play) blip();
@@ -85,5 +99,11 @@ if (!items.length) {
 
   tickClock();
   setInterval(tickClock, 1000);
+  syncSecondaryLabels();
   paint(current, false);
-}
+
+  window.addEventListener("jh:locale", () => {
+    syncSecondaryLabels();
+    paint(current, false);
+  });
+})();
