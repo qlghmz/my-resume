@@ -7,7 +7,7 @@
   <title>简历 · 董家辉</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&family=Barlow+Condensed:wght@600;700;800&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&family=Barlow+Condensed:wght@600;700;800&family=Noto+Sans:wght@500;700&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/site.css" />
 </head>
 <body data-page="resume">
@@ -15,10 +15,10 @@
   <main id="main" class="page">
     <header class="page-hero">
       <div class="section-head">
-        <h2>简历</h2>
-        <span class="counter">CV</span>
+        <h2 data-i18n="resume.heading">简历</h2>
+        <span class="counter" data-i18n="resume.counter">CV</span>
       </div>
-      <p>男 · 24 岁 · 本科 · 2 年经验 · 浙大宁波理工学院 · 计算机科学与技术</p>
+      <p data-i18n="resume.blurb">男 · 24 岁 · 本科 · 2 年经验 · 浙大宁波理工学院 · 计算机科学与技术</p>
       <p>
         <a href="tel:17712130217">177 1213 0217</a>
         ·
@@ -27,203 +27,12 @@
         <a href="https://github.com/qlghmz" target="_blank" rel="noopener">GitHub</a>
       </p>
     </header>
-
-    <section>
-      <div class="section-head">
-        <h2>工作经历</h2>
-        <span class="counter">佳目医疗</span>
-      </div>
-      <p class="cv-org">浙江佳目医疗科技有限公司</p>
-
-      <article class="cv-card" id="mcu">
-        <p class="cv-meta">2025.08 – 至今</p>
-        <h3>医用款眼压机 MCU 程序开发 (MCU RTOS)</h3>
-        <p>完成整个 MCU 系统、外设的开发，协助电机工程师完成电机控制。</p>
-        <ul>
-          <li><strong>系统：</strong>FreeRTOS，四个线程 UART、Handle、Pump、Motor，线程间通过队列通信。</li>
-          <li><strong>外设：</strong>IO（风扇、电源使能、Trigger）；UART（上位机与电机驱动板）；ADC（手柄、气体压力）；IIC（气压传感器、按键板）；EXTI（光耦、按键）。</li>
-          <li><strong>串口：</strong>协议 Head / Command_type / Seq / uTick / Length / Data / CRC / Tail。分段接收，DMA 发送。</li>
-          <li><strong>手柄：</strong>DMA 实时检测手柄、按键，发队列给其他 Task。</li>
-          <li><strong>气路：</strong>打气至指定气缸压力；开阀吹气取值。</li>
-          <li><strong>电机：</strong>S 曲线加减速。</li>
-          <li><strong>远程更新：</strong>进入 Bootloader，Ymodem 更新主系统。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="mmitest">
-        <p class="cv-meta">2024.08 – 至今</p>
-        <h3>眼压机 MMITest、LongTest 工厂 / 老化测试工具 (Qt, RK3588)</h3>
-        <p>内容过多，以下为主要功能。</p>
-        <ul>
-          <li><strong>系统镜像：</strong>Debian 剪裁、配库，与 U-Boot、Boot 打包成镜像。</li>
-          <li><strong>串口：</strong>QSerial 解析、执行并分发指令；完成与下位机全部功能通信和状态获取，用于出厂校验。</li>
-          <li><strong>三路相机：</strong>V4L2 调用平面找眼球、结构光深度（红外两点间距）、远距离找眼球。RGA + DMA 取 Buffer 预览保存，不占 CPU。</li>
-          <li><strong>打气自校准：</strong>打气结束瞬间气流导致读数偏高，校准过充量让打气稳定。</li>
-          <li><strong>吹气自校准：</strong>校准打气、吹气、开阀时间，保证形变一致。</li>
-          <li><strong>无线升级：</strong>MCU 进 Bootloader 走 Ymodem；MPU 做 A/B 分区远程更新。</li>
-          <li><strong>老化：</strong>一键测硬件标准并界面化；电机气路老化，按吹气区间报告 Error 次数。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="optics">
-        <h3>Optics 光学测试工具 (Qt, OpenCV)</h3>
-        <ul>
-          <li>检测两条横向有斜率白色细直线的中间边缘中心点。</li>
-          <li><strong>方法一：</strong>形态学膨胀 + 边缘检测，构造横纵直线位置后取中点。</li>
-          <li><strong>方法二：</strong>XY 投影找灰度变化最大处（中心点精度不够，取消）。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="dicom">
-        <p class="cv-meta">2024.08 – 2024.12</p>
-        <h3>DICOM 医学成像文件制作 (DCMTK, OpenCV)</h3>
-        <ul>
-          <li>DCMTK 制作 DICOM DIR 的保存和读取，结构为 DICOM/UserID/TestTime/。</li>
-          <li>两张图片 DICOM + 一个多帧视频 DICOM。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="ad8555">
-        <p class="cv-meta">2025.04 – 2025.06</p>
-        <h3>AD8555 烧录工装 (MCU)</h3>
-        <ul>
-          <li>IO 模拟脉冲烧写寄存器，配置模式和输出倍率；LED 判断效果。</li>
-          <li>ADC 读 AD8555 与气压传感器。</li>
-          <li>协议：高于 50µs 为高，低于 10µs 为低，位间隔 20µs。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="eye-detect">
-        <p class="cv-meta">2024.09 – 2024.12</p>
-        <h3>眼压机眼球检测 (YOLOv8, OpenCV, PID, NCNN)</h3>
-        <ul>
-          <li><strong>红外相机：</strong>暗光拍摄，并打结构光。</li>
-          <li><strong>训练：</strong>视频拆帧，YOLOv8 训练左眼、右眼、瞳孔、空、光斑，转 NCNN。</li>
-          <li><strong>部署：</strong>OpenCV Mat → NCNN Mat，归一化、推理、NMS 得框。</li>
-          <li><strong>空类：</strong>无眼球时画面全黑，与瞳孔易混，用来判断放入/拿开。</li>
-          <li><strong>结构光：</strong>两个红外光斑间距估计深度；找不到双光斑则沿 Z 轴搜索。</li>
-        </ul>
-      </article>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <h2>项目经验</h2>
-        <span class="counter">实习</span>
-      </div>
-
-      <article class="cv-card" id="iop-model">
-        <p class="cv-meta">2024.03 – 2024.09 · 实习期间 · 用于计算眼压值</p>
-        <h3>眼压计算模型 (ResNet, NCNN)</h3>
-        <ul>
-          <li>把分类模型改成直接输出 float 预测值。</li>
-          <li>捕获最大形变点做数据集，YOLOv5 训练；输入图像 + 660 个吹气值，NCNN 板端推理。</li>
-          <li>持续优化检测模型的图片权重。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="sam2">
-        <p class="cv-meta">2025.06</p>
-        <h3>眼角膜检测标注 (SAM2)</h3>
-        <ul>
-          <li>600 个视频、每个 52 张，多边形标出角膜外形。</li>
-          <li>写 SAM2 推理脚本自动标注，比手动标注缩短一倍以上。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="membrane">
-        <p class="cv-meta">2024.06 – 2024.12 · 实习期间完成</p>
-        <h3>可变眼膜项目 (MCU, LCD)</h3>
-        <ul>
-          <li>旋钮改变密封眼膜内气压，模拟不同眼压。</li>
-          <li>LCD 显示缸内气压传感器得到的眼压值。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="video">
-        <h3>视频剪辑小程序后端 (Nginx, Flask, FFmpeg)</h3>
-        <ul>
-          <li>视频分割、合成、虚化、高质量重编码；NVENC + FFmpeg 低延迟链路。</li>
-          <li>MySQL：Project → SceneGroup → Scene。</li>
-          <li>FastAPI 背景任务 + 状态机，支持断点恢复。</li>
-          <li>重构 PTS/DTS、强制 I 帧切片，解决拼接音画不同步和画面冻结。</li>
-          <li>DeepSeek 生成口播，TTS 转语音。</li>
-        </ul>
-      </article>
-    </section>
-
-    <section id="education">
-      <div class="section-head">
-        <h2>教育背景</h2>
-        <span class="counter">2020–2024</span>
-      </div>
-      <article class="cv-card">
-        <h3>浙大宁波理工学院</h3>
-        <p class="cv-meta">计算机科学与技术 · 2020.09 – 2024.06</p>
-        <ul>
-          <li><strong>编程：</strong>C、C++、Python、Shell。</li>
-          <li><strong>系统：</strong>嵌入式 Linux 移植与驱动；交叉编译、多线程、消息队列、信号量、Qt。</li>
-          <li><strong>构建：</strong>Ubuntu、Debian、Buildroot 剪裁，menuconfig。</li>
-          <li><strong>深度学习：</strong>PyTorch / TensorFlow，YOLO；NCNN、ONNXRuntime、RKNN、Paddle 部署。</li>
-          <li><strong>芯片：</strong>STM32、Arduino（UART / IIC / ADC）；RK 系列、树莓派、Jetson Nano，熟悉 RGA。</li>
-          <li><strong>硬件：</strong>会看原理图，会用示波器。</li>
-        </ul>
-      </article>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <h2>校园经历</h2>
-        <span class="counter">竞赛</span>
-      </div>
-
-      <article class="cv-card" id="mqtt">
-        <p class="cv-meta">2022.06 – 2023.06</p>
-        <h3>Mosquitto 广域物联网网关 (MQTT, Linux 驱动)</h3>
-        <ul>
-          <li>基于 ARM 板、IO 设备和手机的广域物联网模型，C++ 应用。</li>
-          <li>MQTT Client–Server，控制继电器、步进电机。</li>
-          <li>Qt 界面与 IO 驱动；U-Boot 与系统烧录部署。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="robot">
-        <p class="cv-meta">2022.06 – 2023.06 · 二等奖</p>
-        <h3>浙江省机器人竞赛</h3>
-        <ul>
-          <li>自动寻路、检测并抓取物块放入箱子。</li>
-          <li>树莓派计算与指令；STM32 控制电机、舵机。</li>
-          <li>训练优化 YOLOv8，Paddle 部署到嵌入式设备。</li>
-        </ul>
-      </article>
-
-      <article class="cv-card" id="eng">
-        <p class="cv-meta">2021.06 – 2021.12 · 三等奖</p>
-        <h3>浙江省工程训练竞赛</h3>
-        <ul>
-          <li>YOLOv5 识别物块，机械臂抓取，C++ 应用。</li>
-          <li>模型部署到树莓派并做性能优化。</li>
-        </ul>
-      </article>
-    </section>
-
-    <section id="awards">
-      <div class="section-head">
-        <h2>奖学金</h2>
-        <span class="counter">HONORS</span>
-      </div>
-      <article class="cv-card">
-        <ul>
-          <li>浙江省政府奖学金</li>
-          <li>宁波理工学院学业二等奖学金</li>
-          <li>宁波理工学院创新专项奖学金</li>
-        </ul>
-      </article>
-    </section>
+    <div id="resume-root"></div>
   </main>
   <div id="site-footer"></div>
-  <script src="/data/works.js"></script>
-  <script src="/data/posts.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/data/ui.js"></script>
+  <script src="/data/resume.js"></script>
   <script src="/js/layout.js"></script>
   <script src="/js/render.js"></script>
 </body>

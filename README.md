@@ -10,8 +10,24 @@
 - `/blog/` 博客
 - `/contact/` 联系
 
-- 作品数据：`data/works.js`
-- 博客数据：`data/posts.js`
+## 双语（i18n）
+
+同一套 URL，**不**按地区跳转到 `/en/`、`/zh/`。
+
+- 默认语言：浏览器 `navigator.languages`（`zh*` → 中文，否则优先英文，再否则中文）
+- 自选：右上角 / HUD 的 `ZH | EN`，写入 `localStorage`（`jh.locale`）
+- 文案形状：`{ zh: "…", en: "…" }` 写在同一条记录旁，改一条就补齐各语言
+- 加语言：在 `js/i18n.js` 的 `LOCALES` 注册新码，再给各 `L` 对象加对应键；缺键会回退 `en` → `zh`
+
+| 文件 | 内容 |
+| --- | --- |
+| `js/i18n.js` | 检测 / `L` / `t` / `setLocale` / `apply` |
+| `data/ui.js` | 壳文案（导航、首页、空态…） |
+| `data/works.js` / `data/posts.js` | 列表条目 |
+| `data/resume.js` | 简历章节 |
+| `data/articles/*.js` | 博文正文 |
+
+页面壳用 `data-i18n="nav.works"` 等属性；动态列表由 `js/render.js` 渲染。
 
 ## 版本
 

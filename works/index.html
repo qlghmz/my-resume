@@ -7,7 +7,7 @@
   <title>作品 · 董家辉</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&family=Barlow+Condensed:wght@600;700;800&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&family=Barlow+Condensed:wght@600;700;800&family=Noto+Sans:wght@500;700&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/site.css" />
 </head>
 <body data-page="works">
@@ -15,18 +15,20 @@
   <main id="main" class="page">
     <header class="page-hero">
       <div class="section-head">
-        <h2>精选作品</h2>
+        <h2 data-i18n="works.heading">精选作品</h2>
         <span class="counter"><span id="visible-count">0</span> / <span id="total-count">0</span></span>
       </div>
-      <p>工作里做过的系统、工具和竞赛。点进去看简历详情、文章或 GitHub。</p>
+      <p data-i18n="works.intro">工作里做过的系统、工具和竞赛。点进去看简历详情、文章或 GitHub。</p>
     </header>
     <div class="project-tools">
-      <label for="project-search" class="skip-link">搜索作品</label>
-      <input id="project-search" class="search" type="search" placeholder="搜索作品，例如：相机、NCNN、工装、竞赛…" autocomplete="off" />
+      <label for="project-search" class="skip-link" data-i18n="a11y.searchWorks">搜索作品</label>
+      <input id="project-search" class="search" type="search" data-i18n-placeholder="works.searchPh" placeholder="搜索作品…" autocomplete="off" />
     </div>
     <div class="projects" id="project-list"></div>
   </main>
   <div id="site-footer"></div>
+  <script src="/js/i18n.js"></script>
+  <script src="/data/ui.js"></script>
   <script src="/data/works.js"></script>
   <script src="/data/posts.js"></script>
   <script src="/js/layout.js"></script>

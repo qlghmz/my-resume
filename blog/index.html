@@ -7,7 +7,7 @@
   <title>博客 · 董家辉</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&family=Barlow+Condensed:wght@600;700;800&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700&family=Barlow+Condensed:wght@600;700;800&family=Noto+Sans:wght@500;700&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/site.css" />
 </head>
 <body data-page="blog">
@@ -15,14 +15,16 @@
   <main id="main" class="page">
     <header class="page-hero">
       <div class="section-head">
-        <h2>技术博客</h2>
+        <h2 data-i18n="blog.heading">技术博客</h2>
         <span class="counter"><span id="post-count">00</span> / POSTS</span>
       </div>
-      <p>嵌入式 Linux、相机和板端推理相关的笔记。</p>
+      <p data-i18n="blog.intro">嵌入式 Linux、相机和板端推理相关的笔记。</p>
     </header>
     <div class="posts" id="post-list"></div>
   </main>
   <div id="site-footer"></div>
+  <script src="/js/i18n.js"></script>
+  <script src="/data/ui.js"></script>
   <script src="/data/works.js"></script>
   <script src="/data/posts.js"></script>
   <script src="/js/layout.js"></script>
