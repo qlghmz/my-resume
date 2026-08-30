@@ -1,6 +1,7 @@
 .git
 .gitignore
 .assetsignore
+.github
 .wrangler
 node_modules
 package.json
@@ -9,3 +10,7 @@ wrangler.jsonc
 src
 scripts
 README.md
+.env
+.env.*
+.cloudflare-dns-token
+

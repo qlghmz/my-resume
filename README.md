@@ -52,9 +52,25 @@ git tag -a vX.Y.Z -m "简短说明"
 git push origin vX.Y.Z
 ```
 
-Cloudflare 若已把本仓库接到 Worker（Settings → Builds → 连接 GitHub），则：
+## 部署
 
-- 合入 **`main`**：自动部署到 https://resume.tensorview.cc
-- 其它分支 / PR：预览版本，不上生产
+线上 https://resume.tensorview.cc 是 Cloudflare Worker **`resume-tensorview-cc`**（assets-only，没有 `main` 脚本）。
 
-若还没接 Git，合入不会更新网站，需要在 Cloudflare 控制台接上，或本地执行 `npm run deploy`。
+合入 GitHub **不等于**上线。以前 `/` 会 302 到 `/en/`（旧双语页），是因为线上还跑着带 Worker 脚本的旧部署。`wrangler.jsonc` 里不要再加 `main`，也不要把 `/` 指到 `/en/`。
+
+### 合入 `main` 之后自动上线
+
+1. Cloudflare → API Tokens → 用 **Edit Cloudflare Workers** 模板建 token（要能写 Workers，不能只用 DNS Edit）
+2. GitHub 仓库 Settings → Secrets → Actions → 加 `CLOUDFLARE_API_TOKEN`
+3. 合入 `main`（或 Actions 里手动跑 **Deploy**）
+
+PR 上只做 `wrangler deploy --dry-run`，不会改生产。
+
+### 本地先上线
+
+```text
+npx wrangler login
+npm run deploy
+```
+
+不要把「只能改 DNS」的 token 设成 `CLOUDFLARE_API_TOKEN`，Wrangler 会优先用它然后部署失败。OAuth 过期就重新 `wrangler login`。

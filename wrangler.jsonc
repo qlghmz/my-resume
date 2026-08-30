@@ -1,9 +1,19 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "resume-tensorview-cc",
+  "account_id": "95ecb1c0cae07e1ddbb0f3a33129cb85",
   "compatibility_date": "2026-08-30",
+  "workers_dev": true,
+  // Assets-only: do not set `main`. A Worker script on `/` currently 302s to `/en/`
+  // (the old bilingual page). Git merge does not update Cloudflare.
   "assets": {
     "directory": "./",
     "html_handling": "auto-trailing-slash"
-  }
+  },
+  "routes": [
+    {
+      "pattern": "resume.tensorview.cc",
+      "custom_domain": true
+    }
+  ]
 }
