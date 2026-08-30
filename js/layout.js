@@ -85,7 +85,9 @@ function observeReveal() {
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && PAGE !== "home") {
-    window.location.href = "/";
+    e.preventDefault();
+    if (typeof window.playDive === "function") window.playDive("/", { label: "MAIN" });
+    else window.location.href = "/";
   }
 });
 

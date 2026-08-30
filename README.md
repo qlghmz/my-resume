@@ -42,3 +42,7 @@ Cloudflare 若已把本仓库接到 Worker（Settings → Builds → 连接 GitH
 - 其它分支 / PR：预览版本，不上生产
 
 若还没接 Git，合入不会更新网站，需要在 Cloudflare 控制台接上，或本地执行 `npm run deploy`。
+
+### Cursor / 协作约定
+
+开分支 → 改完并开 **PR** → **先本地审核**（`npm run dev`）→ 你说 OK 后再 merge / 打 tag。未确认前不合入 `main`。
