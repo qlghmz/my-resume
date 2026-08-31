@@ -1,5 +1,33 @@
 window.WORKS = [
   {
+    id: "ls2p300",
+    type: "LINUX / DRIVER",
+    href: "/resume/#ls2p300",
+    title: {
+      zh: "龙芯 LS2P300 驱动与大小核协同",
+      en: "Loongson LS2P300 drivers & big–little IPC",
+    },
+    cta: { zh: "查看详情", en: "View details" },
+    search: {
+      zh: "龙芯 ls2p300 i2c spi mailbox freertos 得力 驱动",
+      en: "loongson ls2p300 i2c spi mailbox freertos deli driver",
+    },
+  },
+  {
+    id: "tensorview",
+    type: "SAAS / AI",
+    href: "/resume/#tensorview",
+    title: {
+      zh: "TensorView AI 写网页平台",
+      en: "TensorView AI website builder",
+    },
+    cta: { zh: "查看详情", en: "View details" },
+    search: {
+      zh: "tensorview ai agent nextjs saas 写网页",
+      en: "tensorview ai agent nextjs saas website builder",
+    },
+  },
+  {
     id: "mcu",
     type: "MCU / RTOS",
     href: "/resume/#mcu",
@@ -144,13 +172,27 @@ window.WORKS = [
     type: "PYTHON",
     href: "/resume/#video",
     title: {
-      zh: "视频剪辑小程序后端",
-      en: "Video editing mini-program backend",
+      zh: "GPU 视频处理 API",
+      en: "GPU video processing API",
     },
     cta: { zh: "查看详情", en: "View details" },
     search: {
-      zh: "ffmpeg flask nginx nvenc 视频",
-      en: "ffmpeg flask nginx nvenc video",
+      zh: "ffmpeg fastapi nvenc 视频 七牛",
+      en: "ffmpeg fastapi nvenc video qiniu",
+    },
+  },
+  {
+    id: "warelax",
+    type: "PYTHON",
+    href: "/resume/#warelax",
+    title: {
+      zh: "Warelax 安全下载系统",
+      en: "Warelax secure download system",
+    },
+    cta: { zh: "查看详情", en: "View details" },
+    search: {
+      zh: "warelax flask 七牛 签名下载",
+      en: "warelax flask qiniu signed download",
     },
   },
   {
