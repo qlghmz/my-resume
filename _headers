@@ -1,11 +1,30 @@
 # Cache policy (keep in sync with README 「缓存」)
-# - HTML / pages: always revalidate so blog & copy updates show immediately
-# - /data/*: short / revalidate — lists & article bodies change often
-# - /css/* /js/*: 7 days + revalidate — shell; hard-refresh if you just shipped CSS/JS
-# - /img/*: 30 days + revalidate — media rarely changes
-# Last matching rule wins. Do NOT put a catch-all /* after the long-cache rules.
+#
+# IMPORTANT: Cloudflare COMBINES every matching rule's headers.
+# Never set Cache-Control on /* together with /css/* /js/* /img/* —
+# browsers then see two max-age values and keep behaving like max-age=0.
+#
+# - HTML pages (listed below): always revalidate → blog/copy updates show
+# - /data/*: always revalidate → lists & article bodies
+# - /css/* /js/*: 7 days + revalidate → shell; hard-refresh after CSS/JS ship
+# - /img/*: 30 days + revalidate → media rarely changes
 
-/*
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/works/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/resume/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/blog/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/contact/*
   Cache-Control: public, max-age=0, must-revalidate
 
 /data/*

@@ -31,17 +31,18 @@
 
 ## 缓存（`_headers`）
 
-合入 `main` 后随 Worker assets 上线。**以后改站不要把全站改回 `max-age=0`。**
+合入 `main` 后随 Worker assets 上线。**以后改站不要加会命中 `/css` `/js` `/img` 的全站 `/*` Cache-Control**（Cloudflare 会把多条规则的头合并，叠两个 `max-age` 等于没优化）。
 
 | 路径 | Cache-Control | 原因 |
 | --- | --- | --- |
-| HTML / 页面（默认 `/*`） | `max-age=0, must-revalidate` | 博客、文案一更就看见 |
+| `/`、`/works/*`、`/resume/*`、`/blog/*`、`/contact/*` | `max-age=0, must-revalidate` | 博客、文案一更就看见 |
 | `/data/*` | `max-age=0, must-revalidate` | 列表与正文数据常改 |
-| `/css/*`、`/js/*` | `max-age=604800`（7 天）+ `must-revalidate` | 壳资源；跳转少重复校验 |
+| `/css/*`、`/js/*` | `max-age=604800`（7 天）+ `must-revalidate` | 壳资源；跳转可走磁盘缓存 |
 | `/img/*` | `max-age=2592000`（30 天）+ `must-revalidate` | 图片少改 |
 
 写博客 / 改正文：只动 `data/`、`blog/`、页面 HTML 即可，缓存规则不用改。  
-刚改完 CSS/JS 若浏览器仍像旧的：硬刷新一次（或等窗口内 revalidate）。
+刚改完 CSS/JS 若浏览器仍像旧的：硬刷新一次。  
+新增顶级栏目目录时：在 `_headers` 里为该路径补一条 `max-age=0`（不要用 `/*`）。
 
 ## 版本
 
