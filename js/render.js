@@ -164,7 +164,19 @@
           .map((b) => `<li>${L(b)}</li>`)
           .join("");
         const list = bullets ? `<ul>${bullets}</ul>` : "";
-        return `${heading}${paragraphs}${list}`;
+        const figures = (sec.figures || [])
+          .map((fig) => {
+            const caption = fig.caption
+              ? `<figcaption>${escapeHtml(L(fig.caption))}</figcaption>`
+              : "";
+            return `
+              <figure class="article-figure">
+                <img src="${escapeHtml(fig.src)}" alt="" loading="lazy" />
+                ${caption}
+              </figure>`;
+          })
+          .join("");
+        return `${heading}${paragraphs}${list}${figures}`;
       })
       .join("");
 

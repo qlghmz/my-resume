@@ -71,12 +71,18 @@
     const link = href
       ? `<a class="tarot-cta" href="${escapeHtml(href)}"><span>${escapeHtml(cta)}</span><span aria-hidden="true">↗</span></a>`
       : `<span class="tarot-cta is-soon"><span>${escapeHtml(cta)}</span></span>`;
+    const cover = post.cover
+      ? `<div class="tarot-cover"><img src="${escapeHtml(post.cover)}" alt="" loading="lazy" /></div>`
+      : "";
 
     front.innerHTML = `
-      <span class="tarot-date">${escapeHtml(post.date || "")}${draft ? ` · ${escapeHtml(t("blog.deck.draft"))}` : ""}</span>
-      <h3 class="tarot-title">${escapeHtml(L(post.title))}</h3>
-      <p class="tarot-summary">${escapeHtml(L(post.summary))}</p>
-      ${link}
+      ${cover}
+      <div class="tarot-copy">
+        <span class="tarot-date">${escapeHtml(post.date || "")}${draft ? ` · ${escapeHtml(t("blog.deck.draft"))}` : ""}</span>
+        <h3 class="tarot-title">${escapeHtml(L(post.title))}</h3>
+        <p class="tarot-summary">${escapeHtml(L(post.summary))}</p>
+        ${link}
+      </div>
     `;
   }
 
