@@ -12,15 +12,15 @@
 </head>
 <body data-page="blog">
   <div id="site-header"></div>
-  <main id="main" class="page">
+  <main id="main" class="page blog-page">
     <header class="page-hero">
       <div class="section-head">
         <h2 data-i18n="blog.heading">技术博客</h2>
         <span class="counter"><span id="post-count">00</span> / POSTS</span>
       </div>
-      <p data-i18n="blog.intro">嵌入式 Linux、相机和板端推理相关的笔记。</p>
+      <p data-i18n="blog.intro">嵌入式 Linux、相机和板端推理相关的笔记。悬停左侧目录，右侧卡牌会翻面切换。</p>
     </header>
-    <div class="posts" id="post-list"></div>
+    <div class="blog-deck" id="blog-deck"></div>
   </main>
   <div id="site-footer"></div>
   <script src="/js/i18n.js"></script>
@@ -28,6 +28,7 @@
   <script src="/data/works.js"></script>
   <script src="/data/posts.js"></script>
   <script src="/js/layout.js"></script>
+  <script src="/js/blog-deck.js"></script>
   <script src="/js/render.js"></script>
 </body>
 </html>
