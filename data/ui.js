@@ -43,7 +43,7 @@ window.UI = {
       works: { zh: "查看项目、工装与竞赛", en: "Projects, fixtures, and contests" },
       resume: { zh: "完整经历与教育背景", en: "Full experience and education" },
       blog: { zh: "嵌入式与相机笔记", en: "Embedded and camera notes" },
-      contact: { zh: "邮件、微信与 GitHub", en: "Email, WeChat, and GitHub" },
+      contact: { zh: "邮件、电话与 GitHub", en: "Email, phone, and GitHub" },
       github: { zh: "打开代码仓库", en: "Open GitHub repositories" },
     },
     zhLabel: {
@@ -99,11 +99,11 @@ window.UI = {
   contact: {
     heading: { zh: "联系", en: "Contact" },
     intro: {
-      zh: "打招呼、看代码，或加微信。",
-      en: "Say hello, browse code, or add WeChat.",
+      zh: "打招呼、看代码，或直接打电话。",
+      en: "Say hello, browse code, or call directly.",
     },
     github: { zh: "Github", en: "Github" },
     mail: { zh: "邮件", en: "Mail" },
-    wechat: { zh: "微信", en: "WeChat" },
+    phone: { zh: "电话", en: "Phone" },
   },
 };
