@@ -1,8 +1,9 @@
 (() => {
   const BACKS = ["arcana-star", "arcana-moon", "arcana-cross", "arcana-orbit", "arcana-veil"];
-  const HALF_MS = 320;
+  const HALF_MS = 160;
 
   let index = 0;
+  let pending = null;
   let busy = false;
   let backSeed = 0;
   let angle = 0;
@@ -96,9 +97,10 @@
     const { L } = window.I18N;
     const ol = document.querySelector("#blog-toc-list");
     if (!ol) return;
+    const onIdx = pending !== null ? pending : index;
     ol.innerHTML = list
       .map((post, i) => {
-        const on = i === index ? " is-on" : "";
+        const on = i === onIdx ? " is-on" : "";
         const draft = post.draft ? ' data-draft="1"' : "";
         return `
           <li>
@@ -115,9 +117,10 @@
   }
 
   function syncTocActive() {
+    const onIdx = pending !== null ? pending : index;
     document.querySelectorAll(".blog-toc-item").forEach((btn) => {
       const i = Number(btn.dataset.index);
-      btn.classList.toggle("is-on", i === index);
+      btn.classList.toggle("is-on", i === onIdx);
     });
   }
 
@@ -125,7 +128,7 @@
     const inner = document.querySelector("#tarot-inner");
     if (!inner) return;
     if (animate) {
-      inner.style.transition = `transform ${HALF_MS}ms cubic-bezier(.4,0,.2,1)`;
+      inner.style.transition = `transform ${HALF_MS}ms cubic-bezier(.2,0,.2,1)`;
     } else {
       inner.style.transition = "none";
     }
@@ -133,42 +136,65 @@
     inner.style.transform = `rotateY(${deg}deg)`;
   }
 
-  async function selectIndex(next) {
+  async function drainFlip() {
+    if (busy) return;
+    busy = true;
+    const list = posts();
+    const inner = document.querySelector("#tarot-inner");
+
+    try {
+      while (pending !== null && pending !== index) {
+        if (reducedMotion() || !inner) {
+          index = pending;
+          setBack(pickBack(true));
+          fillFront(list[index]);
+          syncTocActive();
+          break;
+        }
+
+        // One flip → latest hovered target (skip in-between cards)
+        setBack(pickBack(true));
+        setAngle(angle + 180, true);
+        await wait(HALF_MS);
+
+        const reveal = pending !== null ? pending : index;
+        if (reveal !== index) {
+          index = reveal;
+          fillFront(list[index]);
+        }
+        syncTocActive();
+
+        setAngle(angle + 180, true);
+        await wait(HALF_MS);
+
+        if (angle >= 360) {
+          setAngle(angle % 360, false);
+          void inner.offsetWidth;
+        }
+      }
+    } finally {
+      busy = false;
+      if (pending === index) pending = null;
+      syncTocActive();
+      if (pending !== null && pending !== index) {
+        drainFlip();
+      }
+    }
+  }
+
+  function selectIndex(next) {
     const list = posts();
     if (!list.length) return;
     if (next < 0 || next >= list.length) return;
-    if (busy || next === index) return;
 
-    const inner = document.querySelector("#tarot-inner");
-    if (!inner) return;
-
-    if (reducedMotion()) {
-      index = next;
-      setBack(pickBack(true));
-      fillFront(list[index]);
-      syncTocActive();
-      return;
-    }
-
-    busy = true;
-    // Face-up angles are multiples of 360. Flip to back (+180), swap front, then to next face-up (+360).
-    setBack(pickBack(true));
-    setAngle(angle + 180, true);
-    await wait(HALF_MS);
-
-    index = next;
-    fillFront(list[index]);
+    pending = next;
     syncTocActive();
 
-    setAngle(angle + 180, true);
-    await wait(HALF_MS);
-
-    // Normalize so we don't grow forever
-    if (angle >= 360) {
-      setAngle(angle % 360, false);
-      void inner.offsetWidth;
+    if (next === index && !busy) {
+      pending = null;
+      return;
     }
-    busy = false;
+    drainFlip();
   }
 
   function postHref(post) {
@@ -217,17 +243,17 @@
       }
       if (ev.key === "ArrowDown" || ev.key === "ArrowRight") {
         ev.preventDefault();
-        const n = Math.min(list.length - 1, index + 1);
-        selectIndex(n).then(() => {
-          document.querySelector(`.blog-toc-item[data-index="${n}"]`)?.focus();
-        });
+        const cur = pending !== null ? pending : index;
+        const n = Math.min(list.length - 1, cur + 1);
+        selectIndex(n);
+        document.querySelector(`.blog-toc-item[data-index="${n}"]`)?.focus();
       }
       if (ev.key === "ArrowUp" || ev.key === "ArrowLeft") {
         ev.preventDefault();
-        const n = Math.max(0, index - 1);
-        selectIndex(n).then(() => {
-          document.querySelector(`.blog-toc-item[data-index="${n}"]`)?.focus();
-        });
+        const cur = pending !== null ? pending : index;
+        const n = Math.max(0, cur - 1);
+        selectIndex(n);
+        document.querySelector(`.blog-toc-item[data-index="${n}"]`)?.focus();
       }
     });
   }
@@ -248,6 +274,8 @@
     const keep = Math.min(index, list.length - 1);
     renderShell(root);
     index = keep;
+    pending = null;
+    busy = false;
     angle = 0;
     fillToc(list);
     setBack(pickBack(false));
