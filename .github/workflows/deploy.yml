@@ -23,6 +23,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install
+      - name: Require CLOUDFLARE_API_TOKEN
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::Missing GitHub Actions secret CLOUDFLARE_API_TOKEN."
+            echo "Create a Cloudflare API token (Edit Cloudflare Workers template):"
+            echo "https://dash.cloudflare.com/profile/api-tokens"
+            echo "Then: gh secret set CLOUDFLARE_API_TOKEN --repo qlghmz/my-resume"
+            exit 1
+          fi
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v4
         with:
