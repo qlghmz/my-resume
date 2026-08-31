@@ -100,10 +100,10 @@
 
     root.innerHTML = sections
       .map((section) => {
-        const org =
-          section.showOrg && data.org
-            ? `<p class="cv-org">${escapeHtml(L(data.org))}</p>`
-            : "";
+        const orgText = section.org || (section.showOrg ? data.org : null);
+        const org = orgText
+          ? `<p class="cv-org">${escapeHtml(L(orgText))}</p>`
+          : "";
         const cards = (section.cards || [])
           .map((card) => {
             const idAttr = card.id ? ` id="${escapeHtml(card.id)}"` : "";

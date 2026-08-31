@@ -78,8 +78,8 @@ window.UI = {
     heading: { zh: "简历", en: "Resume" },
     counter: { zh: "CV", en: "CV" },
     blurb: {
-      zh: "男 · 24 岁 · 本科 · 2 年经验 · 浙大宁波理工学院 · 计算机科学与技术",
-      en: "Male · 24 · B.S. · 2 years exp · Zhejiang University Ningbo Institute of Technology · Computer Science",
+      zh: "男 · 24 岁 · 本科 · 2 年+ 经验 · 浙大宁波理工学院 · 计算机科学与技术",
+      en: "Male · 24 · B.S. · 2+ years exp · Zhejiang University Ningbo Institute of Technology · Computer Science",
     },
   },
   blog: {
