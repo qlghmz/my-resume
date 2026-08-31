@@ -40,4 +40,18 @@ window.POSTS = [
       en: "FastAPI + distributed GPU / NVENC. DeepSeek copywriting, Edge-TTS voiceover — about 8–10× faster than CPU rendering.",
     },
   },
+  {
+    id: "tonometer-freertos-threads",
+    date: "2025.12",
+    draft: true,
+    href: "#",
+    title: {
+      zh: "眼压机 MCU：FreeRTOS 四线程与气路 / 电机队列设计",
+      en: "Tonometer MCU: FreeRTOS four-thread and pneumatic / motor queues",
+    },
+    summary: {
+      zh: "uart / handle / pump / motor 如何用队列协作，以及 DMA 串口帧的分段接收——草稿占位。",
+      en: "How uart / handle / pump / motor cooperate via queues, plus segmented DMA UART framing — draft placeholder.",
+    },
+  },
 ];
