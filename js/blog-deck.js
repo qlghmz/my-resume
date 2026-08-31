@@ -1,5 +1,18 @@
 (() => {
-  const BACKS = ["arcana-star", "arcana-moon", "arcana-cross", "arcana-orbit", "arcana-veil"];
+  const BACKS = [
+    "/img/tarot-backs/joker.png",
+    "/img/tarot-backs/jolly.png",
+    "/img/tarot-backs/zany.png",
+    "/img/tarot-backs/mad.png",
+    "/img/tarot-backs/crazy.png",
+    "/img/tarot-backs/droll.png",
+    "/img/tarot-backs/chaos.png",
+    "/img/tarot-backs/abstract.png",
+    "/img/tarot-backs/mime.png",
+    "/img/tarot-backs/triboulet.png",
+    "/img/tarot-backs/perkeo.png",
+    "/img/tarot-backs/chicot.png",
+  ];
   const HALF_MS = 160;
 
   let index = 0;
@@ -7,6 +20,12 @@
   let busy = false;
   let backSeed = 0;
   let angle = 0;
+
+  // Warm Balatro joker sprites so flips don't flash empty.
+  BACKS.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
 
   function escapeHtml(s) {
     return String(s)
@@ -51,8 +70,7 @@
         <div class="tarot" id="tarot-card">
           <div class="tarot-inner" id="tarot-inner">
             <div class="tarot-face tarot-back" id="tarot-back" aria-hidden="true">
-              <span class="tarot-sigil"></span>
-              <span class="tarot-back-label">ARCANA</span>
+              <img class="tarot-back-art" id="tarot-back-art" src="/img/tarot-backs/joker.png" alt="" draggable="false" />
             </div>
             <div class="tarot-face tarot-front" id="tarot-front"></div>
           </div>
@@ -87,10 +105,10 @@
     `;
   }
 
-  function setBack(name) {
-    const back = document.querySelector("#tarot-back");
-    if (!back) return;
-    back.className = `tarot-face tarot-back ${name}`;
+  function setBack(src) {
+    const art = document.querySelector("#tarot-back-art");
+    if (!art || !src) return;
+    if (art.getAttribute("src") !== src) art.setAttribute("src", src);
   }
 
   function fillToc(list) {
