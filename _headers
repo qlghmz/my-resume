@@ -1,2 +1,21 @@
+# Cache policy (keep in sync with README 「缓存」)
+# - HTML / pages: always revalidate so blog & copy updates show immediately
+# - /data/*: short / revalidate — lists & article bodies change often
+# - /css/* /js/*: 7 days + revalidate — shell; hard-refresh if you just shipped CSS/JS
+# - /img/*: 30 days + revalidate — media rarely changes
+# Last matching rule wins. Do NOT put a catch-all /* after the long-cache rules.
+
 /*
   Cache-Control: public, max-age=0, must-revalidate
+
+/data/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/css/*
+  Cache-Control: public, max-age=604800, must-revalidate
+
+/js/*
+  Cache-Control: public, max-age=604800, must-revalidate
+
+/img/*
+  Cache-Control: public, max-age=2592000, must-revalidate
