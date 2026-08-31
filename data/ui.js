@@ -98,8 +98,8 @@ window.UI = {
     deck: {
       toc: { zh: "目录", en: "Index" },
       hint: {
-        zh: "悬停目录条目以翻牌切换 · ↑↓ 键也可",
-        en: "Hover an entry to flip · ↑↓ keys work too",
+        zh: "悬停翻牌 · 点击打开文章 · ↑↓ 键也可",
+        en: "Hover to flip · click to open · ↑↓ keys too",
       },
       draft: { zh: "草稿", en: "Draft" },
       soon: { zh: "即将写", en: "Coming soon" },

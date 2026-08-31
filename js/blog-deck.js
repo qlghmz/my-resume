@@ -56,7 +56,7 @@
             <div class="tarot-face tarot-front" id="tarot-front"></div>
           </div>
         </div>
-        <p class="blog-deck-hint" data-i18n="blog.deck.hint">悬停目录条目以翻牌切换。</p>
+        <p class="blog-deck-hint" data-i18n="blog.deck.hint">悬停翻牌；点击打开文章。</p>
       </div>
     `;
   }
@@ -171,6 +171,12 @@
     busy = false;
   }
 
+  function postHref(post) {
+    if (!post || post.draft) return "";
+    const href = post.href;
+    return href && href !== "#" ? href : "";
+  }
+
   function bind(root) {
     root.addEventListener("pointerover", (ev) => {
       const btn = ev.target.closest?.(".blog-toc-item");
@@ -184,9 +190,31 @@
       selectIndex(Number(btn.dataset.index));
     });
 
+    root.addEventListener("click", (ev) => {
+      const btn = ev.target.closest?.(".blog-toc-item");
+      if (!btn || !root.contains(btn)) return;
+      const i = Number(btn.dataset.index);
+      const post = posts()[i];
+      const href = postHref(post);
+      if (!href) {
+        selectIndex(i);
+        return;
+      }
+      window.location.assign(href);
+    });
+
     root.addEventListener("keydown", (ev) => {
-      if (!ev.target.closest?.(".blog-toc-item")) return;
+      const btn = ev.target.closest?.(".blog-toc-item");
+      if (!btn) return;
       const list = posts();
+      if (ev.key === "Enter" || ev.key === " ") {
+        const href = postHref(list[Number(btn.dataset.index)]);
+        if (href) {
+          ev.preventDefault();
+          window.location.assign(href);
+        }
+        return;
+      }
       if (ev.key === "ArrowDown" || ev.key === "ArrowRight") {
         ev.preventDefault();
         const n = Math.min(list.length - 1, index + 1);
