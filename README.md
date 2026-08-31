@@ -46,7 +46,7 @@
 
 ## 版本
 
-当前线上基线：**v1.1.0**
+当前线上基线：**v1.3.0**
 
 | 东西 | 规则 |
 | --- | --- |
@@ -71,15 +71,19 @@ git push origin vX.Y.Z
 
 线上 https://resume.tensorview.cc 是 Cloudflare Worker **`resume-tensorview-cc`**（assets-only，没有 `main` 脚本）。
 
-合入 GitHub **不等于**上线。以前 `/` 会 302 到 `/en/`（旧双语页），是因为线上还跑着带 Worker 脚本的旧部署。`wrangler.jsonc` 里不要再加 `main`，也不要把 `/` 指到 `/en/`。
+合入 GitHub **不等于**上线：需要 Actions 里的 **Deploy** 成功（或本地 `npm run deploy`）。
 
 ### 合入 `main` 之后自动上线
 
-1. Cloudflare → API Tokens → 用 **Edit Cloudflare Workers** 模板建 token（要能写 Workers，不能只用 DNS Edit）
-2. GitHub 仓库 Settings → Secrets → Actions → 加 `CLOUDFLARE_API_TOKEN`
-3. 合入 `main`（或 Actions 里手动跑 **Deploy**）
+1. Cloudflare → [API Tokens](https://dash.cloudflare.com/profile/api-tokens) → **Create Token** → 模板 **Edit Cloudflare Workers**（要能写 Workers，不能只用 DNS Edit）
+2. 复制 token，在本机执行（只设一次）：
+   ```bash
+   gh secret set CLOUDFLARE_API_TOKEN --repo qlghmz/my-resume
+   ```
+   粘贴 token 后回车。仓库 Settings → Secrets → Actions 里应能看到同名 Secret。
+3. 合入 `main`（或 Actions 里手动 **Run workflow** → Deploy）
 
-PR 上只做 `wrangler deploy --dry-run`，不会改生产。
+PR 上只做 `wrangler deploy --dry-run`，不会改生产。Secret 缺失时 Deploy 会明确报错，不会静默失败。
 
 ### 本地先上线
 
