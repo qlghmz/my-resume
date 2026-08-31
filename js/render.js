@@ -68,6 +68,7 @@
   }
 
   function renderPosts() {
+    if (window.BlogDeck?.render?.()) return;
     const list = document.querySelector("#post-list");
     if (!list) return;
     const posts = window.POSTS || [];

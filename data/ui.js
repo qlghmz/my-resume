@@ -85,8 +85,8 @@ window.UI = {
   blog: {
     heading: { zh: "技术博客", en: "Tech Blog" },
     intro: {
-      zh: "嵌入式 Linux、相机和板端推理相关的笔记。",
-      en: "Notes on embedded Linux, cameras, and on-device inference.",
+      zh: "嵌入式 Linux、相机和板端推理相关的笔记。悬停左侧目录，右侧卡牌会翻面切换。",
+      en: "Notes on embedded Linux, cameras, and on-device inference. Hover the TOC — the card flips to match.",
     },
     empty: {
       zh: "还没有文章。打开 data/posts.js 加一条，并在 blog/ 下放 HTML 即可。",
@@ -95,6 +95,15 @@ window.UI = {
     read: { zh: "阅读", en: "Read" },
     back: { zh: "← 博客列表", en: "← Blog list" },
     backBottom: { zh: "← 返回博客列表", en: "← Back to blog" },
+    deck: {
+      toc: { zh: "目录", en: "Index" },
+      hint: {
+        zh: "悬停目录条目以翻牌切换 · ↑↓ 键也可",
+        en: "Hover an entry to flip · ↑↓ keys work too",
+      },
+      draft: { zh: "草稿", en: "Draft" },
+      soon: { zh: "即将写", en: "Coming soon" },
+    },
   },
   contact: {
     heading: { zh: "联系", en: "Contact" },
