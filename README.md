@@ -93,3 +93,33 @@ npm run deploy
 ```
 
 不要把「只能改 DNS」的 token 设成 `CLOUDFLARE_API_TOKEN`，Wrangler 会优先用它然后部署失败。OAuth 过期就重新 `wrangler login`。
+
+## SEO / 搜索收录
+
+仓库已带：
+
+| 文件 / 能力 | 作用 |
+| --- | --- |
+| `robots.txt` | 允许抓取，并指向站点地图 |
+| `sitemap.xml` | 首页、作品、简历、博客列表与已发布文章 |
+| 每页 `description` + Open Graph / Twitter | 搜索摘要与分享卡片 |
+| `js/seo.js` | 按语言切换标题/描述；文章页用 lede + cover |
+| 首页 / 简历 / 联系 | Person 结构化数据（JSON-LD） |
+
+### 接入 Google / Bing（你只需做一次）
+
+1. 打开 [Google Search Console](https://search.google.com/search-console) → 添加资源 `https://resume.tensorview.cc`
+2. 验证方式选 **HTML 标签**，复制 `content="...."` 里的码
+3. 打开 [Bing Webmaster](https://www.bing.com/webmasters) → 同样添加并拿 `msvalidate.01` 码
+4. 在任意已部署页（建议 `index.html`）里，找到注释掉的：
+   ```html
+   <!-- Search Console: uncomment after you get verification codes
+   <meta name="google-site-verification" content="PASTE_GOOGLE_CODE" />
+   <meta name="msvalidate.01" content="PASTE_BING_CODE" />
+   -->
+   ```
+   去掉注释，换成你的码，合入上线后再点控制台「验证」
+5. 验证成功后，在控制台提交站点地图：  
+   `https://resume.tensorview.cc/sitemap.xml`
+
+新发博文时：写入 `data/posts.js`（非 draft）+ 文章 HTML，并在 `sitemap.xml` 加一条 `<url>`。

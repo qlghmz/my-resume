@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Draft / private sources are not linked from the site; keep crawlers on public URLs.
+Disallow: /scripts/
+Disallow: /node_modules/
+
+Sitemap: https://resume.tensorview.cc/sitemap.xml

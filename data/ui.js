@@ -7,9 +7,43 @@ window.UI = {
       blog: { zh: "博客 · 董家辉", en: "Blog · Dong Jiahui" },
       contact: { zh: "联系 · 董家辉", en: "Contact · Dong Jiahui" },
       article: {
-        zh: "基于 RK3588 RGA 硬件加速的三路相机并发预览方案设计 · 董家辉",
-        en: "RK3588 RGA Multi-Camera Preview · Dong Jiahui",
+        zh: "技术文章 · 董家辉",
+        en: "Tech article · Dong Jiahui",
       },
+    },
+    description: {
+      home: {
+        zh: "董家辉的个人网站：嵌入式 Linux、相机与板端 AI，作品、简历与技术博客。",
+        en: "Dong Jiahui — embedded Linux, cameras, and on-device AI. Works, resume, and tech blog.",
+      },
+      works: {
+        zh: "精选作品：龙芯驱动、眼压机 MCU/Qt、RK3588 相机、TensorView 等项目。",
+        en: "Selected work: Loongson drivers, tonometer MCU/Qt, RK3588 cameras, TensorView, and more.",
+      },
+      resume: {
+        zh: "董家辉简历：嵌入式 Linux 驱动工程师，得力集团 / 佳目医疗经历与项目。",
+        en: "Resume of Dong Jiahui — embedded Linux driver engineer; Deli Group and Jiamu Medical experience.",
+      },
+      blog: {
+        zh: "嵌入式 Linux、I2C、RK3588 RGA、AI 视频等技术笔记。",
+        en: "Notes on embedded Linux, I2C, RK3588 RGA, AI video pipelines, and more.",
+      },
+      contact: {
+        zh: "联系董家辉：微信 jdong8464、邮件与 GitHub。",
+        en: "Contact Dong Jiahui via WeChat jdong8464, email, or GitHub.",
+      },
+      article: {
+        zh: "董家辉的技术文章。",
+        en: "A technical article by Dong Jiahui.",
+      },
+    },
+    ogImage: {
+      home: { zh: "/img/blog/rk3588-cover.jpg", en: "/img/blog/rk3588-cover.jpg" },
+      works: { zh: "/img/blog/rk3588-cover.jpg", en: "/img/blog/rk3588-cover.jpg" },
+      resume: { zh: "/img/blog/rk3588-cover.jpg", en: "/img/blog/rk3588-cover.jpg" },
+      blog: { zh: "/img/blog/rk3588-cover.jpg", en: "/img/blog/rk3588-cover.jpg" },
+      contact: { zh: "/img/blog/rk3588-cover.jpg", en: "/img/blog/rk3588-cover.jpg" },
+      article: { zh: "/img/blog/rk3588-cover.jpg", en: "/img/blog/rk3588-cover.jpg" },
     },
   },
   a11y: {
