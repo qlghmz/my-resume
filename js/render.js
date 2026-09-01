@@ -98,15 +98,31 @@
     if (!root || !window.RESUME) return;
     const data = window.RESUME;
     const sections = data.sections || [];
+    let sideIndex = 0;
+    let fadeIndex = 1; // 0 reserved for page-hero
 
-    root.innerHTML = sections
+    const body = sections
       .map((section) => {
         const orgText = section.org || (section.showOrg ? data.org : null);
-        const org = orgText
-          ? `<p class="cv-org">${escapeHtml(L(orgText))}</p>`
-          : "";
+        const sectionId = section.id ? ` id="${escapeHtml(section.id)}"` : "";
+        const markerI = fadeIndex++;
+        const marker = `
+          <div class="cv-tl-marker cv-fade" style="--cv-i:${markerI}"${sectionId}>
+            <span class="cv-tl-dot" aria-hidden="true"></span>
+            <div class="cv-tl-marker-card">
+              <div class="section-head">
+                <h2>${escapeHtml(L(section.heading))}</h2>
+                <span class="counter">${escapeHtml(L(section.counter))}</span>
+              </div>
+              ${orgText ? `<p class="cv-org">${escapeHtml(L(orgText))}</p>` : ""}
+            </div>
+          </div>`;
+
         const cards = (section.cards || [])
           .map((card) => {
+            const side = sideIndex % 2 === 0 ? "is-left" : "is-right";
+            sideIndex += 1;
+            const itemI = fadeIndex++;
             const idAttr = card.id ? ` id="${escapeHtml(card.id)}"` : "";
             const meta = card.meta
               ? `<p class="cv-meta">${escapeHtml(L(card.meta))}</p>`
@@ -122,27 +138,33 @@
               .join("");
             const list = bullets ? `<ul>${bullets}</ul>` : "";
             return `
-              <article class="cv-card"${idAttr}>
-                ${meta}
-                ${title}
-                ${lead}
-                ${list}
+              <article class="cv-tl-item cv-fade ${side}" style="--cv-i:${itemI}"${idAttr}>
+                <span class="cv-tl-node" aria-hidden="true"></span>
+                <div class="cv-card">
+                  ${meta}
+                  ${title}
+                  ${lead}
+                  ${list}
+                </div>
               </article>`;
           })
           .join("");
 
-        const sectionId = section.id ? ` id="${escapeHtml(section.id)}"` : "";
-        return `
-          <section${sectionId}>
-            <div class="section-head">
-              <h2>${escapeHtml(L(section.heading))}</h2>
-              <span class="counter">${escapeHtml(L(section.counter))}</span>
-            </div>
-            ${org}
-            ${cards}
-          </section>`;
+        return `${marker}${cards}`;
       })
       .join("");
+
+    root.innerHTML = `
+      <div class="cv-timeline">
+        <div class="cv-timeline-line" aria-hidden="true"></div>
+        ${body}
+      </div>`;
+
+    const hero = document.querySelector(".resume-page .page-hero");
+    if (hero) {
+      hero.classList.add("cv-fade");
+      hero.style.setProperty("--cv-i", "0");
+    }
   }
 
   function renderArticle() {
