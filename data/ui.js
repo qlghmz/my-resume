@@ -61,7 +61,7 @@ window.UI = {
     contact: { zh: "联系", en: "Contact" },
   },
   footer: {
-    copy: { zh: "© {year} 董家辉", en: "© {year} Dong Jiahui" },
+    copy: { zh: "© {year} dongjiahui", en: "© {year} dongjiahui" },
     esc: { zh: "Esc 返回主菜单", en: "Esc back to menu" },
   },
   home: {

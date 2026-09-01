@@ -601,7 +601,7 @@ h2 {
   margin-bottom: 16px;
   clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
 }
-.cv-card { scroll-margin-top: 80px; }
+.cv-card { scroll-margin-top: 80px; margin-bottom: 0; }
 .cv-card h3,
 .project-card h3,
 .post-card h3 {
@@ -623,6 +623,314 @@ h2 {
 .cv-card ul { margin: 0; padding-left: 1.15em; }
 .cv-card li { margin-bottom: 0.4em; }
 
+/* Resume zigzag timeline */
+.resume-page #resume-root {
+  padding-bottom: 48px;
+}
+.cv-timeline {
+  position: relative;
+  width: 100%;
+  padding: 12px 0 24px;
+}
+.cv-timeline-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  translate: -50% 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(104, 252, 254, 0.55) 8%,
+    rgba(104, 252, 254, 0.35) 50%,
+    rgba(255, 26, 69, 0.35) 92%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+.cv-tl-marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  margin: 28px 0 18px;
+}
+.cv-tl-marker:first-child { margin-top: 8px; }
+.cv-tl-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--void);
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 0 4px rgba(104, 252, 254, 0.15);
+  margin-bottom: 10px;
+}
+.cv-tl-marker-card {
+  width: min(100%, 520px);
+  text-align: center;
+  padding: 14px 18px;
+  background: rgba(6, 18, 42, 0.92);
+  border: 1px solid var(--stroke);
+}
+.cv-tl-marker-card .section-head {
+  justify-content: center;
+  margin-bottom: 6px;
+}
+.cv-tl-marker-card .cv-org {
+  margin: 0;
+  color: var(--dim);
+  font-size: 0.9rem;
+}
+.cv-tl-item {
+  position: relative;
+  z-index: 1;
+  width: calc(50% - 28px);
+  margin-bottom: 22px;
+}
+.cv-tl-item.is-left {
+  margin-right: auto;
+  padding-right: 8px;
+}
+.cv-tl-item.is-right {
+  margin-left: auto;
+  padding-left: 8px;
+}
+.cv-tl-node {
+  position: absolute;
+  top: 22px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cyan);
+  border: 2px solid var(--void);
+  box-shadow: 0 0 12px rgba(104, 252, 254, 0.55);
+}
+.cv-tl-item.is-left .cv-tl-node {
+  right: -33px;
+}
+.cv-tl-item.is-right .cv-tl-node {
+  left: -33px;
+}
+.cv-tl-item .cv-card {
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.cv-tl-item:hover .cv-card {
+  border-color: rgba(104, 252, 254, 0.55);
+  background: rgba(8, 28, 58, 0.9);
+}
+
+@media (max-width: 900px) {
+  .cv-timeline-line {
+    left: 12px;
+    translate: 0 0;
+  }
+  .cv-tl-marker {
+    justify-items: stretch;
+    padding-left: 28px;
+  }
+  .cv-tl-marker-card {
+    width: 100%;
+    text-align: left;
+  }
+  .cv-tl-marker-card .section-head {
+    justify-content: flex-start;
+  }
+  .cv-tl-item,
+  .cv-tl-item.is-left,
+  .cv-tl-item.is-right {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 28px;
+    padding-right: 0;
+  }
+  .cv-tl-item.is-left .cv-tl-node,
+  .cv-tl-item.is-right .cv-tl-node {
+    left: 8px;
+    right: auto;
+  }
+}
+
+/* Resume only: white sketch / hand-drawn theme + staggered fade */
+body[data-page="resume"] {
+  color: #2c2a26;
+  background: #f7f4ef;
+}
+body[data-page="resume"]::before {
+  background:
+    radial-gradient(ellipse 70% 40% at 10% 0%, rgba(255, 255, 255, 0.9), transparent 55%),
+    radial-gradient(ellipse 50% 35% at 90% 10%, rgba(214, 232, 220, 0.55), transparent 50%),
+    linear-gradient(180deg, #fbfaf7 0%, #f3efe8 48%, #efeae2 100%);
+}
+body[data-page="resume"]::after {
+  opacity: 0.07;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 3px,
+      rgba(60, 50, 40, 0.08) 3px 4px
+    );
+}
+body[data-page="resume"] .hud {
+  background: rgba(255, 252, 247, 0.86);
+  border-bottom: 1px solid rgba(50, 45, 40, 0.12);
+  backdrop-filter: blur(8px);
+}
+body[data-page="resume"] .hud-path,
+body[data-page="resume"] .hud-links a,
+body[data-page="resume"] .lang-btn {
+  color: #5a554c;
+}
+body[data-page="resume"] .hud-path b,
+body[data-page="resume"] .hud-links a:hover,
+body[data-page="resume"] .hud-links a[aria-current="page"],
+body[data-page="resume"] .lang-btn[aria-pressed="true"] {
+  color: #2f6b5a;
+}
+body[data-page="resume"] .lang-btn {
+  border-color: rgba(50, 45, 40, 0.18);
+  background: transparent;
+}
+body[data-page="resume"] .page-giant {
+  color: rgba(47, 107, 90, 0.1);
+}
+body[data-page="resume"] .hud-foot {
+  color: #7a7468;
+  border-top: 1px solid rgba(50, 45, 40, 0.1);
+  background: rgba(255, 252, 247, 0.75);
+}
+body[data-page="resume"] .hud-foot a { color: #2f6b5a; }
+
+body[data-page="resume"] .resume-page .page-hero {
+  color: #2c2a26;
+}
+body[data-page="resume"] .resume-page .page-hero a {
+  color: #2f6b5a;
+}
+body[data-page="resume"] .resume-page .section-head h2 {
+  color: #1f1d1a;
+  font-family: "Barlow Condensed", "Noto Sans SC", sans-serif;
+  letter-spacing: 0.04em;
+}
+body[data-page="resume"] .resume-page .counter {
+  color: #6d8f82;
+  background: transparent;
+  border: 1.5px solid rgba(47, 107, 90, 0.35);
+  clip-path: none;
+  border-radius: 255px 20px 225px 15px / 15px 225px 20px 255px;
+}
+
+body[data-page="resume"] .cv-timeline-line {
+  width: 1.5px;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(70, 64, 56, 0.45) 0 6px,
+    transparent 6px 10px
+  );
+}
+body[data-page="resume"] .cv-tl-dot {
+  background: #f7f4ef;
+  border: 2px solid #3d3a34;
+  box-shadow: 0 0 0 3px rgba(47, 107, 90, 0.12);
+}
+body[data-page="resume"] .cv-tl-node {
+  background: #2f6b5a;
+  border: 2px solid #f7f4ef;
+  box-shadow: none;
+}
+body[data-page="resume"] .cv-tl-marker-card {
+  background: #fffefb;
+  border: 1.5px solid #3d3a34;
+  border-radius: 18px 28px 16px 24px / 24px 16px 28px 18px;
+  box-shadow: 3px 4px 0 rgba(61, 58, 52, 0.08);
+}
+body[data-page="resume"] .cv-tl-marker-card .cv-org {
+  color: #6a655c;
+}
+body[data-page="resume"] .cv-tl-item .cv-card {
+  background: #fffefb;
+  border: 1.5px solid #3d3a34;
+  clip-path: none;
+  border-radius: 22px 14px 26px 18px / 16px 24px 14px 22px;
+  box-shadow: 3px 5px 0 rgba(61, 58, 52, 0.07);
+  color: #2c2a26;
+}
+body[data-page="resume"] .cv-tl-item:hover .cv-card {
+  border-color: #2f6b5a;
+  background: #fbfaf6;
+  box-shadow: 4px 6px 0 rgba(47, 107, 90, 0.12);
+}
+body[data-page="resume"] .cv-meta {
+  color: #2f6b5a;
+}
+body[data-page="resume"] .cv-card h3 {
+  color: #1f1d1a;
+  font-size: 1.25rem;
+}
+body[data-page="resume"] .cv-card p,
+body[data-page="resume"] .cv-card li {
+  color: #4a463e;
+}
+body[data-page="resume"] .cv-card strong {
+  color: #2c2a26;
+}
+
+body[data-page="resume"] .cv-fade {
+  opacity: 0;
+  transform: translateY(22px);
+  animation: cvSketchIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--cv-i, 0) * 0.11s + 0.08s);
+}
+@keyframes cvSketchIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-page="resume"] .cv-fade {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .cv-timeline-line {
+    left: 12px;
+    translate: 0 0;
+  }
+  .cv-tl-marker {
+    justify-items: stretch;
+    padding-left: 28px;
+  }
+  .cv-tl-marker-card {
+    width: 100%;
+    text-align: left;
+  }
+  .cv-tl-marker-card .section-head {
+    justify-content: flex-start;
+  }
+  .cv-tl-item,
+  .cv-tl-item.is-left,
+  .cv-tl-item.is-right {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 28px;
+    padding-right: 0;
+  }
+  .cv-tl-item.is-left .cv-tl-node,
+  .cv-tl-item.is-right .cv-tl-node {
+    left: 8px;
+    right: auto;
+  }
+}
 .project-tools { margin: 0 0 22px; }
 .search {
   width: 100%;
