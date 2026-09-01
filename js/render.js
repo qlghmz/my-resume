@@ -207,6 +207,7 @@
     renderResume();
     renderArticle();
     window.I18N.apply();
+    window.SEO?.apply?.();
     if (window.observeReveal) window.observeReveal();
   }
 

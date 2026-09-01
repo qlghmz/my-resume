@@ -123,6 +123,7 @@
     mountFooter();
     mountWatermark();
     window.I18N.apply();
+    window.SEO?.apply?.();
   }
 
   document.addEventListener("keydown", (e) => {
