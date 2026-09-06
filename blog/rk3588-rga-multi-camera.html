@@ -32,6 +32,11 @@
   <main id="main" class="page article">
     <a class="button back-link" href="/blog/" data-i18n="blog.back">← 博客列表</a>
     <article id="article-root"></article>
+    <section class="article-comments" aria-labelledby="comments-heading">
+      <h2 id="comments-heading" data-i18n="blog.comments.heading">评论</h2>
+      <p class="comments-note" data-i18n="blog.comments.note">通过 GitHub 登录后评论（由 Discussions 托管）。暂不支持游客。</p>
+      <div id="giscus-root"></div>
+    </section>
     <a class="button back-link" href="/blog/" data-i18n="blog.backBottom">← 返回博客列表</a>
   </main>
   <div id="site-footer"></div>
@@ -42,5 +47,7 @@
   <script src="/data/articles/rk3588-rga-multi-camera.js"></script>
   <script src="/js/layout.js"></script>
   <script src="/js/render.js"></script>
+  <script src="/data/giscus.js"></script>
+  <script src="/js/comments.js"></script>
 </body>
 </html>

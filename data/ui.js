@@ -138,6 +138,13 @@ window.UI = {
       draft: { zh: "草稿", en: "Draft" },
       soon: { zh: "即将写", en: "Coming soon" },
     },
+    comments: {
+      heading: { zh: "评论", en: "Comments" },
+      note: {
+        zh: "通过 GitHub 登录后评论（由 Discussions 托管）。暂不支持游客。",
+        en: "Sign in with GitHub to comment (hosted in Discussions). Guests are not supported yet.",
+      },
+    },
   },
   contact: {
     heading: { zh: "联系", en: "Contact" },
