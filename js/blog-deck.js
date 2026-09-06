@@ -14,14 +14,16 @@
     "/img/tarot-backs/chicot.png",
   ];
   const HALF_MS = 160;
+  const CAT_KEY = "jh.blogCategory";
+  const DEFAULT_CAT = "tech";
 
+  let category = readStoredCategory();
   let index = 0;
   let pending = null;
   let busy = false;
   let backSeed = 0;
   let angle = 0;
 
-  // Warm Balatro joker sprites so flips don't flash empty.
   BACKS.forEach((src) => {
     const img = new Image();
     img.src = src;
@@ -35,8 +37,42 @@
       .replace(/"/g, "&quot;");
   }
 
-  function posts() {
+  function categories() {
+    return window.BLOG_CATEGORIES || [];
+  }
+
+  function allPosts() {
     return window.POSTS || [];
+  }
+
+  function posts() {
+    return allPosts().filter((p) => (p.category || DEFAULT_CAT) === category);
+  }
+
+  function readStoredCategory() {
+    try {
+      const v = localStorage.getItem(CAT_KEY);
+      if (v && (window.BLOG_CATEGORIES || []).some((c) => c.id === v)) return v;
+    } catch {
+      /* ignore */
+    }
+    return DEFAULT_CAT;
+  }
+
+  function storeCategory(id) {
+    try {
+      localStorage.setItem(CAT_KEY, id);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function currentCategory() {
+    return categories().find((c) => c.id === category) || categories()[0];
+  }
+
+  function countIn(catId) {
+    return allPosts().filter((p) => (p.category || DEFAULT_CAT) === catId).length;
   }
 
   function pickBack(preferDifferent) {
@@ -63,7 +99,13 @@
   function renderShell(root) {
     root.innerHTML = `
       <aside class="blog-toc" aria-label="posts">
-        <p class="blog-toc-kicker" data-i18n="blog.deck.toc">目录</p>
+        <p class="blog-toc-kicker" data-i18n="blog.deck.shelves">分栏</p>
+        <div class="blog-cat-rail" id="blog-cat-rail" role="tablist"></div>
+        <div class="blog-toc-divider" aria-hidden="true"></div>
+        <p class="blog-toc-kicker blog-toc-kicker-sub">
+          <span data-i18n="blog.deck.toc">目录</span>
+          <span class="blog-toc-cat-name" id="blog-toc-cat-name"></span>
+        </p>
         <ol class="blog-toc-list" id="blog-toc-list"></ol>
       </aside>
       <div class="blog-stage">
@@ -75,15 +117,57 @@
             <div class="tarot-face tarot-front" id="tarot-front"></div>
           </div>
         </div>
-        <p class="blog-deck-hint" data-i18n="blog.deck.hint">悬停翻牌；点击打开文章。</p>
+        <p class="blog-deck-hint" data-i18n="blog.deck.hint">先选分栏 · 悬停翻牌 · 点击打开。</p>
       </div>
     `;
+  }
+
+  function fillCategories() {
+    const { L } = window.I18N;
+    const rail = document.querySelector("#blog-cat-rail");
+    if (!rail) return;
+    rail.innerHTML = categories()
+      .map((cat) => {
+        const on = cat.id === category ? " is-on" : "";
+        const n = String(countIn(cat.id)).padStart(2, "0");
+        return `
+          <button type="button" class="blog-cat${on}" role="tab"
+            aria-selected="${cat.id === category ? "true" : "false"}"
+            data-category="${escapeHtml(cat.id)}">
+            <span class="blog-cat-label">${escapeHtml(L(cat.label))}</span>
+            <span class="blog-cat-count">${n}</span>
+          </button>`;
+      })
+      .join("");
+  }
+
+  function syncCategoryActive() {
+    const { L } = window.I18N;
+    document.querySelectorAll(".blog-cat").forEach((btn) => {
+      const on = btn.dataset.category === category;
+      btn.classList.toggle("is-on", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    const nameEl = document.querySelector("#blog-toc-cat-name");
+    const cat = currentCategory();
+    if (nameEl && cat) nameEl.textContent = `· ${L(cat.label)}`;
   }
 
   function fillFront(post) {
     const { t, L } = window.I18N;
     const front = document.querySelector("#tarot-front");
-    if (!front || !post) return;
+    if (!front) return;
+
+    if (!post) {
+      front.innerHTML = `
+        <div class="tarot-copy tarot-copy-empty">
+          <span class="tarot-date">${escapeHtml(L(currentCategory()?.label || {}))}</span>
+          <h3 class="tarot-title">${escapeHtml(t("blog.emptyCategory"))}</h3>
+          <p class="tarot-summary">${escapeHtml(t("blog.deck.soon"))}</p>
+        </div>`;
+      return;
+    }
+
     const draft = !!post.draft;
     const href = post.href && post.href !== "#" ? post.href : "";
     const cta = draft ? t("blog.deck.soon") : t("blog.read");
@@ -112,9 +196,13 @@
   }
 
   function fillToc(list) {
-    const { L } = window.I18N;
+    const { t, L } = window.I18N;
     const ol = document.querySelector("#blog-toc-list");
     if (!ol) return;
+    if (!list.length) {
+      ol.innerHTML = `<li class="blog-toc-empty">${escapeHtml(t("blog.emptyCategory"))}</li>`;
+      return;
+    }
     const onIdx = pending !== null ? pending : index;
     ol.innerHTML = list
       .map((post, i) => {
@@ -142,6 +230,11 @@
     });
   }
 
+  function syncCount() {
+    const countEl = document.querySelector("#post-count");
+    if (countEl) countEl.textContent = String(posts().length).padStart(2, "0");
+  }
+
   function setAngle(deg, animate) {
     const inner = document.querySelector("#tarot-inner");
     if (!inner) return;
@@ -162,7 +255,7 @@
 
     try {
       while (pending !== null && pending !== index) {
-        if (reducedMotion() || !inner) {
+        if (reducedMotion() || !inner || !list.length) {
           index = pending;
           setBack(pickBack(true));
           fillFront(list[index]);
@@ -170,7 +263,6 @@
           break;
         }
 
-        // One flip → latest hovered target (skip in-between cards)
         setBack(pickBack(true));
         setAngle(angle + 180, true);
         await wait(HALF_MS);
@@ -215,6 +307,56 @@
     drainFlip();
   }
 
+  async function selectCategory(nextId) {
+    if (!categories().some((c) => c.id === nextId)) return;
+    if (nextId === category && !busy) return;
+
+    category = nextId;
+    storeCategory(category);
+    index = 0;
+    pending = null;
+    busy = false;
+    syncCategoryActive();
+    syncCount();
+
+    const list = posts();
+    fillToc(list);
+    syncTocActive();
+
+    const inner = document.querySelector("#tarot-inner");
+    if (!list.length) {
+      setBack(pickBack(true));
+      fillFront(null);
+      setAngle(0, false);
+      return;
+    }
+
+    if (reducedMotion() || !inner) {
+      setBack(pickBack(true));
+      fillFront(list[0]);
+      setAngle(0, false);
+      return;
+    }
+
+    // One flip into the new shelf's first card
+    busy = true;
+    try {
+      setBack(pickBack(true));
+      setAngle(angle + 180, true);
+      await wait(HALF_MS);
+      fillFront(list[0]);
+      index = 0;
+      setAngle(angle + 180, true);
+      await wait(HALF_MS);
+      if (angle >= 360) {
+        setAngle(angle % 360, false);
+        void inner.offsetWidth;
+      }
+    } finally {
+      busy = false;
+    }
+  }
+
   function postHref(post) {
     if (!post || post.draft) return "";
     const href = post.href;
@@ -222,19 +364,13 @@
   }
 
   function bind(root) {
-    root.addEventListener("pointerover", (ev) => {
-      const btn = ev.target.closest?.(".blog-toc-item");
-      if (!btn || !root.contains(btn)) return;
-      selectIndex(Number(btn.dataset.index));
-    });
-
-    root.addEventListener("focusin", (ev) => {
-      const btn = ev.target.closest?.(".blog-toc-item");
-      if (!btn || !root.contains(btn)) return;
-      selectIndex(Number(btn.dataset.index));
-    });
-
     root.addEventListener("click", (ev) => {
+      const catBtn = ev.target.closest?.(".blog-cat");
+      if (catBtn && root.contains(catBtn)) {
+        selectCategory(catBtn.dataset.category);
+        return;
+      }
+
       const btn = ev.target.closest?.(".blog-toc-item");
       if (!btn || !root.contains(btn)) return;
       const i = Number(btn.dataset.index);
@@ -247,7 +383,40 @@
       window.location.assign(href);
     });
 
+    root.addEventListener("pointerover", (ev) => {
+      const btn = ev.target.closest?.(".blog-toc-item");
+      if (!btn || !root.contains(btn)) return;
+      selectIndex(Number(btn.dataset.index));
+    });
+
+    root.addEventListener("focusin", (ev) => {
+      const btn = ev.target.closest?.(".blog-toc-item");
+      if (!btn || !root.contains(btn)) return;
+      selectIndex(Number(btn.dataset.index));
+    });
+
     root.addEventListener("keydown", (ev) => {
+      const catBtn = ev.target.closest?.(".blog-cat");
+      if (catBtn) {
+        const cats = categories();
+        const i = cats.findIndex((c) => c.id === category);
+        if (ev.key === "ArrowDown" || ev.key === "ArrowRight") {
+          ev.preventDefault();
+          const n = Math.min(cats.length - 1, i + 1);
+          selectCategory(cats[n].id).then(() => {
+            document.querySelector(`.blog-cat[data-category="${cats[n].id}"]`)?.focus();
+          });
+        }
+        if (ev.key === "ArrowUp" || ev.key === "ArrowLeft") {
+          ev.preventDefault();
+          const n = Math.max(0, i - 1);
+          selectCategory(cats[n].id).then(() => {
+            document.querySelector(`.blog-cat[data-category="${cats[n].id}"]`)?.focus();
+          });
+        }
+        return;
+      }
+
       const btn = ev.target.closest?.(".blog-toc-item");
       if (!btn) return;
       const list = posts();
@@ -280,24 +449,28 @@
     const root = document.querySelector("#blog-deck");
     if (!root) return false;
     const { t } = window.I18N;
-    const list = posts();
-    const countEl = document.querySelector("#post-count");
-    if (countEl) countEl.textContent = String(list.length).padStart(2, "0");
 
-    if (!list.length) {
+    if (!categories().length) {
       root.innerHTML = `<p class="empty">${escapeHtml(t("blog.empty"))}</p>`;
       return true;
     }
 
-    const keep = Math.min(index, list.length - 1);
+    if (!categories().some((c) => c.id === category)) {
+      category = DEFAULT_CAT;
+    }
+
     renderShell(root);
-    index = keep;
+    const list = posts();
+    index = list.length ? Math.min(index, list.length - 1) : 0;
     pending = null;
     busy = false;
     angle = 0;
+    fillCategories();
+    syncCategoryActive();
+    syncCount();
     fillToc(list);
     setBack(pickBack(false));
-    fillFront(list[index]);
+    fillFront(list[index] || null);
     syncTocActive();
     setAngle(0, false);
     if (root.dataset.deckBound !== "1") {
@@ -305,8 +478,9 @@
       bind(root);
     }
     window.I18N.apply();
+    syncCategoryActive();
     return true;
   }
 
-  window.BlogDeck = { render, selectIndex };
+  window.BlogDeck = { render, selectIndex, selectCategory };
 })();
