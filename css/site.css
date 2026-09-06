@@ -1116,6 +1116,88 @@ body[data-page="resume"] .cv-fade {
   font-size: 0.72rem;
   color: var(--cyan);
 }
+.blog-toc-kicker-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 4px;
+}
+.blog-toc-cat-name {
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: var(--dim);
+  font-size: 0.78rem;
+}
+.blog-cat-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.blog-cat {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(104, 252, 254, 0.16);
+  border-left: 2px solid rgba(104, 252, 254, 0.22);
+  background: rgba(2, 10, 24, 0.35);
+  color: var(--dim);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.blog-cat:hover,
+.blog-cat:focus-visible {
+  outline: none;
+  border-color: rgba(104, 252, 254, 0.4);
+  color: var(--ink);
+  background: rgba(104, 252, 254, 0.06);
+}
+.blog-cat.is-on {
+  border-left-color: var(--cyan);
+  border-color: rgba(104, 252, 254, 0.45);
+  background: rgba(104, 252, 254, 0.1);
+  color: var(--ink);
+}
+.blog-cat-label {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+.blog-cat-count {
+  font-family: var(--hud);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--cyan);
+  opacity: 0.85;
+}
+.blog-toc-divider {
+  height: 1px;
+  margin: 14px 0 12px;
+  background: linear-gradient(
+    90deg,
+    rgba(104, 252, 254, 0.45),
+    rgba(104, 252, 254, 0.08) 70%,
+    transparent
+  );
+}
+.blog-toc-empty {
+  margin: 0;
+  padding: 14px 12px;
+  color: var(--dim);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  border-left: 2px dashed rgba(104, 252, 254, 0.25);
+}
+.tarot-copy-empty {
+  justify-content: center;
+  padding: 28px 20px !important;
+}
 .blog-toc-list {
   list-style: none;
   margin: 0;
@@ -1343,6 +1425,16 @@ body[data-page="resume"] .cv-fade {
   .blog-deck {
     grid-template-columns: 1fr;
     gap: 28px;
+  }
+  .blog-cat-rail {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 8px;
+    padding-bottom: 4px;
+  }
+  .blog-cat {
+    flex: 0 0 auto;
+    min-width: 7.5rem;
   }
   .blog-toc-list {
     flex-direction: row;

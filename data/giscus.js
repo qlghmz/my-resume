@@ -9,6 +9,7 @@ window.GISCUS = {
     "i2c-trise-ack-trap": 22,
     "rk3588-rga-multi-camera": 23,
     "ai-video-creation-engine": 24,
+    "taobao-outsource-group-half-year": 25,
   },
   reactionsEnabled: "1",
   emitMetadata: "0",

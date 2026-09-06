@@ -1,6 +1,36 @@
+window.BLOG_CATEGORIES = [
+  {
+    id: "daily",
+    label: { zh: "日常", en: "Daily" },
+  },
+  {
+    id: "tech",
+    label: { zh: "技术", en: "Tech" },
+  },
+  {
+    id: "growth",
+    label: { zh: "个人发展", en: "Growth" },
+  },
+];
+
 window.POSTS = [
   {
+    id: "taobao-outsource-group-half-year",
+    category: "growth",
+    date: "2026.09.06",
+    href: "/blog/taobao-outsource-group-half-year.html",
+    title: {
+      zh: "淘宝外包群接单半年：流程怎么走，坑在哪里",
+      en: "Six Months in Taobao Outsource Groups: The Flow and the Traps",
+    },
+    summary: {
+      zh: "个人分享，不是埋怨行业。淘宝网店进群 → 报价开工 → 月底结算；钱、单价、抽成和回头客上的真实感受。",
+      en: "Personal sharing, not a rant. Shop groups → quote & build → month-end pay; notes on cash timing, rates, cuts, and repeats.",
+    },
+  },
+  {
     id: "i2c-trise-ack-trap",
+    category: "tech",
     date: "2026.03.15",
     href: "/blog/i2c-trise-ack-trap.html",
     title: {
@@ -14,6 +44,7 @@ window.POSTS = [
   },
   {
     id: "rk3588-rga-multi-camera",
+    category: "tech",
     date: "2026.02.07",
     href: "/blog/rk3588-rga-multi-camera.html",
     cover: "/img/blog/rk3588-cover.jpg",
@@ -28,6 +59,7 @@ window.POSTS = [
   },
   {
     id: "ai-video-creation-engine",
+    category: "tech",
     date: "2026.01.30",
     href: "/blog/ai-video-creation-engine.html",
     cover: "/img/blog/ai-video-cover.jpg",
@@ -42,6 +74,7 @@ window.POSTS = [
   },
   {
     id: "tonometer-freertos-threads",
+    category: "tech",
     date: "2025.12",
     draft: true,
     href: "#",
