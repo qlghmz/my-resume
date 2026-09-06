@@ -1057,6 +1057,30 @@ body[data-page="resume"] .cv-fade {
 }
 .back-link { display: inline-flex; }
 
+.article-comments {
+  margin: 48px 0 28px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(104, 252, 254, 0.22);
+}
+.article-comments h2 {
+  margin: 0 0 8px;
+  font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+}
+.comments-note {
+  margin: 0 0 18px;
+  color: var(--dim);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+#giscus-root,
+.giscus {
+  min-height: 120px;
+}
+.giscus-frame {
+  width: 100% !important;
+  border: none !important;
+}
+
 .hud-foot {
   display: flex;
   justify-content: space-between;
