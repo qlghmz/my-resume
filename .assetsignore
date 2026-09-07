@@ -9,6 +9,8 @@ package-lock.json
 wrangler.jsonc
 src
 scripts
+tools
+syndicate-out
 README.md
 .env
 .env.*

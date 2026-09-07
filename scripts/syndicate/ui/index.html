@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>分发预览 · 本地作者工具</title>
+  <link rel="stylesheet" href="/tools/syndicate/syndicate.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <p class="kicker">LOCAL ONLY · NOT PUBLIC</p>
+      <h1>博客多平台分发</h1>
+      <p class="sub">作者本地小工具，不是站点页面。主站为原文源；一键生成各平台稿，文首/文末带主站链接。dry-run，不真正发外站。线上不会部署本页。</p>
+    </div>
+    <a class="back" href="/blog/">← 博客（本机预览）</a>
+  </header>
+
+  <section class="panel">
+    <div class="row">
+      <label>
+        文章
+        <select id="post-select"></select>
+      </label>
+      <fieldset class="platforms" id="platform-checks"></fieldset>
+      <button type="button" id="btn-run" class="primary">一键生成分发稿</button>
+    </div>
+    <p class="status" id="status" aria-live="polite"></p>
+  </section>
+
+  <section class="layout">
+    <aside class="jobs" id="jobs"></aside>
+    <article class="preview">
+      <div class="preview-head">
+        <h2 id="preview-title">选择一篇文章并生成</h2>
+        <p id="preview-meta" class="meta"></p>
+        <div class="tabs" id="tabs"></div>
+      </div>
+      <pre id="preview-body" class="body"></pre>
+    </article>
+  </section>
+
+  <script src="/tools/syndicate/app.js"></script>
+</body>
+</html>

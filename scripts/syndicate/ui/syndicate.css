@@ -1,0 +1,196 @@
+:root {
+  --bg: #06101c;
+  --panel: #0b1a2c;
+  --ink: #e8f4ff;
+  --dim: #8aa0b8;
+  --cyan: #68fcfe;
+  --line: rgba(104, 252, 254, 0.22);
+  --ok: #7dffb3;
+  --font: "Segoe UI", "Noto Sans SC", sans-serif;
+  --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(900px 420px at 10% -10%, rgba(104, 252, 254, 0.12), transparent 60%),
+    radial-gradient(700px 360px at 90% 0%, rgba(80, 120, 255, 0.1), transparent 55%),
+    var(--bg);
+  font-family: var(--font);
+  padding: 28px clamp(16px, 4vw, 40px) 64px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 24px;
+}
+.kicker {
+  margin: 0 0 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--cyan);
+}
+h1 { margin: 0 0 8px; font-size: 1.8rem; }
+.sub { margin: 0; max-width: 42rem; color: var(--dim); line-height: 1.55; }
+.back {
+  color: var(--cyan);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+.back:hover { background: rgba(104, 252, 254, 0.08); }
+
+.panel {
+  border: 1px solid var(--line);
+  background: rgba(11, 26, 44, 0.85);
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: end;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+select {
+  min-width: min(100%, 360px);
+  padding: 10px 12px;
+  background: #04101c;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font: inherit;
+}
+.platforms {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+}
+.platforms label {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.9rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.primary {
+  border: 1px solid rgba(104, 252, 254, 0.55);
+  background: rgba(104, 252, 254, 0.14);
+  color: var(--ink);
+  padding: 10px 16px;
+  font: inherit;
+  cursor: pointer;
+}
+.primary:hover { background: rgba(104, 252, 254, 0.22); }
+.primary:disabled { opacity: 0.5; cursor: wait; }
+.status {
+  margin: 12px 0 0;
+  min-height: 1.2em;
+  color: var(--ok);
+  font-size: 0.92rem;
+}
+.status.is-err { color: #ff8f8f; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.jobs {
+  border: 1px solid var(--line);
+  background: rgba(11, 26, 44, 0.7);
+  padding: 12px;
+  max-height: 70vh;
+  overflow: auto;
+}
+.jobs h3 {
+  margin: 0 0 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+.job {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  padding: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font: inherit;
+}
+.job:hover, .job.is-on {
+  border-color: var(--line);
+  background: rgba(104, 252, 254, 0.08);
+}
+.job small { display: block; color: var(--dim); margin-top: 4px; }
+
+.preview {
+  border: 1px solid var(--line);
+  background: rgba(11, 26, 44, 0.7);
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+}
+.preview-head { padding: 16px 18px 0; }
+.preview-head h2 { margin: 0 0 6px; font-size: 1.2rem; }
+.meta { margin: 0 0 12px; color: var(--dim); font-size: 0.88rem; word-break: break-all; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.tab {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--dim);
+  padding: 6px 10px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+}
+.tab.is-on, .tab:hover {
+  color: var(--ink);
+  border-color: rgba(104, 252, 254, 0.5);
+  background: rgba(104, 252, 254, 0.1);
+}
+.body {
+  margin: 0;
+  padding: 0 18px 18px;
+  flex: 1;
+  overflow: auto;
+  max-height: 62vh;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #cfe6ff;
+}
+
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .jobs { max-height: 220px; }
+}

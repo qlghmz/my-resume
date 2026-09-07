@@ -2,6 +2,21 @@
 
 本地：`npm run dev` → http://127.0.0.1:8787/
 
+## 多平台分发（作者本地工具，不上线）
+
+**不是站点功能、不给访客看。** 代码在 `scripts/syndicate/`（部署已 ignore），仅 `npm run dev` 时挂本地路由；线上没有这个页面和 API。
+
+主站文章为原文源，一键生成博客园 / 掘金 / CSDN / Dev.to / Medium 稿，文首与文末带主站链接。默认 dry-run，不真正发到外站。
+
+```text
+npm run syndicate -- --list
+npm run syndicate -- --id taobao-outsource-group-half-year
+npm run dev
+# 仅本机：http://127.0.0.1:8787/tools/syndicate/
+```
+
+产出在 `syndicate-out/`（已 gitignore）。外站真发后续再接各平台 token。
+
 首页是 Persona 3 Reload 风格暂停菜单（静态 HTML/CSS/JS，无框架）。未使用 Atlus 官方素材/字体/BGM。
 
 - `/` 主菜单
