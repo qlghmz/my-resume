@@ -15,6 +15,20 @@ window.BLOG_CATEGORIES = [
 
 window.POSTS = [
   {
+    id: "outsource-ai-side-hustle-part-2",
+    category: "growth",
+    date: "2026.09.08",
+    href: "/blog/outsource-ai-side-hustle-part-2.html",
+    title: {
+      zh: "外包篇 2：AI 接互联网零活，钱从哪来、坑在哪",
+      en: "Outsourcing Part 2: AI Side Jobs on the Web — Where Money and Pain Come From",
+    },
+    summary: {
+      zh: "网站 / 小程序怎么用 AI 赶；月入 3～4k 常见、运气好可到 8k；两天 HTML 拖两月、急单加卡服务器为什么千万别碰。",
+      en: "Web & mini-program gigs with AI; ¥3–4k common, luck to ¥8k; why a two-day HTML and a rush job on a bad server hurt.",
+    },
+  },
+  {
     id: "taobao-outsource-group-half-year",
     category: "growth",
     date: "2026.09.06",
