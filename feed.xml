@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>董家辉 · 博客</title>
+  <subtitle type="text">嵌入式 Linux、I2C、RK3588 RGA、AI 视频等技术笔记。</subtitle>
+  <link href="https://resume.tensorview.cc/blog/" rel="alternate" type="text/html" />
+  <link href="https://resume.tensorview.cc/feed.xml" rel="self" type="application/atom+xml" />
+  <id>https://resume.tensorview.cc/blog/</id>
+  <updated>2026-09-08T00:00:00Z</updated>
+  <author>
+    <name>董家辉</name>
+    <uri>https://resume.tensorview.cc</uri>
+  </author>
+  <entry>
+    <title>外包篇 2：AI 接互联网零活，钱从哪来、坑在哪</title>
+    <link href="https://resume.tensorview.cc/blog/outsource-ai-side-hustle-part-2.html" rel="alternate" type="text/html" />
+    <id>https://resume.tensorview.cc/blog/outsource-ai-side-hustle-part-2.html</id>
+    <published>2026-09-08T00:00:00Z</published>
+    <updated>2026-09-08T00:00:00Z</updated>
+    <summary type="text">网站 / 小程序怎么用 AI 赶；月入 3～4k 常见、运气好可到 8k；两天 HTML 拖两月、急单加卡服务器为什么千万别碰。</summary>
+  </entry>
+  <entry>
+    <title>淘宝外包群接单半年：流程怎么走，坑在哪里</title>
+    <link href="https://resume.tensorview.cc/blog/taobao-outsource-group-half-year.html" rel="alternate" type="text/html" />
+    <id>https://resume.tensorview.cc/blog/taobao-outsource-group-half-year.html</id>
+    <published>2026-09-06T00:00:00Z</published>
+    <updated>2026-09-06T00:00:00Z</updated>
+    <summary type="text">个人分享，不是埋怨行业。淘宝网店进群 → 报价开工 → 月底结算；钱、单价、抽成和回头客上的真实感受。</summary>
+  </entry>
+  <entry>
+    <title>Linux I2C 驱动调试实录：寄存器快照 + 示波器揪出隐藏时序陷阱</title>
+    <link href="https://resume.tensorview.cc/blog/i2c-trise-ack-trap.html" rel="alternate" type="text/html" />
+    <id>https://resume.tensorview.cc/blog/i2c-trise-ack-trap.html</id>
+    <published>2026-03-15T00:00:00Z</published>
+    <updated>2026-03-15T00:00:00Z</updated>
+    <summary type="text">偶发 EIO / 无 ACK。CCR 看着完美，示波器却看到 SCL 拖尾；失败瞬间 SR1.AF=1，根因是 TRISE 配小了。</summary>
+  </entry>
+  <entry>
+    <title>基于 RK3588 RGA 硬件加速的三路相机并发预览方案设计</title>
+    <link href="https://resume.tensorview.cc/blog/rk3588-rga-multi-camera.html" rel="alternate" type="text/html" />
+    <id>https://resume.tensorview.cc/blog/rk3588-rga-multi-camera.html</id>
+    <published>2026-02-07T00:00:00Z</published>
+    <updated>2026-02-07T00:00:00Z</updated>
+    <summary type="text">三路高分辨率相机同时预览。RGA + DMA 零拷贝做格式转换，统一异构源，CPU 占用很低。</summary>
+  </entry>
+  <entry>
+    <title>我构建了一个分布式 AI 视频创作引擎</title>
+    <link href="https://resume.tensorview.cc/blog/ai-video-creation-engine.html" rel="alternate" type="text/html" />
+    <id>https://resume.tensorview.cc/blog/ai-video-creation-engine.html</id>
+    <published>2026-01-30T00:00:00Z</published>
+    <updated>2026-01-30T00:00:00Z</updated>
+    <summary type="text">FastAPI + 分布式 GPU / NVENC。DeepSeek 改写、Edge-TTS 配音，合成相对 CPU 方案提速约 8–10 倍。</summary>
+  </entry>
+</feed>

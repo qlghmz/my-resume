@@ -5,7 +5,8 @@
     "dev": "node ./scripts/dev.mjs",
     "syndicate": "node ./scripts/syndicate/index.mjs",
     "cf:dev": "node ./node_modules/wrangler/bin/wrangler.js dev --live-reload --port 8787",
-    "deploy": "node ./node_modules/wrangler/bin/wrangler.js deploy",
+    "feed": "node ./scripts/generate-feed.mjs",
+    "deploy": "npm run feed && node ./node_modules/wrangler/bin/wrangler.js deploy",
     "setup:analytics": "node ./scripts/setup-analytics.mjs"
   },
   "devDependencies": {

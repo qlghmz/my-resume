@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: "22"
       - run: npm install
+      - run: npm run feed
       - run: npx wrangler deploy --dry-run
 
   deploy:
@@ -27,6 +28,7 @@ jobs:
         with:
           node-version: "22"
       - run: npm install
+      - run: npm run feed
       - name: Require CLOUDFLARE_API_TOKEN
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
