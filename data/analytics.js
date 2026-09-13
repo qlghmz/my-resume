@@ -1,10 +1,9 @@
-// Site analytics config (Umami). See README 「访问统计」.
-// websiteId is a public tracker id (like GA measurement id), not your admin password.
+// Site analytics (Cloudflare Web Analytics). See README 「访问统计」.
+// token is a public beacon id (like GA measurement id), not your Cloudflare password.
 window.ANALYTICS_CONFIG = {
   enabled: false,
-  scriptHost: "https://cloud.umami.is",
-  websiteId: "",
-  domains: "resume.tensorview.cc",
+  provider: "cloudflare",
+  token: "",
   ignoreLocalhost: true,
   respectDoNotTrack: true,
 };
