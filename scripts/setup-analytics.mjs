@@ -12,10 +12,11 @@ const DOMAIN = "resume.tensorview.cc";
 const ZONE_NAME = "tensorview.cc";
 
 function parseArgs() {
-  const out = { deploy: false, token: "", apiToken: "" };
+  const out = { deploy: false, token: "", umamiId: "", apiToken: "" };
   for (const arg of process.argv.slice(2)) {
     if (arg === "--deploy") out.deploy = true;
     else if (arg.startsWith("--token=")) out.token = arg.slice(8).trim();
+    else if (arg.startsWith("--umami-id=")) out.umamiId = arg.slice(11).trim();
     else if (arg.startsWith("--api-token=")) out.apiToken = arg.slice(12).trim();
   }
   out.apiToken ||= process.env.CLOUDFLARE_API_TOKEN || "";
@@ -68,19 +69,10 @@ async function resolveTokenViaApi(apiToken) {
   const zone = zones?.[0];
   if (!zone?.id) throw new Error(`Zone not found: ${ZONE_NAME}`);
 
-  let sites = [];
-  try {
-    sites = await cfApi(
-      apiToken,
-      `https://api.cloudflare.com/client/v4/accounts/${accountId}/rum/site_info/list`,
-    );
-  } catch (err) {
-    throw new Error(
-      `Cloudflare API cannot manage Web Analytics with this token.\n` +
-        `${err.message}\n` +
-        `Create a token with Account → Account Analytics → Edit, or paste a beacon token manually.`,
-    );
-  }
+  const sites = await cfApi(
+    apiToken,
+    `https://api.cloudflare.com/client/v4/accounts/${accountId}/rum/site_info/list`,
+  );
 
   let site = (sites || []).find(
     (s) => siteHost(s) === DOMAIN || siteHost(s) === ZONE_NAME,
@@ -104,13 +96,24 @@ async function resolveTokenViaApi(apiToken) {
   return token;
 }
 
-function patchConfig(token) {
+function patchField(src, key, value) {
+  const re = new RegExp(`(${key}:\\s*)(true|false|"[^"]*")`);
+  if (!re.test(src)) throw new Error(`Field not found: ${key}`);
+  const lit = typeof value === "boolean" ? String(value) : `"${value}"`;
+  return src.replace(re, `$1${lit}`);
+}
+
+function patchConfig({ cfToken, umamiId }) {
   let src = fs.readFileSync(CONFIG_PATH, "utf8");
-  src = src.replace(/enabled:\s*false/, "enabled: true");
-  if (!/token:\s*"[^"]*"/.test(src)) {
-    throw new Error("Unexpected analytics.js format");
+  if (cfToken) {
+    src = patchField(src, "token", cfToken);
+    src = patchField(src, "enabled", true);
   }
-  src = src.replace(/token:\s*"[^"]*"/, `token: "${token}"`);
+  if (umamiId) {
+    src = patchField(src, "websiteId", umamiId);
+    src = src.replace(/(umami:\s*\{[\s\S]*?enabled:\s*)false/, "$1true");
+  }
+  src = src.replace(/^(\s*enabled:\s*)false/m, "$1true");
   fs.writeFileSync(CONFIG_PATH, src);
 }
 
@@ -123,53 +126,45 @@ function deploy() {
   if (r.status !== 0) process.exit(r.status ?? 1);
 }
 
-function printManualHelp() {
-  console.error(`Need a Cloudflare Web Analytics beacon token.
+function printHelp() {
+  console.error(`Usage:
+  npm run setup:analytics -- --token=CF_TOKEN [--umami-id=UUID] [--deploy]
 
-Option A — paste token (fastest, free):
-  npm run setup:analytics -- --token=YOUR_TOKEN --deploy
+Cloudflare token: Dashboard → Analytics & Logs → Web Analytics → ${DOMAIN}
+Umami website id: https://cloud.umami.is → Add website → copy Website ID (Hobby free, no API)
 
-  Get token: Cloudflare Dashboard → Analytics & Logs → Web Analytics
-  → Add a site → hostname ${DOMAIN} → copy the token from the snippet.
-
-Option B — API token with Web Analytics permission:
-  $env:CLOUDFLARE_API_TOKEN="..."
-  npm run setup:analytics -- --deploy
-
-Dashboard after setup:
-  Cloudflare → Analytics & Logs → Web Analytics → ${DOMAIN}`);
+Example:
+  npm run setup:analytics -- --token=abc --umami-id=uuid --deploy`);
 }
 
 async function main() {
-  const { deploy: doDeploy, token: argToken, apiToken } = parseArgs();
-  let token = argToken;
+  const { deploy: doDeploy, token: argToken, umamiId, apiToken } = parseArgs();
+  let cfToken = argToken;
 
-  if (!token) {
+  if (!cfToken && !umamiId) {
     const bearer = apiToken || readWranglerOAuth();
     if (bearer) {
       try {
-        token = await resolveTokenViaApi(bearer);
-        console.log(`Cloudflare Web Analytics ready for ${DOMAIN}`);
+        cfToken = await resolveTokenViaApi(bearer);
       } catch (err) {
         console.warn(String(err.message || err));
       }
     }
   }
 
-  if (!token) {
-    printManualHelp();
+  if (!cfToken && !umamiId) {
+    printHelp();
     process.exit(1);
   }
 
-  patchConfig(token);
-  console.log(`Updated ${path.relative(ROOT, CONFIG_PATH)} (enabled: true)`);
+  patchConfig({ cfToken: cfToken || undefined, umamiId: umamiId || undefined });
+  console.log(`Updated ${path.relative(ROOT, CONFIG_PATH)}`);
 
   if (doDeploy) {
-    console.log("Deploying to Cloudflare…");
     deploy();
-    console.log("Done. Open Web Analytics in Cloudflare dashboard, then visit https://resume.tensorview.cc");
-  } else {
-    console.log(`Next: npm run setup:analytics -- --token=${token} --deploy`);
+    console.log("Deployed. Dashboards:");
+    console.log("  CF Web Analytics → performance + pageviews");
+    if (umamiId) console.log("  Umami → countries, referrers, events");
   }
 }
 
