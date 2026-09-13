@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "node ./scripts/dev.mjs",
     "cf:dev": "node ./node_modules/wrangler/bin/wrangler.js dev --live-reload --port 8787",
-    "deploy": "node ./node_modules/wrangler/bin/wrangler.js deploy"
+    "deploy": "node ./node_modules/wrangler/bin/wrangler.js deploy",
+    "setup:analytics": "node ./scripts/setup-analytics.mjs"
   },
   "devDependencies": {
     "wrangler": "^4"

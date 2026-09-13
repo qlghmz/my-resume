@@ -136,23 +136,27 @@ npm run deploy
 
 代码：`data/analytics.js`（开关与 websiteId）+ `js/analytics.js`（Umami 脚本与事件）。默认 **关闭**，配好 Umami 后再打开。
 
-### 一次性接入 Umami（推荐 Cloud，最省事）
+### 一次性接入 Umami（CLI，推荐）
 
-1. 打开 [Umami Cloud](https://cloud.umami.is) 注册（或 [自托管](https://github.com/umami-software/umami)）
-2. **Settings → Websites → Add website** → 域名填 `resume.tensorview.cc`
-3. 复制 **Website ID**（UUID，公开追踪 id，**不是**登录密码）
-4. 编辑 `data/analytics.js`：
-   ```js
-   window.ANALYTICS_CONFIG = {
-     enabled: true,
-     scriptHost: "https://cloud.umami.is", // 自托管则改成你的域名
-     websiteId: "粘贴 UUID",
-     domains: "resume.tensorview.cc",
-     ignoreLocalhost: true,
-     respectDoNotTrack: true,
-   };
+1. 登录 [Umami Cloud](https://cloud.umami.is) → 头像 → **Settings → API keys → Create key**（复制一次即可）
+2. 在本机 `site/` 目录执行（PowerShell）：
+
+   ```powershell
+   $env:UMAMI_API_KEY="粘贴 API key"
+   npm run setup:analytics -- --deploy
    ```
-5. 合入并部署 → 打开 Umami 仪表盘 → **Realtime** 应能看到自己访问
+
+   脚本会自动：查找或创建 `resume.tensorview.cc` 网站 → 写入 `data/analytics.js` → `wrangler deploy`。
+
+   若你已在网页里建过站，也可直接用 Website ID：
+
+   ```powershell
+   npm run setup:analytics -- --website-id=你的UUID --deploy
+   ```
+
+3. 打开 Umami **Realtime**，访问 https://resume.tensorview.cc 验证
+
+手动改配置仍可用：编辑 `data/analytics.js` 后 `npm run deploy`。
 
 自托管：Docker 一键部署 Umami，把 `scriptHost` 改成 `https://analytics.你的域名`，后台与追踪脚本同域。
 
