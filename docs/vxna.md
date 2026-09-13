@@ -23,14 +23,23 @@ npm run feed
 
 ## 申请收录（一次性）
 
-1. 打开 [VXNA 节点](https://www.v2ex.com/go/vxna)
-2. 发一个新帖，正文写清楚：
-   - **网站地址**：`https://resume.tensorview.cc/blog/`
-   - **Feed 地址**：`https://resume.tensorview.cc/feed.xml`
-3. 等 Livid 人工审核（可能数天到数周，批量处理）
-4. 收录后在 https://www.v2ex.com/xna 能看到你的源
+### 方式 A：命令行（需 V2EX Token）
 
-**申请帖模板（可直接复制改）：**
+1. 在 [V2EX → Settings → Tokens](https://www.v2ex.com/settings/tokens) 创建 Personal Access Token
+2. 运行：
+
+```bash
+# PowerShell
+$env:V2EX_TOKEN="粘贴你的-token"
+npm run vxna:submit
+```
+
+成功后会输出帖子 URL；失败则检查 Token 权限或改用手动发帖。
+
+### 方式 B：手动
+
+1. 打开 [VXNA 节点](https://www.v2ex.com/go/vxna)
+2. 创建新主题，标题 **申请 VXNA 收录**，正文：
 
 ```
 申请 VXNA 收录
@@ -40,6 +49,9 @@ Feed：https://resume.tensorview.cc/feed.xml
 
 个人技术博客，嵌入式 Linux / RK3588 / AI 视频等方向，持续更新。
 ```
+
+3. 等 Livid 人工审核（可能数天到数周，批量处理）
+4. 收录后在 https://www.v2ex.com/xna 能看到你的源
 
 ## 收录之后
 
