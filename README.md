@@ -126,6 +126,7 @@ npm run deploy
 
 ## 访问统计（产品化四层数据）
 
+**需求文档：** [`docs/requirements/0012-analytics.md`](docs/requirements/0012-analytics.md)（REQ-0012-*）  
 **目标、阶段基线、周/月复盘标准、月报模板：** 见 [`docs/analytics-playbook.md`](docs/analytics-playbook.md)（有 1～2 周数据后按此分析）。
 
 个人站按 **产品** 维护：发现 → 阅读 → 行动 → 结果。工具组合（均免费档可用）：
