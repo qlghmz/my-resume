@@ -23,10 +23,9 @@ npm run feed
 
 ## 申请收录（一次性）
 
-### 方式 A：命令行（需 V2EX Token）
+### 方式 A：命令行（验证 Token + 输出正文）
 
-1. 在 [V2EX → Settings → Tokens](https://www.v2ex.com/settings/tokens) 创建 Personal Access Token
-2. 运行：
+V2EX API 2.0 **尚未公开**「创建主题」接口（`POST topics/new` 返回 405），脚本无法代发，只能校验 Token 并打印可复制正文。
 
 ```bash
 # PowerShell
@@ -34,7 +33,7 @@ $env:V2EX_TOKEN="粘贴你的-token"
 npm run vxna:submit
 ```
 
-成功后会输出帖子 URL；失败则检查 Token 权限或改用手动发帖。
+**Token 有效期：** 最长 **180 天**，无永久选项。但 VXNA **只需申请帖发一次**；收录后靠 `feed.xml` 自动抓取，**不必**为 VXNA 定期更新 Token。
 
 ### 方式 B：手动
 
