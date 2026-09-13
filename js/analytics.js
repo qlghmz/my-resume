@@ -6,6 +6,11 @@
   if (!cfg.enabled) return;
   if (cfg.ignoreLocalhost !== false && isLocalhost()) return;
   if (cfg.respectDoNotTrack && navigator.doNotTrack === "1") return;
+  try {
+    if (localStorage.getItem("jh.statsExclude") === "1") return;
+  } catch {
+    /* ignore */
+  }
 
   const cf = cfg.cloudflare || {};
   const umamiCfg = cfg.umami || {};

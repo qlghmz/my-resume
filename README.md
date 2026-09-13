@@ -126,6 +126,8 @@ npm run deploy
 
 ## 访问统计（产品化四层数据）
 
+**目标、阶段基线、周/月复盘标准、月报模板：** 见 [`docs/analytics-playbook.md`](docs/analytics-playbook.md)（有 1～2 周数据后按此分析）。
+
 个人站按 **产品** 维护：发现 → 阅读 → 行动 → 结果。工具组合（均免费档可用）：
 
 | 层级 | 问什么 | 工具 | 后台入口 | 看什么 |
@@ -180,29 +182,7 @@ npm run deploy
 
 Umami **Countries** 页可看 China / United States 等占比（回答「中国人还是外国人」）。
 
-### 每月复盘（15 分钟，对照发文日期）
-
-| 步骤 | 动作 |
-| --- | --- |
-| 1 | **Search Console**：新增搜索词？哪篇 URL 有展示无点击？→ 改标题 |
-| 2 | **Umami**：Top pages、Countries、Referrers、Events（`goal_resume` 多不多） |
-| 3 | **Cloudflare**：Core Web Vitals 是否变差；Visits 趋势 |
-| 4 | **Giscus**：哪篇有讨论 |
-| 5 | **机会日志**：本月有无面试/私信；来源是搜索、转发还是 direct |
-
-**机会日志模板**（复制到 Notion/表格，不要提交 secrets）：
-
-```text
-日期 | 来源(Google/V2EX/朋友/HR) | 是否提到网站 | 相关文章 | 结果
-```
-
-### 决策规则（数据 → 下一步）
-
-- 某文 **Search Console 展示高、点击低** → 改标题/描述，不写新文
-- **Umami 某国流量高** → 考虑双语内容比重
-- **博客 PV 高、`goal_resume` 低** → 文章末尾加「看简历 / 联系」
-- **某技术 slug 搜索词上涨** → 写同系列续篇
-- 全站 flat → 检查收录 + 发 1 篇可搜索长文 + 外链分享一次
+**站长自排除（避免自刷污染）：** 浏览器控制台 `localStorage.setItem('jh.statsExclude','1')`；恢复：`removeItem`。
 
 ### 安全说明
 
