@@ -52,12 +52,12 @@
     slot.innerHTML = `
       <a class="skip-link" href="#main">${t("a11y.skip")}</a>
       <header class="hud">
-        <a class="logo" href="/"><span>JH.</span> DONG</a>
+        <a class="logo" href="/" data-analytics="nav_click" data-analytics-target="home"><span>JH.</span> DONG</a>
         <div class="hud-path">${t("nav.main")} <b>/ ${t(here.key) || here.mark}</b></div>
         <nav class="hud-links" aria-label="${t("a11y.site")}">
           ${LINKS.map((item) => {
             const on = item.id === NAV_PAGE ? ' aria-current="page"' : "";
-            return `<a href="${item.href}"${on}>${t(item.key)}</a>`;
+            return `<a href="${item.href}" data-analytics="nav_click" data-analytics-target="${item.id}"${on}>${t(item.key)}</a>`;
           }).join("")}
         </nav>
         ${langSwitcherHtml()}

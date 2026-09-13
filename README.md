@@ -138,3 +138,78 @@ npm run deploy
    `https://resume.tensorview.cc/sitemap.xml`
 
 新发博文时：写入 `data/posts.js`（非 draft）+ 文章 HTML，并在 `sitemap.xml` 加一条 `<url>`。
+
+## 访问统计（产品化四层数据）
+
+**需求文档：** [`docs/requirements/0012-analytics.md`](docs/requirements/0012-analytics.md)（REQ-0012-*）  
+**目标、阶段基线、周/月复盘标准、月报模板：** 见 [`docs/analytics-playbook.md`](docs/analytics-playbook.md)（有 1～2 周数据后按此分析）。
+
+个人站按 **产品** 维护：发现 → 阅读 → 行动 → 结果。工具组合（均免费档可用）：
+
+| 层级 | 问什么 | 工具 | 后台入口 | 看什么 |
+| --- | --- | --- | --- | --- |
+| **发现** | 有没有被找到？ | Google Search Console | [search.google.com/search-console](https://search.google.com/search-console) | 搜索展示、点击、查询词、收录页 |
+| **阅读** | 来了之后看不看？ | Cloudflare Web Analytics | CF → Analytics & Logs → **Web Analytics** | PV、Visits、Core Web Vitals、页面路径 |
+| **阅读+行动** | 哪国/哪来/点什么？ | Umami（Hobby 免费） | [cloud.umami.is](https://cloud.umami.is) | **国家**（中/外）、Referrer、设备、浏览器、Events |
+| **行动** | 有没有进一步动作？ | Umami Events + 页面路径 | Umami → Events / Pages | `goal_resume`、`click_github`、`article_scroll`… |
+| **结果** | 对人生有没有用？ | **机会日志**（自建表格） | Notion / 飞书 / 本地 CSV | 面试、私信、合作、来源 |
+| **互动** | 谁评论了？ | Giscus | GitHub → Discussions | 评论人与文章 |
+
+代码：`data/analytics.js` + `js/analytics.js`（**Cloudflare + Umami 双栈**）。
+
+### 为什么 Cloudflare 现在显示 0？
+
+刚接入、访客少时正常。Web Analytics **不是实时秒出**，通常要：
+
+1. 用**非本地**浏览器打开 https://resume.tensorview.cc（无痕/手机流量更好）
+2. 等 **15 分钟～24 小时** 再刷新仪表盘
+3. 排除机器人已默认开启（Exclude bots = Yes）
+
+有数据后，CF 仪表盘可看：**Visits、Page views、Countries（国家）、Referrers、Pages、Core Web Vitals**。
+
+### 接入步骤（CLI）
+
+**① Cloudflare（已接）** — 性能 + 基础 PV
+
+**② Umami（建议接）** — 国家/来源/事件（Hobby 免费，**不需要 Pro API**）
+
+1. [cloud.umami.is](https://cloud.umami.is) → **Add website** → 域名 `resume.tensorview.cc`
+2. 复制 **Website ID**（UUID，在网站 Settings 里）
+3. 执行：
+
+   ```powershell
+   npm run setup:analytics -- --token=你的CF_token --umami-id=你的UUID --deploy
+   ```
+
+**③ Search Console（发现层，必做）**
+
+按上文 **SEO / 搜索收录** 验证并提交 `sitemap.xml`。
+
+### Umami 已追踪事件（行动层）
+
+| 事件 | 含义 |
+| --- | --- |
+| `goal_resume` / `goal_contact` / `goal_blog`… | 进入栏目 |
+| `goal_article` | 打开文章（含 slug） |
+| `article_scroll` | 阅读深度 25/50/75/90% |
+| `click_github` / `click_email` | 外链转化 |
+| `work_click` / `blog_open` | 作品 / 博文入口 |
+| `nav_click` / `lang_switch` | 导航与语言 |
+
+Umami **Countries** 页可看 China / United States 等占比（回答「中国人还是外国人」）。
+
+**站长自排除（避免自刷污染）：** 浏览器控制台 `localStorage.setItem('jh.statsExclude','1')`；恢复：`removeItem`。
+
+### 安全说明
+
+- CF token、Umami Website ID 为**公开追踪 id**，可写进仓库
+- **不要**提交 Cloudflare/Umami **登录密码**或带写权限的 API Token
+- `data/analytics.js` 里 `umami.enabled: false` 可单独关闭行为统计
+
+### 对外推广（可选 UTM）
+
+```text
+https://resume.tensorview.cc/blog/rk3588-rga-multi-camera?utm_source=v2ex&utm_medium=post
+```
+
+Umami / CF Referrers 可看到来源。
