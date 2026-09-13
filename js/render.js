@@ -35,7 +35,7 @@
           <span class="project-number">${String(i + 1).padStart(2, "0")}</span>
           <span class="project-type">${escapeHtml(work.type || "")}</span>
           <h3>${escapeHtml(title)}</h3>
-          <a class="project-link" href="${escapeHtml(href)}"${external ? ' target="_blank" rel="noopener"' : ""}>
+          <a class="project-link" href="${escapeHtml(href)}" data-analytics="work_click" data-analytics-work="${escapeHtml(work.id || "")}"${external ? ' target="_blank" rel="noopener"' : ""}>
             <span>${escapeHtml(cta)}</span><span aria-hidden="true">↗</span>
           </a>
         </article>`;

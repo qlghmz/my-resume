@@ -171,8 +171,9 @@
     const draft = !!post.draft;
     const href = post.href && post.href !== "#" ? post.href : "";
     const cta = draft ? t("blog.deck.soon") : t("blog.read");
+    const slug = postSlug(post);
     const link = href
-      ? `<a class="tarot-cta" href="${escapeHtml(href)}"><span>${escapeHtml(cta)}</span><span aria-hidden="true">↗</span></a>`
+      ? `<a class="tarot-cta" href="${escapeHtml(href)}" data-analytics="blog_open" data-analytics-post="${escapeHtml(slug)}"><span>${escapeHtml(cta)}</span><span aria-hidden="true">↗</span></a>`
       : `<span class="tarot-cta is-soon"><span>${escapeHtml(cta)}</span></span>`;
     const cover = post.cover
       ? `<div class="tarot-cover"><img src="${escapeHtml(post.cover)}" alt="" loading="lazy" /></div>`
@@ -363,10 +364,22 @@
     return href && href !== "#" ? href : "";
   }
 
+  function postSlug(post) {
+    const href = postHref(post);
+    if (!href) return "";
+    const match = href.match(/\/blog\/([^/?#]+)/);
+    return match ? match[1].replace(/\.html$/i, "") : "";
+  }
+
+  function trackBlog(event, data) {
+    window.SiteAnalytics?.track?.(event, data);
+  }
+
   function bind(root) {
     root.addEventListener("click", (ev) => {
       const catBtn = ev.target.closest?.(".blog-cat");
       if (catBtn && root.contains(catBtn)) {
+        trackBlog("blog_category", { category: catBtn.dataset.category });
         selectCategory(catBtn.dataset.category);
         return;
       }
@@ -380,6 +393,7 @@
         selectIndex(i);
         return;
       }
+      trackBlog("blog_open", { post: postSlug(post), source: "toc" });
       window.location.assign(href);
     });
 
@@ -421,9 +435,11 @@
       if (!btn) return;
       const list = posts();
       if (ev.key === "Enter" || ev.key === " ") {
-        const href = postHref(list[Number(btn.dataset.index)]);
+        const post = list[Number(btn.dataset.index)];
+        const href = postHref(post);
         if (href) {
           ev.preventDefault();
+          trackBlog("blog_open", { post: postSlug(post), source: "toc_keyboard" });
           window.location.assign(href);
         }
         return;

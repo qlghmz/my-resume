@@ -123,3 +123,91 @@ npm run deploy
    `https://resume.tensorview.cc/sitemap.xml`
 
 新发博文时：写入 `data/posts.js`（非 draft）+ 文章 HTML，并在 `sitemap.xml` 加一条 `<url>`。
+
+## 访问统计（量化方案）
+
+站点用 **成熟开源方案组合**，不在仓库里自建统计后台：
+
+| 层级 | 工具 | 后台在哪看 | 量什么 |
+| --- | --- | --- | --- |
+| 全站流量 + 转化 | [Umami](https://github.com/umami-software/umami)（MIT） | Umami Cloud 或自托管仪表盘 | PV、UV、来源、国家、设备、自定义事件 |
+| 搜索发现 | Google Search Console | Google 控制台 | 展示、点击、搜索词、收录 |
+| 评论互动 | Giscus / GitHub Discussions | GitHub 仓库 Discussions | 谁评论、哪篇有讨论 |
+
+代码：`data/analytics.js`（开关与 websiteId）+ `js/analytics.js`（Umami 脚本与事件）。默认 **关闭**，配好 Umami 后再打开。
+
+### 一次性接入 Umami（推荐 Cloud，最省事）
+
+1. 打开 [Umami Cloud](https://cloud.umami.is) 注册（或 [自托管](https://github.com/umami-software/umami)）
+2. **Settings → Websites → Add website** → 域名填 `resume.tensorview.cc`
+3. 复制 **Website ID**（UUID，公开追踪 id，**不是**登录密码）
+4. 编辑 `data/analytics.js`：
+   ```js
+   window.ANALYTICS_CONFIG = {
+     enabled: true,
+     scriptHost: "https://cloud.umami.is", // 自托管则改成你的域名
+     websiteId: "粘贴 UUID",
+     domains: "resume.tensorview.cc",
+     ignoreLocalhost: true,
+     respectDoNotTrack: true,
+   };
+   ```
+5. 合入并部署 → 打开 Umami 仪表盘 → **Realtime** 应能看到自己访问
+
+自托管：Docker 一键部署 Umami，把 `scriptHost` 改成 `https://analytics.你的域名`，后台与追踪脚本同域。
+
+### 安全说明
+
+- **Website ID 可以出现在前端**（与 Google Analytics 测量 id 一样），访客看得到也改不了你的后台
+- **不要把 Umami 管理员密码、数据库密码、API secret 写进仓库**
+- Umami 后台：强密码 + 2FA；自托管不要裸奔暴露 3000 端口
+- `enabled: false` 或清空 `websiteId` 可立刻停统计
+- 本地 `127.0.0.1:8787` 默认不上报（`ignoreLocalhost`）
+- 尊重浏览器 **Do Not Track**（`respectDoNotTrack`）
+
+### 已追踪事件（Umami → Events）
+
+| 事件 | 含义 |
+| --- | --- |
+| `goal_home` / `goal_works` / `goal_resume` / `goal_blog` / `goal_contact` | 进入对应栏目 |
+| `goal_article` | 打开文章（`slug`） |
+| `article_scroll` | 文章阅读深度 25/50/75/90% |
+| `home_nav` | 首页菜单跳转 |
+| `nav_click` | 顶栏导航 |
+| `work_click` | 作品卡片（`work` id） |
+| `blog_open` | 打开博文（`post` slug） |
+| `blog_category` | 切换博客分类架 |
+| `click_github` / `click_email` | 联系/GitHub 点击 |
+| `lang_switch` | 切换 ZH/EN |
+
+页面浏览量由 Umami 脚本自动记录；上表是「有没有起作用」的转化信号。
+
+### Search Console（搜索层，与 Umami 互补）
+
+按上文 **SEO / 搜索收录** 接入。每月看：
+
+- 哪些搜索词带来展示（决定下一篇写什么）
+- 哪些 URL 有点击但 CTR 低（改标题/描述）
+- 新文章是否被索引
+
+### 每月复盘（15 分钟）
+
+1. **Umami**：UV、Top 页面、Referrer、Events（`goal_resume`、`click_github` 等）
+2. **Search Console**：展示/点击/查询词 Top 10
+3. **Giscus**：新评论在哪篇
+4. **机会日志**（自己记，表格即可）：日期 | 来源 | 是否看过站 | 结果（面试/私信/无）
+
+根据数据决定下月动作：
+
+- 某技术文搜索展示高、点击低 → 改标题，不急着写新文
+- 博客有流量、`goal_resume` 少 → 文章末尾加强「看简历/联系」
+- 某分类 `blog_category` 常点但无文 → 补该架内容
+- 全站 flat → 检查 Search Console 收录 + 发 1 篇可搜索长文
+
+### 对外推广（可选）
+
+简历、签名、社群发帖链接可加 UTM，Umami 里看来源更清楚：
+
+```text
+https://resume.tensorview.cc/blog/rk3588-rga-multi-camera?utm_source=v2ex&utm_medium=post&utm_campaign=rk3588
+```
