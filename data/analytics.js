@@ -11,9 +11,9 @@ window.ANALYTICS_CONFIG = {
   },
   // Behavior + countries + custom events (Umami Dashboard, Hobby free)
   umami: {
-    enabled: false,
+    enabled: true,
     scriptHost: "https://cloud.umami.is",
-    websiteId: "",
+    websiteId: "754b195c-5332-4a3f-afd7-897a217c503c",
     domains: "resume.tensorview.cc",
   },
 };
