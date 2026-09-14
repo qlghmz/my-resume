@@ -55,7 +55,10 @@ async function main() {
   const sorted = [...posts].sort(
     (a, b) => parsePostDate(b.date).getTime() - parsePostDate(a.date).getTime(),
   );
-  const updated = sorted.length ? parsePostDate(sorted[0].date) : new Date();
+  // Use current time so external aggregators see the feed as freshly updated
+  // whenever the feed is regenerated. This helps VXNA notice new posts
+  // even if post metadata dates are not changed.
+  const updated = new Date();
   const feedUrl = `${site}/feed.xml`;
 
   const xml = [
