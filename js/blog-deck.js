@@ -169,7 +169,10 @@
     }
 
     const draft = !!post.draft;
-    const href = post.href && post.href !== "#" ? post.href : "";
+    const rawHref = post.href && post.href !== "#" ? post.href : "";
+    const href = rawHref
+      ? window.I18N?.localizeHref?.(rawHref) || rawHref
+      : "";
     const cta = draft ? t("blog.deck.soon") : t("blog.read");
     const slug = postSlug(post);
     const link = href
@@ -361,7 +364,8 @@
   function postHref(post) {
     if (!post || post.draft) return "";
     const href = post.href;
-    return href && href !== "#" ? href : "";
+    if (!href || href === "#") return "";
+    return window.I18N?.localizeHref?.(href) || href;
   }
 
   function postSlug(post) {

@@ -1,6 +1,12 @@
 (() => {
   const SITE = "https://resume.tensorview.cc";
   const DEFAULT_OG = `${SITE}/img/blog/rk3588-cover.jpg`;
+  const HREFLANG = [
+    { code: "zh-CN", locale: "zh" },
+    { code: "en", locale: "en" },
+    { code: "ja", locale: "ja" },
+    { code: "x-default", locale: "zh" },
+  ];
 
   function ensureMeta(attr, key, content) {
     if (content == null || content === "") return;
@@ -13,15 +19,23 @@
     el.setAttribute("content", String(content));
   }
 
-  function ensureLink(rel, href) {
+  function ensureLink(rel, href, attrs = {}) {
     if (!href) return;
-    let el = document.head.querySelector(`link[rel="${rel}"]`);
+    let el;
+    if (attrs.hreflang) {
+      el = document.head.querySelector(
+        `link[rel="${rel}"][hreflang="${attrs.hreflang}"]`,
+      );
+    } else {
+      el = document.head.querySelector(`link[rel="${rel}"]:not([hreflang])`);
+    }
     if (!el) {
       el = document.createElement("link");
       el.setAttribute("rel", rel);
       document.head.appendChild(el);
     }
     el.setAttribute("href", href);
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
   }
 
   function absoluteUrl(path) {
@@ -32,12 +46,39 @@
 
   function pagePath() {
     const path = location.pathname || "/";
-    if (path === "/index.html") return "/";
+    if (path === "/index.html" || path === "/ja/index.html") {
+      return path.startsWith("/ja") ? "/ja/" : "/";
+    }
     return path.endsWith("/") || path.endsWith(".html") ? path : `${path}/`;
   }
 
+  function logicalPath() {
+    return window.I18N?.stripLocalePrefix?.(pagePath()) || pagePath();
+  }
+
+  function localePath(locale) {
+    return window.I18N?.pathForLocale?.(logicalPath(), locale) || logicalPath();
+  }
+
+  function ogLocale(code) {
+    if (code === "ja") return "ja_JP";
+    if (code === "zh") return "zh_CN";
+    return "en_US";
+  }
+
+  function applyHreflang() {
+    document.head
+      .querySelectorAll('link[rel="alternate"][hreflang]')
+      .forEach((el) => el.remove());
+    HREFLANG.forEach(({ code, locale }) => {
+      ensureLink("alternate", absoluteUrl(localePath(locale)), {
+        hreflang: code,
+      });
+    });
+  }
+
   function applyShell() {
-    const { t } = window.I18N;
+    const { t, locale } = window.I18N;
     const page = document.body?.dataset.page || "home";
     const title = t(`meta.title.${page}`) || document.title;
     const description = t(`meta.description.${page}`);
@@ -52,20 +93,21 @@
     ensureMeta("property", "og:description", description);
     ensureMeta("property", "og:url", url);
     ensureMeta("property", "og:image", ogImage);
+    ensureMeta("property", "og:locale", ogLocale(locale));
     ensureMeta("name", "twitter:card", "summary_large_image");
     ensureMeta("name", "twitter:title", title);
     ensureMeta("name", "twitter:description", description);
     ensureMeta("name", "twitter:image", ogImage);
     ensureLink("canonical", url);
+    applyHreflang();
   }
 
   function applyArticle(article) {
     if (!article) return;
-    const { L } = window.I18N;
+    const { L, locale } = window.I18N;
     const title = `${L(article.title)} · Dong Jiahui`;
     const description = L(article.lede) || L(article.title);
-    const path = pagePath();
-    const url = absoluteUrl(path);
+    const url = absoluteUrl(pagePath());
     const cover =
       window.POSTS?.find((p) => p.id === article.id)?.cover ||
       article.ogImage ||
@@ -80,12 +122,20 @@
     ensureMeta("property", "og:description", description);
     ensureMeta("property", "og:url", url);
     ensureMeta("property", "og:image", ogImage);
-    if (article.date) ensureMeta("property", "article:published_time", article.date.replace(/\./g, "-"));
+    ensureMeta("property", "og:locale", ogLocale(locale));
+    if (article.date) {
+      ensureMeta(
+        "property",
+        "article:published_time",
+        article.date.replace(/\./g, "-"),
+      );
+    }
     ensureMeta("name", "twitter:card", "summary_large_image");
     ensureMeta("name", "twitter:title", title);
     ensureMeta("name", "twitter:description", description);
     ensureMeta("name", "twitter:image", ogImage);
     ensureLink("canonical", url);
+    applyHreflang();
   }
 
   function applyJsonLdPerson() {
@@ -101,7 +151,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       name: "Dong Jiahui",
-      alternateName: "董家辉",
+      alternateName: ["董家辉", "ドン・ジアフイ"],
       url: SITE,
       jobTitle: "Embedded Linux Engineer",
       email: "mailto:jdong8464@gmail.com",

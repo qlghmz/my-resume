@@ -28,7 +28,10 @@
         const title = L(work.title);
         const cta = L(work.cta) || t("works.ctaDefault");
         const search = L(work.search) || `${title} ${work.type}`;
-        const href = work.href || "#";
+        const rawHref = work.href || "#";
+        const href = rawHref.startsWith("http")
+          ? rawHref
+          : window.I18N?.localizeHref?.(rawHref) || rawHref;
         const external = href.startsWith("http");
         return `
         <article class="project-card reveal" data-search="${escapeHtml(search.toLowerCase())}">
@@ -210,6 +213,27 @@
       })
       .join("");
 
+    const loc = (href) =>
+      window.I18N?.localizeHref?.(href || "#") || href || "#";
+    const related = (article.related || [])
+      .map(
+        (item) => `
+        <li>
+          <a href="${escapeHtml(loc(item.href || "#"))}"
+             data-analytics="article_cta"
+             data-analytics-target="related">
+            ${escapeHtml(L(item.label))}
+          </a>
+        </li>`,
+      )
+      .join("");
+    const relatedBlock = related
+      ? `<div class="article-cta-block">
+           <p class="article-cta-label">${escapeHtml(t("blog.cta.related"))}</p>
+           <ul class="article-cta-list">${related}</ul>
+         </div>`
+      : "";
+
     root.innerHTML = `
       <header>
         <span class="cv-meta">${escapeHtml(article.date || "")}</span>
@@ -219,6 +243,17 @@
       <div class="body">
         ${sections}
         <div class="tag-row tags">${tags}</div>
+        <nav class="article-cta" aria-label="next steps">
+          ${relatedBlock}
+          <div class="article-cta-block">
+            <p class="article-cta-label">${escapeHtml(t("blog.cta.resume"))}</p>
+            <p><a href="${escapeHtml(loc("/resume/"))}" data-analytics="article_cta" data-analytics-target="resume">${escapeHtml(t("blog.cta.resumeLink"))}</a></p>
+          </div>
+          <div class="article-cta-block">
+            <p class="article-cta-label">${escapeHtml(t("blog.cta.contact"))}</p>
+            <p><a href="${escapeHtml(loc("/contact/"))}" data-analytics="article_cta" data-analytics-target="contact">${escapeHtml(t("blog.cta.contactLink"))}</a></p>
+          </div>
+        </nav>
       </div>
     `;
   }

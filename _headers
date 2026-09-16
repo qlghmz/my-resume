@@ -24,6 +24,9 @@
 /blog/*
   Cache-Control: public, max-age=0, must-revalidate
 
+/ja/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /contact/*
   Cache-Control: public, max-age=0, must-revalidate
 
