@@ -154,7 +154,7 @@
       alternateName: ["董家辉", "ドン・ジアフイ"],
       url: SITE,
       jobTitle: "Embedded Linux Engineer",
-      email: "mailto:jdong8464@gmail.com",
+      email: "mailto:jdong@tensorview.cc",
       sameAs: ["https://github.com/qlghmz", "https://ai.tensorview.cc"],
     });
   }

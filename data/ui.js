@@ -248,7 +248,8 @@ window.UI = {
       ja: "ご挨拶、コード閲覧、または WeChat の追加を。",
     },
     github: { zh: "Github", en: "Github", ja: "Github" },
-    mail: { zh: "邮件", en: "Mail", ja: "メール" },
+    mail: { zh: "域名邮箱", en: "Domain email", ja: "ドメインメール" },
+    gmail: { zh: "Gmail", en: "Gmail", ja: "Gmail" },
     wechat: { zh: "微信", en: "WeChat", ja: "WeChat" },
   },
 };
