@@ -24,19 +24,19 @@ npm run dev
 - `/resume/` 简历
 - `/blog/` 博客
 - `/contact/` 联系
+- `/ja/` … 日文版（同上路径加前缀，供日本搜索收录）
 
-## 双语（i18n）
+## 多语言（i18n）
 
-同一套 URL，**不**按地区跳转到 `/en/`、`/zh/`。
-
-- 默认语言：浏览器 `navigator.languages`（`zh*` → 中文，否则优先英文，再否则中文）
-- 自选：右上角 / HUD 的 `ZH | EN`，写入 `localStorage`（`jh.locale`）
-- 文案形状：`{ zh: "…", en: "…" }` 写在同一条记录旁，改一条就补齐各语言
-- 加语言：在 `js/i18n.js` 的 `LOCALES` 注册新码，再给各 `L` 对象加对应键；缺键会回退 `en` → `zh`
+- **中 / 英**：同一套 URL（`/`、`/blog/`…），右上角 `ZH | EN` 切换，写入 `localStorage`（`jh.locale`）
+- **日文**：独立路径 `/ja/…`（静态 meta 为日文 + `hreflang`），日本浏览器首次访问会进 `/ja/`
+- 文案形状：`{ zh, en, ja }`；缺键回退 `en` → `zh` → `ja`
+- 改完页面 HTML 后跑：`npm run ja:pages`（生成 `/ja` 镜像）
+- Search Console：提交 `sitemap.xml` 后，对关键 `/ja/blog/…` URL「请求编入索引」
 
 | 文件 | 内容 |
 | --- | --- |
-| `js/i18n.js` | 检测 / `L` / `t` / `setLocale` / `apply` |
+| `js/i18n.js` | 检测 / `L` / `t` / `setLocale` / `/ja` 路径 |
 | `data/ui.js` | 壳文案（导航、首页、空态…） |
 | `data/works.js` / `data/posts.js` | 列表条目 |
 | `data/resume.js` | 简历章节 |
@@ -194,6 +194,7 @@ npm run deploy
 | `article_scroll` | 阅读深度 25/50/75/90% |
 | `click_github` / `click_email` | 外链转化 |
 | `work_click` / `blog_open` | 作品 / 博文入口 |
+| `article_cta` | 文末导流（简历 / 联系 / 相关作品） |
 | `nav_click` / `lang_switch` | 导航与语言 |
 
 Umami **Countries** 页可看 China / United States 等占比（回答「中国人还是外国人」）。

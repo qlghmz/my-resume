@@ -6,7 +6,10 @@
   }
 
   function giscusLang() {
-    return window.I18N?.locale === "zh" ? "zh-CN" : "en";
+    const loc = window.I18N?.locale;
+    if (loc === "zh") return "zh-CN";
+    if (loc === "ja") return "ja";
+    return "en";
   }
 
   function clearHost(el) {

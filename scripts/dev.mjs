@@ -195,5 +195,6 @@ server.listen(PORT, "127.0.0.1", () => {
   console.log(`  Resume       http://127.0.0.1:${PORT}/resume/`);
   console.log(`  Blog         http://127.0.0.1:${PORT}/blog/`);
   console.log(`  Contact      http://127.0.0.1:${PORT}/contact/`);
+  console.log(`  Japanese     http://127.0.0.1:${PORT}/ja/`);
   console.log(`  Syndicate    http://127.0.0.1:${PORT}/tools/syndicate/`);
 });

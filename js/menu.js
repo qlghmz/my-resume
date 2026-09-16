@@ -48,12 +48,21 @@
   }
 
   function syncSecondaryLabels() {
-    const showZh = window.I18N.locale === "zh";
+    const loc = window.I18N.locale;
+    const showSecondary = loc === "zh" || loc === "ja";
     items.forEach((el) => {
       const key = el.dataset.i18nZh;
       const zhEl = el.querySelector(".cmd-zh");
       if (zhEl && key) zhEl.textContent = t(key);
-      if (zhEl) zhEl.hidden = !showZh;
+      if (zhEl) zhEl.hidden = !showSecondary;
+      const raw = el.getAttribute("data-i18n-href") || el.getAttribute("href");
+      if (raw && !/^https?:\/\//i.test(raw)) {
+        el.setAttribute("data-i18n-href", raw.replace(/^\/ja/, "") || "/");
+        el.setAttribute(
+          "href",
+          window.I18N.localizeHref(el.getAttribute("data-i18n-href")),
+        );
+      }
     });
   }
 

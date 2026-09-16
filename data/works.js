@@ -6,11 +6,13 @@ window.WORKS = [
     title: {
       zh: "龙芯 LS2P300 驱动与大小核协同",
       en: "Loongson LS2P300 drivers & big–little IPC",
+      ja: "Loongson LS2P300 ドライバと大小核連携",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "龙芯 ls2p300 i2c spi mailbox freertos 得力 驱动",
       en: "loongson ls2p300 i2c spi mailbox freertos deli driver",
+      ja: "loongson ls2p300 i2c spi mailbox freertos 得力 ドライバ",
     },
   },
   {
@@ -20,11 +22,13 @@ window.WORKS = [
     title: {
       zh: "TensorView AI 写网页平台",
       en: "TensorView AI website builder",
+      ja: "TensorView AI Web サイト構築プラットフォーム",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "tensorview ai agent nextjs saas 写网页",
       en: "tensorview ai agent nextjs saas website builder",
+      ja: "tensorview ai agent nextjs saas ウェブサイト生成",
     },
   },
   {
@@ -34,11 +38,13 @@ window.WORKS = [
     title: {
       zh: "医用眼压机 MCU 程序",
       en: "Medical tonometer MCU firmware",
+      ja: "医用眼圧計 MCU ファームウェア",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "眼压机 mcu freertos uart 气路 电机 佳目",
       en: "tonometer mcu freertos uart pneumatics motor jiamu",
+      ja: "眼圧計 mcu freertos uart 気路 モータ 佳目",
     },
   },
   {
@@ -48,11 +54,13 @@ window.WORKS = [
     title: {
       zh: "MMITest / LongTest 工厂与老化测试",
       en: "MMITest / LongTest factory and burn-in tools",
+      ja: "MMITest / LongTest 工場・エージング試験",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "工厂测试 qt 相机 rga 打气 吹气 老化",
       en: "factory test qt camera rga inflate blow burn-in",
+      ja: "工場試験 qt カメラ rga 加圧 送気 エージング",
     },
   },
   {
@@ -62,11 +70,13 @@ window.WORKS = [
     title: {
       zh: "RK3588 三路相机 RGA 并发预览",
       en: "RK3588 three-camera RGA concurrent preview",
+      ja: "RK3588 3 系統カメラ RGA 同時プレビュー",
     },
-    cta: { zh: "阅读文章", en: "Read article" },
+    cta: { zh: "阅读文章", en: "Read article", ja: "記事を読む" },
     search: {
       zh: "rk3588 rga 相机 v4l2 dma linux",
       en: "rk3588 rga camera v4l2 dma linux",
+      ja: "rk3588 rga カメラ v4l2 dma linux",
     },
   },
   {
@@ -76,11 +86,13 @@ window.WORKS = [
     title: {
       zh: "Optics 光学测试工具",
       en: "Optics optical test tool",
+      ja: "Optics 光学試験ツール",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "光学 opencv 直线 中心点",
       en: "optics opencv line center point",
+      ja: "光学 opencv 直線 中心点",
     },
   },
   {
@@ -90,11 +102,13 @@ window.WORKS = [
     title: {
       zh: "DICOM 医学成像文件",
       en: "DICOM medical imaging files",
+      ja: "DICOM 医用画像ファイル",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "dicom dcmtk 医学成像",
       en: "dicom dcmtk medical imaging",
+      ja: "dicom dcmtk 医用画像",
     },
   },
   {
@@ -104,11 +118,13 @@ window.WORKS = [
     title: {
       zh: "AD8555 烧录工装",
       en: "AD8555 programming fixture",
+      ja: "AD8555 書き込み治具",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "ad8555 烧录 工装 脉冲",
       en: "ad8555 programming fixture pulse",
+      ja: "ad8555 書き込み 治具 パルス",
     },
   },
   {
@@ -118,11 +134,13 @@ window.WORKS = [
     title: {
       zh: "眼球检测 YOLOv8 + NCNN",
       en: "Eye detection with YOLOv8 + NCNN",
+      ja: "眼球検出 YOLOv8 + NCNN",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "yolov8 ncnn 眼球 结构光 红外",
       en: "yolov8 ncnn eye structured light infrared",
+      ja: "yolov8 ncnn 眼球 構造光 赤外",
     },
   },
   {
@@ -132,11 +150,13 @@ window.WORKS = [
     title: {
       zh: "眼压计算模型 ResNet",
       en: "IOP estimation model (ResNet)",
+      ja: "眼圧推定モデル ResNet",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "resnet 眼压 回归 ncnn",
       en: "resnet iop regression ncnn",
+      ja: "resnet 眼圧 回帰 ncnn",
     },
   },
   {
@@ -146,11 +166,13 @@ window.WORKS = [
     title: {
       zh: "SAM2 角膜自动标注",
       en: "SAM2 cornea auto-annotation",
+      ja: "SAM2 角膜自動アノテーション",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "sam2 标注 角膜 分割",
       en: "sam2 annotation cornea segmentation",
+      ja: "sam2 アノテーション 角膜 セグメンテーション",
     },
   },
   {
@@ -160,11 +182,13 @@ window.WORKS = [
     title: {
       zh: "可变眼膜 MCU / LCD",
       en: "Variable eye membrane MCU / LCD",
+      ja: "可変眼膜 MCU / LCD",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "眼膜 lcd 气压",
       en: "membrane lcd pressure",
+      ja: "眼膜 lcd 気圧",
     },
   },
   {
@@ -174,11 +198,13 @@ window.WORKS = [
     title: {
       zh: "GPU 视频处理 API",
       en: "GPU video processing API",
+      ja: "GPU 動画処理 API",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "ffmpeg fastapi nvenc 视频 七牛",
       en: "ffmpeg fastapi nvenc video qiniu",
+      ja: "ffmpeg fastapi nvenc 動画 七牛",
     },
   },
   {
@@ -188,11 +214,13 @@ window.WORKS = [
     title: {
       zh: "Warelax 安全下载系统",
       en: "Warelax secure download system",
+      ja: "Warelax 安全ダウンロードシステム",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "warelax flask 七牛 签名下载",
       en: "warelax flask qiniu signed download",
+      ja: "warelax flask 七牛 署名ダウンロード",
     },
   },
   {
@@ -202,11 +230,13 @@ window.WORKS = [
     title: {
       zh: "MQTT 广域物联网网关",
       en: "MQTT wide-area IoT gateway",
+      ja: "MQTT 広域 IoT ゲートウェイ",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "mqtt linux 网关 驱动",
       en: "mqtt linux gateway driver",
+      ja: "mqtt linux ゲートウェイ ドライバ",
     },
   },
   {
@@ -216,11 +246,13 @@ window.WORKS = [
     title: {
       zh: "浙江省机器人竞赛",
       en: "Zhejiang Robotics Contest",
+      ja: "浙江省ロボットコンテスト",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "机器人 yolov8 树莓派 二等奖",
       en: "robot yolov8 raspberry pi second prize",
+      ja: "ロボット yolov8 ラズベリーパイ 二等賞",
     },
   },
   {
@@ -230,11 +262,13 @@ window.WORKS = [
     title: {
       zh: "浙江省工程训练竞赛",
       en: "Zhejiang Engineering Training Contest",
+      ja: "浙江省エンジニアリング訓練コンテスト",
     },
-    cta: { zh: "查看详情", en: "View details" },
+    cta: { zh: "查看详情", en: "View details", ja: "詳細を見る" },
     search: {
       zh: "工程训练 yolov5 机械臂 三等奖",
       en: "engineering training yolov5 arm third prize",
+      ja: "エンジニアリング訓練 yolov5 アーム 三等賞",
     },
   },
   {
@@ -244,11 +278,13 @@ window.WORKS = [
     title: {
       zh: "RK3588 V4L2 相机采集",
       en: "RK3588 V4L2 camera capture",
+      ja: "RK3588 V4L2 カメラキャプチャ",
     },
-    cta: { zh: "打开仓库", en: "Open repo" },
+    cta: { zh: "打开仓库", en: "Open repo", ja: "リポジトリを開く" },
     search: {
       zh: "github rk3588 v4l2 rga opencv",
       en: "github rk3588 v4l2 rga opencv",
+      ja: "github rk3588 v4l2 rga opencv",
     },
   },
 ];

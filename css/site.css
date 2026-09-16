@@ -21,6 +21,12 @@ html[lang="en"] {
   --body: "Noto Sans", "Barlow Condensed", sans-serif;
 }
 
+html[lang="ja"] {
+  --display: "Passion One", "Barlow Condensed", "Noto Sans JP", "Noto Sans SC", sans-serif;
+  --hud: "Barlow Condensed", "Noto Sans JP", "Noto Sans SC", sans-serif;
+  --body: "Noto Sans JP", "Noto Sans SC", "Barlow Condensed", sans-serif;
+}
+
 * { box-sizing: border-box; }
 html, body { min-height: 100%; }
 html { scroll-behavior: smooth; }
@@ -1047,6 +1053,38 @@ body[data-page="resume"] .cv-fade {
   border-top: 1px solid rgba(104, 252, 254, 0.16);
 }
 .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.article-cta {
+  margin-top: 36px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(104, 252, 254, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.article-cta-block { margin: 0; }
+.article-cta-label {
+  margin: 0 0 6px;
+  font-family: var(--hud);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--cyan);
+}
+.article-cta-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.article-cta a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(104, 252, 254, 0.35);
+}
+.article-cta a:hover { border-bottom-color: var(--cyan); color: var(--cyan-2); }
+.article-cta-block > p { margin: 0; color: var(--dim); }
 .tag {
   border: 1px solid var(--cyan);
   color: var(--cyan);

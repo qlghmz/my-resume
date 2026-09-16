@@ -1,5 +1,5 @@
 (() => {
-  const { t, L, locale, LOCALES, setLocale } = window.I18N;
+  const { t, L, locale, LOCALES, setLocale, localizeHref } = window.I18N;
 
   const PAGE = document.body.dataset.page || "";
   const NAV_PAGE = PAGE === "article" ? "blog" : PAGE;
@@ -52,12 +52,12 @@
     slot.innerHTML = `
       <a class="skip-link" href="#main">${t("a11y.skip")}</a>
       <header class="hud">
-        <a class="logo" href="/" data-analytics="nav_click" data-analytics-target="home"><span>JH.</span> DONG</a>
+        <a class="logo" href="${localizeHref("/")}" data-analytics="nav_click" data-analytics-target="home"><span>JH.</span> DONG</a>
         <div class="hud-path">${t("nav.main")} <b>/ ${t(here.key) || here.mark}</b></div>
         <nav class="hud-links" aria-label="${t("a11y.site")}">
           ${LINKS.map((item) => {
             const on = item.id === NAV_PAGE ? ' aria-current="page"' : "";
-            return `<a href="${item.href}" data-analytics="nav_click" data-analytics-target="${item.id}"${on}>${t(item.key)}</a>`;
+            return `<a href="${localizeHref(item.href)}" data-analytics="nav_click" data-analytics-target="${item.id}"${on}>${t(item.key)}</a>`;
           }).join("")}
         </nav>
         ${langSwitcherHtml()}
@@ -97,6 +97,15 @@
     mark.textContent = (PATH[PAGE]?.mark || PAGE).toUpperCase();
   }
 
+  function localizeStaticLinks() {
+    document.querySelectorAll("a[href^='/']:not([href^='//'])").forEach((a) => {
+      const href = a.getAttribute("href");
+      if (!href || a.dataset.noLocale === "1") return;
+      if (a.classList.contains("lang-btn")) return;
+      a.setAttribute("href", localizeHref(href));
+    });
+  }
+
   function observeReveal() {
     const nodes = document.querySelectorAll(".reveal");
     if (!nodes.length) return;
@@ -122,13 +131,14 @@
     mountHeader();
     mountFooter();
     mountWatermark();
+    localizeStaticLinks();
     window.I18N.apply();
     window.SEO?.apply?.();
   }
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && PAGE !== "home") {
-      window.location.href = "/";
+      window.location.href = localizeHref("/");
     }
   });
 

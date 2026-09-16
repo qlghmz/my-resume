@@ -6,8 +6,9 @@
     "syndicate": "node ./scripts/syndicate/index.mjs",
     "cf:dev": "node ./node_modules/wrangler/bin/wrangler.js dev --live-reload --port 8787",
     "feed": "node ./scripts/generate-feed.mjs",
+    "ja:pages": "node ./scripts/generate-ja-pages.mjs",
     "vxna:submit": "node ./scripts/submit-vxna.mjs",
-    "deploy": "npm run feed && node ./node_modules/wrangler/bin/wrangler.js deploy",
+    "deploy": "npm run feed && npm run ja:pages && node ./node_modules/wrangler/bin/wrangler.js deploy",
     "setup:analytics": "node ./scripts/setup-analytics.mjs"
   },
   "devDependencies": {
