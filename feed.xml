@@ -5,11 +5,19 @@
   <link href="https://resume.tensorview.cc/blog/" rel="alternate" type="text/html" />
   <link href="https://resume.tensorview.cc/feed.xml" rel="self" type="application/atom+xml" />
   <id>https://resume.tensorview.cc/blog/</id>
-  <updated>2026-09-16T09:44:32Z</updated>
+  <updated>2026-09-17T01:21:23Z</updated>
   <author>
     <name>董家辉</name>
     <uri>https://resume.tensorview.cc</uri>
   </author>
+  <entry>
+    <title>外包下载站怎么搭：前端页 + 七牛私有链 + 云服务器部署</title>
+    <link href="https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html" rel="alternate" type="text/html" />
+    <id>https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html</id>
+    <published>2026-09-17T00:00:00Z</published>
+    <updated>2026-09-17T00:00:00Z</updated>
+    <summary type="text">按真实外包流程：三页前端、七牛私有桶、Flask 签发、VPS + Nginx/HTTPS；补验收标准、微信缓存与改包计价。</summary>
+  </entry>
   <entry>
     <title>外包篇 2：AI 接互联网零活，钱从哪来、坑在哪</title>
     <link href="https://resume.tensorview.cc/blog/outsource-ai-side-hustle-part-2.html" rel="alternate" type="text/html" />

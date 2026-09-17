@@ -15,6 +15,23 @@ window.BLOG_CATEGORIES = [
 
 window.POSTS = [
   {
+    id: "secure-download-site-flask-qiniu",
+    category: "tech",
+    date: "2026.09.17",
+    href: "/blog/secure-download-site-flask-qiniu.html",
+    cover: "/img/blog/download-site-pc.jpg",
+    title: {
+      zh: "外包下载站怎么搭：前端页 + 七牛私有链 + 云服务器部署",
+      en: "How I Ship a Controlled Download Site: HTML + Private Object Storage + VPS",
+      ja: "外注ダウンロードサイトの作り方：HTML＋署名付き配信＋VPS デプロイ",
+    },
+    summary: {
+      zh: "按真实外包流程：三页前端、七牛私有桶、Flask 签发、VPS + Nginx/HTTPS；补验收标准、微信缓存与改包计价。",
+      en: "Real freelance flow: three pages, private bucket, Flask signed URLs, VPS + Nginx/HTTPS — plus acceptance, chat cache, and re-upload pricing.",
+      ja: "実際の外注の流れ：画面三枚、プライベートバケット、Flask 署名 URL、VPS＋Nginx／HTTPS。検収基準、チャット内キャッシュ、差し替え課金も補足。",
+    },
+  },
+  {
     id: "outsource-ai-side-hustle-part-2",
     category: "growth",
     date: "2026.09.08",

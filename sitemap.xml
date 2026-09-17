@@ -92,6 +92,26 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://resume.tensorview.cc/contact/" />
   </url>
   <url>
+    <loc>https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://resume.tensorview.cc/ja/blog/secure-download-site-flask-qiniu.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html" />
+  </url>
+  <url>
+    <loc>https://resume.tensorview.cc/ja/blog/secure-download-site-flask-qiniu.html</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://resume.tensorview.cc/ja/blog/secure-download-site-flask-qiniu.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html" />
+  </url>
+  <url>
     <loc>https://resume.tensorview.cc/blog/outsource-ai-side-hustle-part-2.html</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
