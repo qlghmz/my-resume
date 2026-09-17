@@ -6,16 +6,35 @@
 
 **不是站点功能、不给访客看。** 代码在 `scripts/syndicate/`（部署已 ignore），仅 `npm run dev` 时挂本地路由；线上没有这个页面和 API。
 
-主站文章为原文源，一键生成博客园 / 掘金 / CSDN / Dev.to / Medium 稿，文首与文末带主站链接。默认 dry-run，不真正发到外站。
+主站文章为原文源，一键生成博客园 / 掘金 / CSDN / Dev.to / Qiita / Medium 稿，文首与文末带主站链接。
+
+- **国内**：默认只生 Markdown（`syndicate-out/`），自行粘贴。
+- **欧美 Dev.to / 日本 Qiita**：支持自动发布（读本地 `.env` token）。默认草稿 / 限定公开；加 `--live` 才公开。
 
 ```text
+# 生成全部平台稿
 npm run syndicate -- --list
 npm run syndicate -- --id taobao-outsource-group-half-year
+
+# 自动发到 Dev.to + Qiita（先草稿）
+cp .env.example .env   # 填入 DEVTO_API_KEY、QIITA_TOKEN
+npm run syndicate -- --id i2c-trise-ack-trap --platforms devto,qiita --publish
+
+# 确认无误后再公开
+npm run syndicate -- --id i2c-trise-ack-trap --platforms devto,qiita --publish --live
+
 npm run dev
 # 仅本机：http://127.0.0.1:8787/tools/syndicate/
 ```
 
-产出在 `syndicate-out/`（已 gitignore）。外站真发后续再接各平台 token。
+Token：
+
+| 变量 | 获取 |
+| --- | --- |
+| `DEVTO_API_KEY` | [dev.to/settings/extensions](https://dev.to/settings/extensions) |
+| `QIITA_TOKEN` | [qiita.com/settings/applications](https://qiita.com/settings/applications)（勾选 `write_qiita`） |
+
+产出在 `syndicate-out/`（已 gitignore）。同一文章再次 `--publish` 会更新已记录的 remote id，不会重复开新帖。
 
 首页是 Persona 3 Reload 风格暂停菜单（静态 HTML/CSS/JS，无框架）。未使用 Atlus 官方素材/字体/BGM。
 
@@ -61,7 +80,7 @@ npm run dev
 
 ## 版本
 
-当前线上基线：**v1.5.0**
+当前线上基线：**v1.10.0**
 
 | 东西 | 规则 |
 | --- | --- |

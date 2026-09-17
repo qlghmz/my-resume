@@ -106,6 +106,7 @@ async function handleApi(req, res, url) {
         platforms: body.platforms,
         locale: body.locale || "zh",
         mode: body.mode || "dry-run",
+        live: !!body.live,
       });
       const manifest = await refreshManifest();
       return json(res, 200, { summary, manifest });

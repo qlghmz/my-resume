@@ -12,7 +12,7 @@
     <div>
       <p class="kicker">LOCAL ONLY · NOT PUBLIC</p>
       <h1>博客多平台分发</h1>
-      <p class="sub">作者本地小工具，不是站点页面。主站为原文源；一键生成各平台稿，文首/文末带主站链接。dry-run，不真正发外站。线上不会部署本页。</p>
+      <p class="sub">作者本地小工具，不是站点页面。主站为原文源；可生成各平台稿，并对 Dev.to / Qiita 自动发草稿。线上不会部署本页。</p>
     </div>
     <a class="back" href="/blog/">← 博客（本机预览）</a>
   </header>
@@ -25,6 +25,11 @@
       </label>
       <fieldset class="platforms" id="platform-checks"></fieldset>
       <button type="button" id="btn-run" class="primary">一键生成分发稿</button>
+      <button type="button" id="btn-publish" class="secondary" title="需要 .env 里的 DEVTO_API_KEY / QIITA_TOKEN">发草稿到 Dev.to / Qiita</button>
+      <label class="inline">
+        <input type="checkbox" id="opt-live" />
+        公开（--live）
+      </label>
     </div>
     <p class="status" id="status" aria-live="polite"></p>
   </section>

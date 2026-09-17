@@ -3,6 +3,8 @@
   const postSelect = $("#post-select");
   const platformChecks = $("#platform-checks");
   const btnRun = $("#btn-run");
+  const btnPublish = $("#btn-publish");
+  const optLive = $("#opt-live");
   const statusEl = $("#status");
   const jobsEl = $("#jobs");
   const previewTitle = $("#preview-title");
@@ -43,13 +45,14 @@
 
   function fillPlatformChecks() {
     platformChecks.innerHTML = platforms
-      .map(
-        (p) => `
+      .map((p) => {
+        const badge = p.autoPublish ? " · auto" : "";
+        return `
         <label title="${escapeAttr(p.note || "")}">
           <input type="checkbox" name="platform" value="${escapeAttr(p.id)}" checked />
-          ${escapeHtml(p.name)}
-        </label>`,
-      )
+          ${escapeHtml(p.name)}${badge}
+        </label>`;
+      })
       .join("");
   }
 
@@ -152,6 +155,57 @@
     } catch (err) {
       setStatus(err.message || String(err), true);
     } finally {
+      btnRun.disabled = false;
+    }
+  });
+
+  btnPublish.addEventListener("click", async () => {
+    const id = postSelect.value;
+    let platformsSel = selectedPlatforms().filter((p) =>
+      platforms.find((x) => x.id === p && x.autoPublish),
+    );
+    if (!platformsSel.length) {
+      platformsSel = platforms.filter((p) => p.autoPublish).map((p) => p.id);
+    }
+    if (!id) return;
+    if (!platformsSel.length) {
+      setStatus("没有可自动发布的平台（Dev.to / Qiita）", true);
+      return;
+    }
+    const live = !!optLive?.checked;
+    if (
+      live &&
+      !confirm("将把勾选的 Dev.to / Qiita 文章设为公开。确认继续？")
+    ) {
+      return;
+    }
+    btnPublish.disabled = true;
+    btnRun.disabled = true;
+    setStatus(live ? "正在公开发布…" : "正在发到草稿/限定公开…");
+    try {
+      const data = await api("/api/syndicate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id,
+          platforms: platformsSel,
+          mode: "publish",
+          live,
+        }),
+      });
+      manifest = data.manifest || (await api("/api/syndicate/manifest"));
+      const lines = (data.summary?.platforms || []).map((p) => {
+        if (p.publishError) return `${p.platformName}: ${p.publishError}`;
+        if (p.remote?.url) return `${p.platformName}: ${p.status} → ${p.remote.url}`;
+        return `${p.platformName}: ${p.status}`;
+      });
+      const err = (data.summary?.platforms || []).some((p) => p.status === "error");
+      setStatus(lines.join(" · ") || "完成", err);
+      await showJob(id);
+    } catch (err) {
+      setStatus(err.message || String(err), true);
+    } finally {
+      btnPublish.disabled = false;
       btnRun.disabled = false;
     }
   });

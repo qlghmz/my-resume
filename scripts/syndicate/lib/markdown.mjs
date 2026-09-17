@@ -1,4 +1,4 @@
-import { pickLocale } from "./load.mjs";
+import { pickLocale, siteOrigin } from "./load.mjs";
 
 function stripToMd(html) {
   return String(html || "")
@@ -15,6 +15,13 @@ function stripToMd(html) {
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .trim();
+}
+
+function absolutizeUrl(src) {
+  if (!src) return src;
+  if (/^https?:\/\//i.test(src)) return src;
+  const origin = siteOrigin().replace(/\/$/, "");
+  return src.startsWith("/") ? `${origin}${src}` : `${origin}/${src}`;
 }
 
 /**
@@ -45,7 +52,7 @@ export function articleToMarkdown(article, locale = "zh") {
     for (const fig of sec.figures || []) {
       if (!fig?.src) continue;
       const caption = stripToMd(pickLocale(fig.caption, locale));
-      parts.push(`![${caption || ""}](${fig.src})`);
+      parts.push(`![${caption || ""}](${absolutizeUrl(fig.src)})`);
       if (caption) parts.push(`*${caption}*`);
       parts.push("");
     }
@@ -63,6 +70,14 @@ export function backlinkBlock(canonical, locale = "zh") {
       "",
     ].join("\n");
   }
+  if (locale === "ja") {
+    return [
+      "---",
+      "",
+      `> **原文（個人サイト）：** [${canonical}](${canonical})`,
+      "",
+    ].join("\n");
+  }
   return [
     "---",
     "",
@@ -75,6 +90,12 @@ export function frontlinkBlock(canonical, locale = "zh") {
   if (locale === "en") {
     return [
       `> This article was first published on my site: [${canonical}](${canonical})`,
+      "",
+    ].join("\n");
+  }
+  if (locale === "ja") {
+    return [
+      `> 本記事は個人サイトで先に公開したものです。最新版は原文を優先してください：[${canonical}](${canonical})`,
       "",
     ].join("\n");
   }
