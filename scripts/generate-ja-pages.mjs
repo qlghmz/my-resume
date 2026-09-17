@@ -85,6 +85,14 @@ const PAGES = [
     description: "AI で Web 副業を受けた実体験：収入感とつらい案件。",
     canonical: "/ja/blog/outsource-ai-side-hustle-part-2.html",
   },
+  {
+    src: "blog/secure-download-site-flask-qiniu.html",
+    dest: "ja/blog/secure-download-site-flask-qiniu.html",
+    title: "外注ダウンロードサイトの作り方 · 董家輝",
+    description:
+      "HTML＋署名付きオブジェクト配信＋VPS デプロイ。検収基準、キャッシュ、差し替え課金まで。",
+    canonical: "/ja/blog/secure-download-site-flask-qiniu.html",
+  },
 ];
 
 function patchHtml(html, page) {
