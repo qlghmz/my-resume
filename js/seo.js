@@ -105,6 +105,8 @@
     ensureMeta("name", "twitter:description", description);
     ensureMeta("name", "twitter:image", ogImage);
     ensureLink("canonical", url);
+    ensureLink("icon", "/favicon.svg", { type: "image/svg+xml" });
+    ensureLink("icon", "/favicon.ico", { type: "image/x-icon" });
     applyHreflang();
   }
 
