@@ -26,8 +26,14 @@
       el = document.head.querySelector(
         `link[rel="${rel}"][hreflang="${attrs.hreflang}"]`,
       );
+    } else if (attrs.type) {
+      el = document.head.querySelector(
+        `link[rel="${rel}"][type="${attrs.type}"]`,
+      );
     } else {
-      el = document.head.querySelector(`link[rel="${rel}"]:not([hreflang])`);
+      el = document.head.querySelector(
+        `link[rel="${rel}"]:not([hreflang]):not([type])`,
+      );
     }
     if (!el) {
       el = document.createElement("link");
@@ -99,6 +105,8 @@
     ensureMeta("name", "twitter:description", description);
     ensureMeta("name", "twitter:image", ogImage);
     ensureLink("canonical", url);
+    ensureLink("icon", "/favicon.svg", { type: "image/svg+xml" });
+    ensureLink("icon", "/favicon.ico", { type: "image/x-icon" });
     applyHreflang();
   }
 

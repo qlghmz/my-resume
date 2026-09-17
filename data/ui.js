@@ -114,6 +114,7 @@ window.UI = {
   footer: {
     copy: { zh: "© {year} dongjiahui", en: "© {year} dongjiahui", ja: "© {year} dongjiahui" },
     esc: { zh: "Esc 返回主菜单", en: "Esc back to menu", ja: "Esc でメニューに戻る" },
+    sitemap: { zh: "站点地图", en: "Sitemap", ja: "サイトマップ" },
   },
   home: {
     kicker: { zh: "个人网站", en: "Personal Site", ja: "個人サイト" },

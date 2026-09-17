@@ -78,6 +78,7 @@
     slot.innerHTML = `
       <div class="hud-foot">
         <span>${copy}</span>
+        <span><a href="${localizeHref("/site-map/")}" data-no-locale="1">${t("footer.sitemap")}</a></span>
         <span>${t("footer.esc")}</span>
       </div>
     `;
