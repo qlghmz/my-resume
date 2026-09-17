@@ -6,3 +6,5 @@ Disallow: /scripts/
 Disallow: /node_modules/
 
 Sitemap: https://resume.tensorview.cc/sitemap.xml
+# HTML fallback for crawlers
+# https://resume.tensorview.cc/site-map/
