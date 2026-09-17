@@ -8,6 +8,7 @@ import { canonicalUrl, pickLocale } from "./load.mjs";
 /**
  * Platform adapters: shape the same article for each target.
  * All include a link back to the canonical site post.
+ * autoPublish: wired in lib/publishers/* (Dev.to / Qiita).
  */
 export const PLATFORMS = [
   {
@@ -15,6 +16,7 @@ export const PLATFORMS = [
     name: "博客园",
     region: "cn",
     publish: "metaweblog",
+    autoPublish: false,
     note: "可用 MetaWeblog API 直发；本地默认 dry-run。",
   },
   {
@@ -22,6 +24,7 @@ export const PLATFORMS = [
     name: "掘金",
     region: "cn",
     publish: "manual",
+    autoPublish: false,
     note: "无稳定公开写接口；导出 Markdown，可用 SyncCaster 粘贴。",
   },
   {
@@ -29,6 +32,7 @@ export const PLATFORMS = [
     name: "CSDN",
     region: "cn",
     publish: "manual",
+    autoPublish: false,
     note: "导出 Markdown + 文首原文声明。",
   },
   {
@@ -36,13 +40,23 @@ export const PLATFORMS = [
     name: "Dev.to",
     region: "en",
     publish: "api",
-    note: "支持 canonical_url；本地生成 front matter。",
+    autoPublish: true,
+    note: "自动发布（DEVTO_API_KEY）。默认草稿；--live 公开。支持 canonical_url。",
+  },
+  {
+    id: "qiita",
+    name: "Qiita",
+    region: "ja",
+    publish: "api",
+    autoPublish: true,
+    note: "日本技术博客自动发布（QIITA_TOKEN，需 write_qiita）。默认限定公开；--live 公开。",
   },
   {
     id: "medium",
     name: "Medium",
     region: "en",
     publish: "manual",
+    autoPublish: false,
     note: "Medium Integration Token 可发；本地先出带 canonical 的稿。",
   },
 ];
@@ -80,7 +94,11 @@ export function buildPayload(platformId, post, article, locale = "zh") {
   const platform = PLATFORMS.find((p) => p.id === platformId);
   if (!platform) throw new Error(`Unknown platform: ${platformId}`);
 
-  const loc = platform.region === "en" ? "en" : locale;
+  // Locale: EN platforms → en, JA → ja, CN → requested locale (default zh)
+  let loc = locale;
+  if (platform.region === "en") loc = "en";
+  else if (platform.region === "ja") loc = "ja";
+
   const meta = baseMeta(post, article, loc);
 
   let body;
@@ -96,9 +114,17 @@ export function buildPayload(platformId, post, article, locale = "zh") {
       canonical_url: meta.canonical,
       description: meta.summary.slice(0, 140),
     };
-    body =
-      yamlFrontMatter(frontMatter) +
-      wrapBody(article, meta.canonical, loc);
+    // File keeps YAML for manual paste; API publisher uses structured fields + body without YAML.
+    const mdBody = wrapBody(article, meta.canonical, loc);
+    body = yamlFrontMatter(frontMatter) + mdBody;
+  } else if (platform.id === "qiita") {
+    frontMatter = {
+      title: meta.title,
+      tags: meta.tags.slice(0, 5),
+      canonical: meta.canonical,
+      private: true,
+    };
+    body = wrapBody(article, meta.canonical, loc);
   } else if (platform.id === "medium") {
     frontMatter = {
       title: meta.title,
@@ -116,10 +142,17 @@ export function buildPayload(platformId, post, article, locale = "zh") {
     body = wrapBody(article, meta.canonical, "zh");
   }
 
+  // API body: markdown without YAML front matter (title/tags sent separately)
+  const apiBody =
+    platform.id === "devto"
+      ? wrapBody(article, meta.canonical, loc)
+      : body;
+
   return {
     platform: platform.id,
     platformName: platform.name,
     publish: platform.publish,
+    autoPublish: !!platform.autoPublish,
     note: platform.note,
     title: meta.title,
     summary: meta.summary,
@@ -128,6 +161,7 @@ export function buildPayload(platformId, post, article, locale = "zh") {
     locale: loc,
     frontMatter,
     body,
+    apiBody,
     charCount: body.length,
   };
 }

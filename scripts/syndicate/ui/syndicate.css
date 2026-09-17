@@ -105,6 +105,26 @@ select {
 }
 .primary:hover { background: rgba(104, 252, 254, 0.22); }
 .primary:disabled { opacity: 0.5; cursor: wait; }
+.secondary {
+  border: 1px solid rgba(125, 255, 179, 0.45);
+  background: rgba(125, 255, 179, 0.08);
+  color: var(--ink);
+  padding: 10px 16px;
+  font: inherit;
+  cursor: pointer;
+}
+.secondary:hover { background: rgba(125, 255, 179, 0.16); }
+.secondary:disabled { opacity: 0.5; cursor: wait; }
+.inline {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: 0.9rem !important;
+  color: var(--ink) !important;
+  cursor: pointer;
+}
 .status {
   margin: 12px 0 0;
   min-height: 1.2em;

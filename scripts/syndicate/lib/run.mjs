@@ -2,6 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { ROOT, loadPosts, loadArticle, pickLocale } from "./load.mjs";
 import { PLATFORMS, buildAllPayloads } from "./platforms.mjs";
+import { publishPayload, canAutoPublish } from "./publish.mjs";
+import { loadEnv } from "./env.mjs";
 
 export const OUT_DIR = path.join(ROOT, "syndicate-out");
 
@@ -20,12 +22,34 @@ export async function listPublishablePosts() {
   return { posts: out, categories };
 }
 
+async function readRemoteMeta(jobDir, platformId) {
+  try {
+    const raw = await fs.readFile(path.join(jobDir, `${platformId}.json`), "utf8");
+    const meta = JSON.parse(raw);
+    return meta.remote || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * @param {string} id
+ * @param {{
+ *   platforms?: string[],
+ *   locale?: string,
+ *   mode?: "dry-run" | "publish",
+ *   live?: boolean,
+ * }} options
+ */
 export async function syndicatePost(id, options = {}) {
   const {
     platforms = PLATFORMS.map((p) => p.id),
     locale = "zh",
     mode = "dry-run",
+    live = false,
   } = options;
+
+  loadEnv();
 
   const { posts } = await loadPosts();
   const post = posts.find((p) => p.id === id);
@@ -43,17 +67,60 @@ export async function syndicatePost(id, options = {}) {
   for (const payload of payloads) {
     const file = path.join(jobDir, `${payload.platform}.md`);
     await fs.writeFile(file, payload.body, "utf8");
-    const metaFile = path.join(jobDir, `${payload.platform}.json`);
+
+    const prevRemote = await readRemoteMeta(jobDir, payload.platform);
+    let status = mode === "dry-run" ? "written" : "pending";
+    let remote = prevRemote;
+    let publishError = null;
+
+    if (mode === "publish") {
+      if (!canAutoPublish(payload.platform)) {
+        status = "skipped-manual";
+      } else {
+        try {
+          const pub = await publishPayload(
+            { ...payload, body: payload.apiBody || payload.body },
+            {
+              live,
+              remoteId: prevRemote?.id || null,
+            },
+          );
+          if (pub?.skipped) {
+            status = "skipped-manual";
+          } else {
+            remote = {
+              id: pub.remoteId,
+              url: pub.url,
+              published: pub.published,
+              updatedAt: stamp,
+              live,
+            };
+            status = pub.published ? "published" : "drafted";
+          }
+        } catch (err) {
+          status = "error";
+          publishError = err.message || String(err);
+        }
+      }
+    }
+
     const result = {
       ...payload,
       mode,
-      status: mode === "dry-run" ? "written" : "pending",
+      live,
+      status,
+      remote,
+      publishError,
       file: path.relative(ROOT, file).replace(/\\/g, "/"),
       writtenAt: stamp,
     };
-    // Drop huge body from json duplicate — keep path
-    const { body: _b, ...meta } = result;
-    await fs.writeFile(metaFile, JSON.stringify(meta, null, 2), "utf8");
+
+    const { body: _b, apiBody: _a, ...meta } = result;
+    await fs.writeFile(
+      path.join(jobDir, `${payload.platform}.json`),
+      JSON.stringify(meta, null, 2),
+      "utf8",
+    );
     results.push(result);
   }
 
@@ -62,6 +129,7 @@ export async function syndicatePost(id, options = {}) {
     title: pickLocale(article.title || post.title, locale),
     canonical: results[0]?.canonical,
     mode,
+    live,
     writtenAt: stamp,
     platforms: results.map((r) => ({
       platform: r.platform,
@@ -69,7 +137,10 @@ export async function syndicatePost(id, options = {}) {
       file: r.file,
       charCount: r.charCount,
       publish: r.publish,
+      autoPublish: r.autoPublish,
       status: r.status,
+      remote: r.remote || null,
+      publishError: r.publishError || null,
     })),
   };
 
