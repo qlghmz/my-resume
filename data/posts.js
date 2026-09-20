@@ -15,6 +15,22 @@ window.BLOG_CATEGORIES = [
 
 window.POSTS = [
   {
+    id: "saas-creem-payments",
+    category: "tech",
+    date: "2026.09.20",
+    href: "/blog/saas-creem-payments.html",
+    title: {
+      zh: "SaaS 海外收款：Stripe 过不了大陆主体，我改用 Creem",
+      en: "Overseas SaaS Billing: Stripe Rejects a Mainland Entity, So I Used Creem",
+      ja: "SaaS の海外課金：Stripe は中国大陸主体では通らず、Creem を使った",
+    },
+    summary: {
+      zh: "香港主体才能走 Stripe。不办公司就用 Creem：费率对照、隐私页、域名邮箱，以及每轮审核大约 2–4 小时。",
+      en: "Stripe needs a supported entity such as Hong Kong. Without one, Creem: fee math, privacy pages, domain email, and a 2–4 hour review round.",
+      ja: "Stripe には香港などの対応主体が要る。会社を作らないなら Creem。手数料、プライバシー、ドメインメール、審査はおよそ 2〜4 時間。",
+    },
+  },
+  {
     id: "secure-download-site-flask-qiniu",
     category: "tech",
     date: "2026.09.17",

@@ -5,11 +5,19 @@
   <link href="https://resume.tensorview.cc/blog/" rel="alternate" type="text/html" />
   <link href="https://resume.tensorview.cc/feed.xml" rel="self" type="application/atom+xml" />
   <id>https://resume.tensorview.cc/blog/</id>
-  <updated>2026-09-17T01:21:23Z</updated>
+  <updated>2026-09-20T15:53:17Z</updated>
   <author>
     <name>董家辉</name>
     <uri>https://resume.tensorview.cc</uri>
   </author>
+  <entry>
+    <title>SaaS 海外收款：Stripe 过不了大陆主体，我改用 Creem</title>
+    <link href="https://resume.tensorview.cc/blog/saas-creem-payments.html" rel="alternate" type="text/html" />
+    <id>https://resume.tensorview.cc/blog/saas-creem-payments.html</id>
+    <published>2026-09-20T00:00:00Z</published>
+    <updated>2026-09-20T00:00:00Z</updated>
+    <summary type="text">香港主体才能走 Stripe。不办公司就用 Creem：费率对照、隐私页、域名邮箱，以及每轮审核大约 2–4 小时。</summary>
+  </entry>
   <entry>
     <title>外包下载站怎么搭：前端页 + 七牛私有链 + 云服务器部署</title>
     <link href="https://resume.tensorview.cc/blog/secure-download-site-flask-qiniu.html" rel="alternate" type="text/html" />

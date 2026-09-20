@@ -86,6 +86,14 @@ const PAGES = [
     canonical: "/ja/blog/outsource-ai-side-hustle-part-2.html",
   },
   {
+    src: "blog/saas-creem-payments.html",
+    dest: "ja/blog/saas-creem-payments.html",
+    title: "SaaS 海外課金：Creem · 董家輝",
+    description:
+      "Stripe は中国大陸主体では不可。香港会社がなければ Creem。手数料、プライバシー、ドメインメール、審査はおよそ 2〜4 時間。",
+    canonical: "/ja/blog/saas-creem-payments.html",
+  },
+  {
     src: "blog/secure-download-site-flask-qiniu.html",
     dest: "ja/blog/secure-download-site-flask-qiniu.html",
     title: "外注ダウンロードサイトの作り方 · 董家輝",
